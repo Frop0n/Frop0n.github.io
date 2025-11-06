@@ -395,23 +395,22 @@ renderer.render(scene, camera);
         }
         resizeCanvas();
         window.addEventListener('resize', resizeCanvas);
-
-        // Mobile fallback - simple text
+        // Mobile fallback - responsive text
         if (isMobile) {
-            function drawSimpleText() {
+            function drawResponsiveText() {
                 ctx.clearRect(0, 0, canvas.width, canvas.height);
-                ctx.font = '900 48px Montserrat';
+                const fontSize = Math.min(canvas.width * 0.18, 60); // 18% of container width, max 60px
+                ctx.font = `900 ${fontSize}px Montserrat`;
                 ctx.fillStyle = 'white';
                 ctx.textAlign = 'center';
                 ctx.textBaseline = 'middle';
                 ctx.fillText('BOLSILLO', canvas.width/2, canvas.height/2);
             }
-            drawSimpleText();
-            window.addEventListener('resize', drawSimpleText);
+            drawResponsiveText();
+            window.addEventListener('resize', drawResponsiveText);
             return;
         }
-
-        // Desktop particle effect
+// Desktop particle effect
         const text = "BOLSILLO";
         const baseFontSize = 0.15;
         const fontSize = Math.min(canvas.width * baseFontSize, 120);
