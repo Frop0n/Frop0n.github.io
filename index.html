@@ -15,31 +15,47 @@
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@900&family=Poppins:wght@300;400;700&family=Rubik:wght@700&display=swap" rel="stylesheet">
 </head>
 <body class="bg-black text-white font-poppins overflow-x-hidden">
+    <custom-navbar></custom-navbar>
+    <!-- Preloader -->
+<div id="preloader" class="fixed inset-0 z-50 flex items-center justify-center bg-black">
+        <div class="preloader-text text-5xl md:text-7xl font-black tracking-tighter">
+            <span>B</span>
+            <span>O</span>
+            <span>L</span>
+            <span>S</span>
+            <span>I</span>
+            <span>L</span>
+            <span>L</span>
+            <span>O</span>
+        </div>
+    </div>
+    
     <!-- Particle Canvas Container -->
-    <div id="particle-container" class="fixed top-0 left-0 w-full h-full -z-10"></div>
+<div id="particle-container" class="fixed top-0 left-0 w-full h-full -z-10"></div>
     
     <!-- Main Content -->
     <main class="relative min-h-screen flex flex-col">
         <!-- Hero Section -->
         <section class="hero-section flex-grow flex flex-col justify-center items-center px-4 py-20 text-center">
             <div id="logo-container">
-            <div id="particle-text-container" class="relative w-full h-24 sm:h-32 md:h-48 lg:h-64 xl:h-80 flex items-center justify-center">
-<canvas id="particle-text" class="w-full h-full"></canvas>
+            <div id="particle-text-container" class="relative w-full h-48 sm:h-64 md:h-80 flex items-center justify-center">
+                <canvas id="particle-text" class="w-full h-full"></canvas>
             </div>
 </div>
-            <p class="text-xl md:text-2xl max-w-2xl mx-auto mb-12 text-center leading-relaxed">
+            <p class="text-xl md:text-2xl max-w-2xl mx-auto mb-8 text-center leading-relaxed text-white/90">
                 Conectamos personas con soluciones a través de experiencias audiovisuales impactantes
             </p>
-<a href="#contact" class="px-8 py-4 rounded-full font-bold text-lg hover:scale-105 transition-transform duration-300 backdrop-blur-md bg-white/10 border border-white/20 shadow-lg hover:shadow-xl">
-                Contáctanos
-            </a>
-</section>
-
-        <!-- Scroll Indicator -->
-        <div class="absolute bottom-10 left-1/2 transform -translate-x-1/2 animate-bounce">
-            <i data-feather="chevron-down" class="w-8 h-8 opacity-70"></i>
-        </div>
-    </main>
+            <div class="flex flex-col items-center">
+                <a href="#contact" class="px-8 py-4 rounded-full font-bold text-lg hover:scale-105 transition-transform duration-300 backdrop-blur-md bg-white/30 border border-white/30 shadow-lg hover:shadow-xl">
+                    Contáctanos
+                </a>
+                <!-- Scroll Indicator -->
+                <div class="mt-8 animate-bounce">
+                    <i data-feather="chevron-down" class="w-8 h-8 opacity-70"></i>
+                </div>
+            </div>
+        </section>
+</main>
         <!-- Services Section -->
         <section id="services" class="py-20 px-4 bg-gray-900/85 backdrop-blur-sm" style="view-timeline-name: --services;">
 <div class="max-w-6xl mx-auto">
@@ -49,11 +65,92 @@
                         Soluciones completas para potenciar tu presencia digital y audiovisual
                     </p>
                 </div>
-
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                    <!-- Production Column -->
-                    <div class="bg-gray-800/85 p-8 rounded-xl border border-gray-700/50">
-                        <div class="flex items-center gap-4 mb-6">
+                    <!-- Mobile Accordion -->
+                    <div class="md:hidden space-y-4 w-full">
+                        <div class="service-accordion">
+                            <button class="accordion-toggle w-full flex justify-between items-center px-6 py-4 rounded-xl font-bold bg-purple-500/20 text-purple-400 border border-purple-400/50 transition-all">
+                                <span>Estrategias Digitales</span>
+                                <i data-feather="chevron-down" class="transform transition-transform duration-300"></i>
+                            </button>
+                            <div class="accordion-content hidden bg-gray-800/85 p-6 rounded-b-xl border border-t-0 border-gray-700/50">
+                                <div class="space-y-6">
+                                    <div class="bg-gray-700/50 p-4 rounded-lg">
+                                        <div class="flex items-center gap-3 mb-2">
+                                            <div class="w-8 h-8 rounded-md bg-purple-500/20 flex items-center justify-center">
+                                                <i data-feather="refresh-cw" class="w-4 h-4 text-purple-400"></i>
+                                            </div>
+                                            <h4 class="text-lg font-semibold">Plan Reactivación</h4>
+                                        </div>
+                                        <p class="text-gray-300 pl-11">Manual de marca + 12 piezas mensuales + producción audiovisual + dirección creativa.</p>
+                                    </div>
+                                    
+                                    <div class="bg-gray-700/50 p-4 rounded-lg">
+                                        <div class="flex items-center gap-3 mb-2">
+                                            <div class="w-8 h-8 rounded-md bg-purple-500/20 flex items-center justify-center">
+                                                <i data-feather="trending-up" class="w-4 h-4 text-purple-400"></i>
+                                            </div>
+                                            <h4 class="text-lg font-semibold">Plan Crecimiento</h4>
+                                        </div>
+                                        <p class="text-gray-300 pl-11">Todo lo del Plan Reactivación + gestión de publicaciones + análisis de métricas.</p>
+                                    </div>
+                                    
+                                    <div class="bg-gray-700/50 p-4 rounded-lg">
+                                        <div class="flex items-center gap-3 mb-2">
+                                            <div class="w-8 h-8 rounded-md bg-purple-500/20 flex items-center justify-center">
+                                                <i data-feather="target" class="w-4 h-4 text-purple-400"></i>
+                                            </div>
+                                            <h4 class="text-lg font-semibold">Plan Estratégico</h4>
+                                        </div>
+                                        <p class="text-gray-300 pl-11">Planes anteriores + inversión publicitaria + análisis FODA + objetivos SMART.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="service-accordion">
+                            <button class="accordion-toggle w-full flex justify-between items-center px-6 py-4 rounded-xl font-bold bg-blue-500/20 text-blue-400 border border-blue-400/50 transition-all">
+                                <span>Producción Audiovisual</span>
+                                <i data-feather="chevron-down" class="transform transition-transform duration-300"></i>
+                            </button>
+                            <div class="accordion-content hidden bg-gray-800/85 p-6 rounded-b-xl border border-t-0 border-gray-700/50">
+                                <div class="space-y-6">
+                                    <div class="bg-gray-700/50 p-4 rounded-lg">
+                                        <div class="flex items-center gap-3 mb-2">
+                                            <div class="w-8 h-8 rounded-md bg-blue-500/20 flex items-center justify-center">
+                                                <i data-feather="film" class="w-4 h-4 text-blue-400"></i>
+                                            </div>
+                                            <h4 class="text-lg font-semibold">Videos Corporativos</h4>
+                                        </div>
+                                        <p class="text-gray-300 pl-11">Presentamos tu empresa con identidad visual profesional para productos y servicios.</p>
+                                    </div>
+                                    
+                                    <div class="bg-gray-700/50 p-4 rounded-lg">
+                                        <div class="flex items-center gap-3 mb-2">
+                                            <div class="w-8 h-8 rounded-md bg-blue-500/20 flex items-center justify-center">
+                                                <i data-feather="calendar" class="w-4 h-4 text-blue-400"></i>
+                                            </div>
+                                            <h4 class="text-lg font-semibold">Cobertura de Eventos</h4>
+                                        </div>
+                                        <p class="text-gray-300 pl-11">Registramos profesionalmente inauguraciones, lanzamientos y activaciones de marca.</p>
+                                    </div>
+                                    
+                                    <div class="bg-gray-700/50 p-4 rounded-lg">
+                                        <div class="flex items-center gap-3 mb-2">
+                                            <div class="w-8 h-8 rounded-md bg-blue-500/20 flex items-center justify-center">
+                                                <i data-feather="edit" class="w-4 h-4 text-blue-400"></i>
+                                            </div>
+                                            <h4 class="text-lg font-semibold">Postproducción</h4>
+                                        </div>
+                                        <p class="text-gray-300 pl-11">Edición profesional, motion graphics, corrección de color y diseño de identidad.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+<!-- Desktop Columns -->
+                    <div id="production-service" class="service-column bg-gray-800/85 p-8 rounded-xl border border-gray-700/50 hidden md:block">
+<div class="flex items-center gap-4 mb-6">
                             <div class="w-14 h-14 rounded-lg bg-blue-500/20 flex items-center justify-center">
                                 <i data-feather="video" class="w-6 h-6 text-blue-400"></i>
                             </div>
@@ -92,10 +189,9 @@
                             </div>
                         </div>
                     </div>
-
                     <!-- Marketing Column -->
-                    <div class="bg-gray-800/85 p-8 rounded-xl border border-gray-700/50">
-                        <div class="flex items-center gap-4 mb-6">
+                    <div id="marketing-service" class="service-column bg-gray-800/85 p-8 rounded-xl border border-gray-700/50 md:block hidden">
+<div class="flex items-center gap-4 mb-6">
                             <div class="w-14 h-14 rounded-lg bg-purple-500/20 flex items-center justify-center">
                                 <i data-feather="bar-chart-2" class="w-6 h-6 text-purple-400"></i>
                             </div>
@@ -138,77 +234,86 @@
             </div>
         </section>
         <!-- Team Section -->
-        <section id="team" class="py-20 px-4 bg-gray-900/85 backdrop-blur-sm" style="view-timeline-name: --team;">
-<div class="max-w-6xl mx-auto">
+        <section id="team" class="py-20 px-4 bg-gray-900/85 backdrop-blur-sm">
+            <div class="max-w-3xl mx-auto">
                 <div class="text-center mb-16">
                     <span class="text-blue-400 text-lg font-medium">Quiénes somos</span>
                     <h2 class="text-4xl md:text-5xl font-bold mt-2">Nuestro Equipo</h2>
                 </div>
 
-                <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6">
-                    <div class="bg-gray-800/50 p-6 rounded-xl border border-gray-700/50 hover:border-blue-500/30 transition-all">
-                        <div class="w-20 h-20 mx-auto rounded-full bg-blue-500/10 flex items-center justify-center mb-4">
-                            <i data-feather="film" class="text-blue-400"></i>
+                <div class="team-carousel relative">
+                    <div class="team-member bg-gray-800/50 p-8 rounded-xl border border-gray-700/50 transition-all text-center">
+                        <div class="w-32 h-32 mx-auto rounded-full bg-blue-500/10 flex items-center justify-center mb-6">
+                            <i data-feather="film" class="w-12 h-12 text-blue-400"></i>
                         </div>
-                        <h3 class="text-xl font-bold text-center">Palomo</h3>
-                        <p class="text-gray-400 text-center mt-1">Director de Postproducción</p>
+                        <h3 class="text-2xl font-bold">Francisco Palomo</h3>
+                        <p class="text-gray-400 mt-2 mb-4">Director de Postproducción</p>
+                        <div class="flex justify-center gap-4">
+                            <a href="https://instagram.com/Frop0n" target="_blank" class="social-link">
+                                <i data-feather="instagram" class="w-6 h-6 text-blue-400"></i>
+                            </a>
+                        </div>
                     </div>
-                    <div class="bg-gray-800/50 p-6 rounded-xl border border-gray-700/50 hover:border-purple-500/30 transition-all">
-                        <div class="w-20 h-20 mx-auto rounded-full bg-purple-500/10 flex items-center justify-center mb-4">
-                            <i data-feather="edit-3" class="text-purple-400"></i>
+
+                    <div class="team-nav flex justify-center mt-8 gap-4">
+                        <button class="team-prev px-4 py-2 rounded-full bg-gray-700/50 hover:bg-gray-600/50 transition">
+                            <i data-feather="chevron-left" class="w-6 h-6"></i>
+                        </button>
+                        <div class="team-dots flex gap-2 items-center">
+                            <!-- Dots will be added by JS -->
                         </div>
-                        <h3 class="text-xl font-bold text-center">Máximo</h3>
-                        <p class="text-gray-400 text-center mt-1">Guionista y Director Creativo</p>
-                    </div>
-                    <div class="bg-gray-800/50 p-6 rounded-xl border border-gray-700/50 hover:border-pink-500/30 transition-all">
-                        <div class="w-20 h-20 mx-auto rounded-full bg-pink-500/10 flex items-center justify-center mb-4">
-                            <i data-feather="mic" class="text-pink-400"></i>
-                        </div>
-                        <h3 class="text-xl font-bold text-center">Luis Mesa</h3>
-                        <p class="text-gray-400 text-center mt-1">Director de Producción</p>
-                    </div>
-                    <div class="bg-gray-800/50 p-6 rounded-xl border border-gray-700/50 hover:border-green-500/30 transition-all">
-                        <div class="w-20 h-20 mx-auto rounded-full bg-green-500/10 flex items-center justify-center mb-4">
-                            <i data-feather="briefcase" class="text-green-400"></i>
-                        </div>
-                        <h3 class="text-xl font-bold text-center">Felipe Bustos</h3>
-                        <p class="text-gray-400 text-center mt-1">Asesor Legal y Financiero</p>
-                    </div>
-                    <div class="bg-gray-800/50 p-6 rounded-xl border border-gray-700/50 hover:border-yellow-500/30 transition-all">
-                        <div class="w-20 h-20 mx-auto rounded-full bg-yellow-500/10 flex items-center justify-center mb-4">
-                            <i data-feather="dollar-sign" class="text-yellow-400"></i>
-                        </div>
-                        <h3 class="text-xl font-bold text-center">Martín Rendón</h3>
-                        <p class="text-gray-400 text-center mt-1">Director Comercial</p>
+                        <button class="team-next px-4 py-2 rounded-full bg-gray-700/50 hover:bg-gray-600/50 transition">
+                            <i data-feather="chevron-right" class="w-6 h-6"></i>
+                        </button>
                     </div>
                 </div>
             </div>
         </section>
 <!-- Contact Section -->
-        <section id="contact" class="min-h-screen py-20 px-4 bg-black/80 backdrop-blur-sm" style="view-timeline-name: --contact;">
-<div class="max-w-4xl mx-auto text-center">
-                <h2 class="text-4xl md:text-5xl font-bold mb-16">Contacto</h2>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                    <div class="contact-method bg-gradient-to-br from-gray-900 to-gray-800 p-8 rounded-xl hover:scale-105 transition-transform duration-500">
-                        <i data-feather="mail" class="w-12 h-12 mb-4 text-blue-400 mx-auto"></i>
-                        <h3 class="text-2xl font-bold mb-4">Correo Electrónico</h3>
-                        <p class="text-gray-300 mb-4">Escríbenos para consultas y cotizaciones</p>
-                        <a href="mailto:bolsillo.contactar@gmail.com" class="text-blue-400 hover:text-blue-300 font-medium">bolsillo.contactar@gmail.com</a>
-                    </div>
-                    <div class="contact-method bg-gradient-to-br from-gray-900 to-gray-800 p-8 rounded-xl hover:scale-105 transition-transform duration-500">
-                        <i data-feather="message-square" class="w-12 h-12 mb-4 text-green-400 mx-auto"></i>
+        <section id="contact" class="min-h-screen py-20 px-4 bg-gray-900/85 backdrop-blur-sm" style="view-timeline-name: --contact;">
+            <div class="max-w-6xl mx-auto">
+                <div class="text-center mb-16">
+                    <h2 class="text-4xl md:text-5xl font-bold mb-4">Contacto</h2>
+                    <p class="text-xl text-gray-300 max-w-2xl mx-auto">
+                        Conéctate con nosotros a través de nuestros canales
+                    </p>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-8 max-w-4xl mx-auto">
+                    <div class="contact-method bg-gray-800/85 p-8 rounded-xl border border-gray-700/50 hover:border-green-500/30 transition-all flex flex-col items-center text-center">
+                        <i data-feather="message-square" class="w-12 h-12 mb-4 text-green-400"></i>
                         <h3 class="text-2xl font-bold mb-4">WhatsApp</h3>
-                        <p class="text-gray-300 mb-4">Conversemos directamente</p>
+                        <p class="text-gray-300 mb-4 px-4">Conversemos directamente</p>
                         <a href="https://wa.me/56939461500" class="text-green-400 hover:text-green-300 font-medium">+56 9 3946 1500</a>
                     </div>
+                    
+                    <div class="contact-method bg-gray-800/85 p-8 rounded-xl border border-gray-700/50 hover:border-blue-500/30 transition-all flex flex-col items-center text-center">
+                        <i data-feather="mail" class="w-12 h-12 mb-4 text-blue-400"></i>
+                        <h3 class="text-2xl font-bold mb-4">Correo Electrónico</h3>
+                        <p class="text-gray-300 mb-4 px-4">Escríbenos para consultas y cotizaciones</p>
+                        <a href="mailto:bolsillo.contactar@gmail.com" class="text-blue-400 hover:text-blue-300 font-medium break-all">bolsillo.contactar@gmail.com</a>
+                    </div>
+<div class="contact-method bg-gray-800/85 p-8 rounded-xl border border-gray-700/50 hover:border-pink-500/30 transition-all flex flex-col items-center text-center">
+                        <i data-feather="instagram" class="w-12 h-12 mb-4 text-pink-400"></i>
+                        <h3 class="text-2xl font-bold mb-4">Instagram</h3>
+                        <p class="text-gray-300 mb-4 px-4">Síguenos para ver nuestro trabajo</p>
+                        <a href="https://instagram.com/bolsilloprod" target="_blank" class="text-pink-400 hover:text-pink-300 font-medium">@bolsilloprod</a>
+                    </div>
+                    
+                    <div class="contact-method bg-gray-800/85 p-8 rounded-xl border border-gray-700/50 hover:border-blue-500/30 transition-all flex flex-col items-center text-center">
+                        <i data-feather="external-link" class="w-12 h-12 mb-4 text-blue-400"></i>
+                        <h3 class="text-2xl font-bold mb-4">Behance</h3>
+                        <p class="text-gray-300 mb-4 px-4">Explora nuestros proyectos</p>
+                        <a href="https://www.behance.net/bolsilloprod" target="_blank" class="text-blue-400 hover:text-blue-300 font-medium">bolsilloprod</a>
+                    </div>
                 </div>
-                <p class="mt-16 text-gray-400 max-w-2xl mx-auto">
+                
+                <p class="mt-16 text-gray-400 max-w-2xl mx-auto text-center">
                     Atendemos empresas de toda la Región Metropolitana, con especial enfoque en emprendimientos que buscan profesionalizar su imagen digital.
                 </p>
-</div>
-        </div>
-    </section>
+            </div>
+        </section>
+    <script src="components/navbar.js"></script>
     <script src="script.js"></script>
-    <script>feather.replace();</script>
+<script>feather.replace();</script>
 </body>
 </html>
