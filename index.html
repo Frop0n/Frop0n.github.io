@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BOLSILLO | Creative Media Production</title>
+    <link rel="icon" type="image/png" href="https://huggingface.co/spaces/Frop0n/bolsillo-vortex-visualizer/resolve/main/images/LOGO_SIN_FONDO%20(1).png">
+<title>BOLSILLO | Creative Media Production</title>
     <link rel="stylesheet" href="style.css">
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
@@ -233,9 +234,13 @@
                 </div>
             </div>
         </section>
-        <!-- Team Section -->
+        <!-- Fullscreen Work Section -->
+        <section id="work">
+            <behance-carousel></behance-carousel>
+</section>
+<!-- Team Section -->
         <section id="team" class="py-20 px-4 bg-gray-900/85 backdrop-blur-sm">
-            <div class="max-w-3xl mx-auto">
+<div class="max-w-3xl mx-auto">
                 <div class="text-center mb-16">
                     <span class="text-blue-400 text-lg font-medium">Quiénes somos</span>
                     <h2 class="text-4xl md:text-5xl font-bold mt-2">Nuestro Equipo</h2>
@@ -313,7 +318,9 @@
             </div>
         </section>
     <script src="components/navbar.js"></script>
-    <script src="script.js"></script>
+    <script src="components/behance-carousel.js"></script>
+    <script src="components/mobile-behance-carousel.js"></script>
+<script src="script.js"></script>
 <script>feather.replace();</script>
 </body>
 </html>

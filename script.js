@@ -64,22 +64,24 @@ const progressBar = document.createElement('div');
                 yoyo: true,
                 repeat: 1,
                 onComplete: () => {
-                    // Flash effect
-                    gsap.to('.camera-flash', {
-                        opacity: 1,
-                        scale: 50,
-                        duration: 0.05,
-                        onComplete: () => {
-                            // White screen flash
-                            gsap.to(preloader, {
-                                backgroundColor: 'white',
-                                duration: 0.01,
+            // Flash effect
+            gsap.to('.camera-flash', {
+                opacity: 1,
+                scale: 50,
+                duration: 0.05,
+                backgroundColor: 'black',
+                onComplete: () => {
+                    // Black screen flash
+                    gsap.to(preloader, {
+                        backgroundColor: 'black',
+duration: 0.01,
                                 onComplete: () => {
                                     gsap.to(preloader, {
                                         opacity: 0,
+                                        backgroundColor: 'black',
                                         duration: 0.5,
                                         onComplete: () => {
-                                            preloader.style.display = 'none';
+preloader.style.display = 'none';
                                             document.body.style.overflow = ''; // Re-enable scrolling
                                             initParticleSystem();
 gsap.fromTo("#particle-text-container, .hero-section p, .hero-section a", 
@@ -212,8 +214,10 @@ gsap.from("a", {
             });
         });
     };
+// Initialize work items animation
 animateCards(".service-card");
-        // Team Carousel
+animateCards(".work-item");
+// Team Carousel
         const teamMembers = [
             {
                 name: "Francisco Palomo",
@@ -446,24 +450,60 @@ function initParticleText() {
         }
 // Desktop particle effect
         const text = "BOLSILLO";
-        const baseFontSize = 0.4;  /* Doubled from 0.2 to make text twice as big */
-        const fontSize = Math.min(canvas.width * (isMobile ? baseFontSize * 0.9 : baseFontSize), 320);  /* Doubled max size from 160 to 320 */
+        // Dynamic sizing based on screen dimensions and pixel density
+        const pixelRatio = window.devicePixelRatio || 1;
+        const screenArea = window.innerWidth * window.innerHeight;
+        // Dynamic font sizing based on viewport
+        const vw = Math.min(window.innerWidth, 1920); // Cap at 1920px
+        const vh = Math.min(window.innerHeight, 1080); // Cap at 1080px
+        
+        // Calculate base size using viewport units and aspect ratio
+        const aspectRatio = vw / vh;
+        let baseSize;
+        
+        if (aspectRatio > 1.8) { // Very wide screens
+            baseSize = vh * 0.3;
+        } else if (aspectRatio > 1.3) { // Standard widescreen
+            baseSize = vh * 0.25;
+        } else if (aspectRatio > 0.8) { // Square-ish
+            baseSize = vw * 0.15;
+        } else { // Tall screens
+            baseSize = vw * 0.2;
+        }
+        
+        // Apply pixel ratio scaling
+        const fontSize = Math.min(
+            baseSize * (pixelRatio > 1.5 ? 0.9 : 1),
+            vh * 0.4 // Never exceed 40% of viewport height
+        );
 const fontFamily = 'Montserrat';
         const fontWeight = '900';
-// Particle settings
-        const particleSize = isMobile ? 3 : 4; // Increased from 2.5/3 to 3/4
-        const particleSpacing = isMobile ? 4 : 5; // Increased from 3.5/4 to 4/5
-const attractionRadius = isMobile ? 50 : 100;
-        const attractionForce = isMobile ? 0.7 : 0.5;
-        const repulsionRadius = isMobile ? 30 : 50;
-        const repulsionForce = isMobile ? 1 : 0.8;
-        const friction = isMobile ? 0.2 : 0.3;
+        // Dynamic particle settings
+        // Dynamic particle sizing based on text size
+        const particleSize = Math.max(
+            2,
+            Math.min(5, fontSize * 0.03)
+        );
+        const particleSpacing = Math.max(
+            3,
+            Math.min(6, fontSize * 0.04)
+        );
+// Dynamic interaction settings
+        // Interaction parameters scaled to text size
+        const baseInteraction = fontSize * 0.5;
+        const attractionRadius = baseInteraction * 1.5;
+        const attractionForce = 0.6;
+        const repulsionRadius = baseInteraction;
+        const repulsionForce = 0.9;
+        const friction = 0.25;
 // Create particles
         let particles = [];
         
-        // Draw text to get particle positions
+        // Enhanced text rendering for high DPI
         ctx.font = `${fontWeight} ${fontSize}px ${fontFamily}`;
-        ctx.textAlign = 'center';
+        ctx.textRendering = 'optimizeLegibility';
+        ctx.imageSmoothingEnabled = true;
+ctx.textAlign = 'center';
         ctx.textBaseline = 'middle';
         
         // Get text metrics
@@ -530,9 +570,12 @@ const attractionRadius = isMobile ? 50 : 100;
         canvas.addEventListener('touchend', handlePointerEnd);
 // Animation loop
         function animate() {
+            // High DPI canvas clearing
+            ctx.save();
+            ctx.setTransform(1, 0, 0, 1, 0, 0);
             ctx.clearRect(0, 0, canvas.width, canvas.height);
-            
-            // Update particles
+            ctx.restore();
+// Update particles
             particles.forEach(p => {
                 // Calculate distance to mouse
                 if (mouse.isActive) {

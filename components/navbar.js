@@ -129,7 +129,6 @@ class CustomNavbar extends HTMLElement {
                 </svg>
               </a>
             </div>
-            <a href="https://ug.link/bolsillo" class="login-btn hidden md:block" target="_blank">Inicio de sesión</a>
 </div>
         </nav>
 `;
