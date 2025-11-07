@@ -214,9 +214,23 @@ gsap.from("a", {
             });
         });
     };
-// Initialize work items animation
-animateCards(".service-card");
-animateCards(".work-item");
+    // Initialize work items animation
+    animateCards(".service-card");
+    animateCards(".work-item");
+
+    // Scroll indicator functionality
+    const scrollIndicator = document.querySelector('.animate-bounce');
+    if (scrollIndicator) {
+        scrollIndicator.addEventListener('click', () => {
+            const servicesSection = document.getElementById('services');
+            if (servicesSection) {
+                servicesSection.scrollIntoView({ 
+                    behavior: 'smooth',
+                    block: 'start'
+                });
+            }
+        });
+    }
 // Team Carousel
         const teamMembers = [
             {

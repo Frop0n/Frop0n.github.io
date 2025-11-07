@@ -237,145 +237,51 @@ class BehanceCarousel extends HTMLElement {
         }
         @media (max-width: 768px) {
           :host {
-            height: auto;
-            min-height: 80vh;
-            width: 100%;
-            margin: 0;
-            padding: 0;
+            height: 50vh;
+            width: 95vw;
           }
           
           .carousel-container {
-            height: auto;
-            min-height: 80vh;
-            grid-template-columns: 1fr;
-            gap: 0;
-            position: relative;
+            height: 100%;
           }
-
-          .project-slide {
-            grid-template-columns: 1fr;
-            height: auto;
-            min-height: 80vh;
-            position: relative;
-          }
-
-          .project-iframe {
-            height: 60vh;
-            min-height: 400px;
-            width: 100%;
-            aspect-ratio: 16/9;
-          }
-
-          .project-info {
-            padding: 2rem;
-            height: auto;
-            min-height: 20vh;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            border-left: none;
-            border-top: 1px solid rgba(255,255,255,0.1);
-          }
-
-          .project-title {
-            font-size: 1.5rem;
+.project-info {
+            padding: 1rem;
           }
           
-          .project-description {
-            font-size: 1rem;
+          .project-title {
+            font-size: 1.25rem;
           }
-          .project-link {
-            padding: 0.75rem 1.5rem;
-            font-size: 1rem;
-            margin-top: 1rem;
-            align-self: center;
-          }
+          
           .carousel-arrow {
             width: 50px;
             height: 50px;
-            top: 50%;
-            transform: translateY(-50%);
-            background: rgba(0,0,0,0.7);
-            backdrop-filter: blur(5px);
-            border: 1px solid rgba(255,255,255,0.2);
-            z-index: 10;
-            display: flex !important;
           }
           
-          .carousel-arrow.prev {
-            left: 10px;
-          }
-          
-          .carousel-arrow.next {
-            right: 10px;
-            left: auto;
-          }
-
           .carousel-arrow::before {
-            width: 12px;
-            height: 12px;
+            width: 10px;
+            height: 10px;
             left: 18px;
           }
           
           .carousel-arrow.next::before {
             right: 18px;
-            left: auto;
           }
-
-          .carousel-nav {
-            position: absolute;
-            bottom: 20px;
-            left: 0;
-            right: 0;
-            display: flex;
-            justify-content: center;
-            gap: 10px;
-            z-index: 10;
+          
+          .project-slide.prev {
+            transform: translateX(-25%) scale(0.85);
           }
-
-          .nav-dot {
-            width: 10px;
-            height: 10px;
-            background: rgba(255,255,255,0.3);
-            border-radius: 50%;
-            cursor: pointer;
-            transition: all 0.3s ease;
-          }
-
-          .nav-dot.active {
-            background: white;
-            transform: scale(1.2);
-          }
-
-          /* Disable auto-rotate on mobile */
-          .auto-rotate {
-            display: none;
-          }
-        }
-@media (max-width: 480px) {
-          :host {
-            height: 70vh;
-          }
-
-          .project-info {
-            padding: 0.8rem;
-          }
-
-          .project-title {
-            font-size: 1.1rem;
-          }
-
-          .project-description {
-            font-size: 0.8rem;
-          }
-
-          .carousel-arrow {
-            bottom: 10px;
+          
+          .project-slide.next {
+            transform: translateX(25%) scale(0.85);
           }
         }
 </style>
       
       <div class="carousel-container">
+        <div class="carousel-arrow prev">
+          <i data-feather="chevron-left"></i>
+        </div>
+        
         ${this.projects.map((project, index) => `
           <div class="project-slide ${index === 0 ? 'active' : ''}" data-index="${index}">
             <iframe 
@@ -388,8 +294,20 @@ class BehanceCarousel extends HTMLElement {
               scrolling="no"
               style="overflow: hidden;"
             ></iframe>
+            <div class="project-info">
+              <h3 class="project-title">${project.title}</h3>
+              <p class="project-description">${project.description}</p>
+              <a href="${project.projectUrl}" target="_blank" class="project-link">
+                Ver proyecto completo
+                <i data-feather="external-link" class="ml-2"></i>
+              </a>
+            </div>
           </div>
 `).join('')}
+        
+        <div class="carousel-arrow next">
+          <i data-feather="chevron-right"></i>
+        </div>
 </div>
     `;
     
@@ -458,20 +376,16 @@ class BehanceCarousel extends HTMLElement {
     this.updateCarousel();
     this.resetAutoRotate();
   }
+
   startAutoRotate() {
-    // Always auto-rotate on mobile, only on desktop for larger screens
-    if (window.innerWidth < 768 || window.innerWidth >= 768) {
-      this.autoRotateInterval = setInterval(() => {
-        this.nextSlide();
-      }, 6000);
-    }
+    this.autoRotateInterval = setInterval(() => {
+      this.nextSlide();
+    }, 6000);
   }
-resetAutoRotate() {
+
+  resetAutoRotate() {
     clearInterval(this.autoRotateInterval);
-    // Only restart auto-rotate if on desktop
-    if (window.innerWidth >= 768) {
-      this.startAutoRotate();
-    }
+    this.startAutoRotate();
   }
 }
 
