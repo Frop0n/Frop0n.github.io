@@ -143,7 +143,7 @@ class CustomNavbar extends HTMLElement {
                 </svg>
               </a>
             </div>
-            <a href="/login.html" class="login-btn">Iniciar Sesión</a>
+            <a href="https://ug.link/bolsillo" target="_blank" class="login-btn">Iniciar Sesión</a>
 </div>
         </nav>
 `;
