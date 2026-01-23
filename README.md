@@ -46,7 +46,8 @@ Puedes encontrar más información y contactarme a través de:
 
 - Email: frop0ncontact@gmail.com
 - GitHub: [@Frop0n](https://github.com/Frop0n)
-- LinkedIn: [Tu perfil](https://www.linkedin.com/in/frop0n/)
+- LinkedIn: [@Frop0n](https://www.linkedin.com/in/frop0n/)
+- Instagram: [@Frop0n](https://www.instagram.com/frop0n/)
 
 ## 📄 Licencia
 
