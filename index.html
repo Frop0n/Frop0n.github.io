@@ -307,7 +307,7 @@ section{padding:6rem 0;}
   width:0; height:0; opacity:0;
   border:none; margin:0; padding:0;
 }
-.member-avatar img{width:100%;height:100%;object-fit:cover;object-position:center top;}
+.member-avatar img{width:100%;height:100%;object-fit:cover;object-position:center 20%;}
 .member-avatar-ph{
   width:100%;height:100%;
   display:flex;align-items:center;justify-content:center;
@@ -333,7 +333,10 @@ section{padding:6rem 0;}
   font-size:.72rem; font-weight:300;
   color:rgba(255,255,255,.55); letter-spacing:.04em;
   transition:opacity .3s ease, max-height .35s ease;
-  overflow:hidden; max-height:2rem;
+  overflow:hidden; max-height:3rem;
+  line-height:1.4;
+  white-space:normal;
+  word-break:break-word;
 }
 .member-row.open .member-role-header{
   opacity:0; max-height:0;
@@ -977,7 +980,7 @@ body.scroll-locked { overflow: hidden; }
 <section id="servicios">
   <div class="container">
     <p class="section-label reveal slide-left">Lo que hacemos</p>
-    <h2 class="section-title reveal slide-left">Nuestros servicios</h2>
+    <h2 class="section-title reveal slide-left">Algunos de nuestros trabajos</h2>
     <div class="divider reveal"></div>
     <div class="servicios-tabs-wrap">
     <div class="servicios-tabs reveal" id="serviciosTabs">
@@ -985,7 +988,7 @@ body.scroll-locked { overflow: hidden; }
       <button class="tab-btn active" data-cat="redes" data-num="01">Redes sociales</button><span class="tab-sep" aria-hidden="true"><svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg><svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg><svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg></span>
       <button class="tab-btn" data-cat="corporativo" data-num="02">Video corporativo</button><span class="tab-sep" aria-hidden="true"><svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg><svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg><svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg></span>
       <button class="tab-btn" data-cat="fotografia" data-num="03">Fotografía</button><span class="tab-sep" aria-hidden="true"><svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg><svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg><svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg></span>
-      <button class="tab-btn" data-cat="videoclips" data-num="05">Videoclips y sesiones</button>
+      <button class="tab-btn" data-cat="videoclips" data-num="04">Videoclips y sesiones</button>
     </div>
   </div><!-- end tabs-wrap -->
     <div class="servicios-grid" id="serviciosGrid">
@@ -1076,7 +1079,7 @@ body.scroll-locked { overflow: hidden; }
       </div>
 
       <!-- VIDEOCLIPS Y SESIONES — YouTube thumbnails -->
-      <div class="servicio-card" data-cat="videoclips" data-num="05">
+      <div class="servicio-card" data-cat="videoclips" data-num="04">
         <div class="servicio-card-bg"></div>
         <div class="servicio-card-num">01</div>
         <div class="photo-card">
@@ -1087,7 +1090,7 @@ body.scroll-locked { overflow: hidden; }
         </a>
         <div class="servicio-card-label"><span class="servicio-card-tag">Videoclip</span><span class="servicio-card-title">Kala Baldosa</span></div>
       </div>
-      <div class="servicio-card" data-cat="videoclips" data-num="05">
+      <div class="servicio-card" data-cat="videoclips" data-num="04">
         <div class="servicio-card-bg"></div>
         <div class="servicio-card-num">02</div>
         <div class="photo-card">
@@ -1098,7 +1101,7 @@ body.scroll-locked { overflow: hidden; }
         </a>
         <div class="servicio-card-label"><span class="servicio-card-tag">Playthrough</span><span class="servicio-card-title">Dany Barrera</span></div>
       </div>
-      <div class="servicio-card" data-cat="videoclips" data-num="05">
+      <div class="servicio-card" data-cat="videoclips" data-num="04">
         <div class="servicio-card-bg"></div>
         <div class="servicio-card-num">03</div>
         <div class="photo-card">
@@ -1109,7 +1112,7 @@ body.scroll-locked { overflow: hidden; }
         </a>
         <div class="servicio-card-label"><span class="servicio-card-tag">Postproducción de color</span><span class="servicio-card-title">Candelabro</span></div>
       </div>
-      <div class="servicio-card" data-cat="videoclips" data-num="05">
+      <div class="servicio-card" data-cat="videoclips" data-num="04">
         <div class="servicio-card-bg"></div>
         <div class="servicio-card-num">04</div>
         <div class="photo-card">
