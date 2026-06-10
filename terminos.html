@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Términos y Condiciones — Bolsillo Producciones</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@200;300;400;700&family=DM+Sans:ital,opsz,wght@0,9..40,200;0,9..40,300;0,9..40,400;1,9..40,200&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg:     #050506;
+  --glass:  rgba(255,255,255,.07);
+  --glass2: rgba(255,255,255,.12);
+  --border: rgba(255,255,255,.10);
+  --border2:rgba(255,255,255,.18);
+  --white:  #F8F8F8;
+  --mid:    rgba(255,255,255,.5);
+  --muted:  rgba(255,255,255,.28);
+  --font-h: 'Unbounded', sans-serif;
+  --font-b: 'DM Sans', sans-serif;
+  --r:      14px;
+  --r2:     20px;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  background: var(--bg);
+  color: var(--white);
+  font-family: var(--font-b);
+  font-size: 16px;
+  line-height: 1.75;
+  overflow-x: hidden;
+}
+a { color: inherit; text-decoration: none; }
+button { cursor: pointer; border: none; background: none; font-family: var(--font-b); color: inherit; }
+
+/* ── Galaxy canvas ── */
+#galaxy { position: fixed; inset: 0; z-index: 0; pointer-events: none; }
+body::after {
+  content: '';
+  position: fixed; inset: 0; z-index: 1; pointer-events: none;
+  background:
+    radial-gradient(ellipse 70% 50% at 20% 30%, rgba(255,255,255,.03) 0%, transparent 60%),
+    radial-gradient(ellipse 60% 70% at 80% 70%, rgba(255,255,255,.025) 0%, transparent 55%);
+}
+nav, main, footer { position: relative; z-index: 2; }
+
+/* ── NAV ── */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 1.2rem 2.5rem;
+  background: rgba(5,5,6,.85);
+  backdrop-filter: blur(30px);
+  border-bottom: 1px solid var(--border);
+}
+.nav-logo {
+  font-family: var(--font-h); font-size: .8rem; font-weight: 400;
+  letter-spacing: .18em; color: var(--white);
+  display: flex; align-items: center; gap: .7rem;
+}
+.nav-back {
+  font-size: .7rem; font-weight: 300; letter-spacing: .12em;
+  text-transform: uppercase; color: var(--muted);
+  display: flex; align-items: center; gap: .5rem;
+  transition: color .2s;
+}
+.nav-back:hover { color: var(--white); }
+
+/* ── MAIN CONTENT ── */
+main {
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 140px 2rem 6rem;
+}
+
+.tc-eyebrow {
+  font-family: var(--font-h); font-size: .6rem; font-weight: 300;
+  letter-spacing: .26em; text-transform: uppercase; color: var(--muted);
+  margin-bottom: 1rem;
+}
+.tc-title {
+  font-family: var(--font-h); font-size: clamp(1.8rem, 4vw, 2.8rem);
+  font-weight: 700; line-height: 1.05; letter-spacing: -.01em;
+  margin-bottom: .6rem;
+}
+.tc-divider {
+  width: 32px; height: 1px;
+  background: rgba(255,255,255,.3);
+  margin: 1.2rem 0 2rem;
+}
+.tc-intro {
+  font-size: .95rem; font-weight: 300; color: var(--mid);
+  line-height: 1.85; margin-bottom: 3rem;
+  padding: 1.2rem 1.5rem;
+  background: rgba(255,255,255,.05);
+  border: 1px solid var(--border);
+  border-radius: var(--r);
+  border-left: 3px solid rgba(255,255,255,.25);
+}
+
+/* ── Articles ── */
+.tc-article {
+  margin-bottom: 2.2rem;
+  padding-bottom: 2.2rem;
+  border-bottom: 1px solid var(--border);
+}
+.tc-article:last-child { border-bottom: none; margin-bottom: 0; }
+.tc-article-num {
+  font-family: var(--font-h); font-size: .56rem; font-weight: 300;
+  letter-spacing: .22em; text-transform: uppercase; color: var(--muted);
+  margin-bottom: .5rem;
+}
+.tc-article h2 {
+  font-family: var(--font-h); font-size: .9rem; font-weight: 500;
+  letter-spacing: .04em; color: var(--white); margin-bottom: .9rem;
+}
+.tc-article p, .tc-article li {
+  font-size: .9rem; font-weight: 300; color: var(--mid);
+  line-height: 1.85;
+}
+.tc-article ul {
+  list-style: none; margin-top: .5rem;
+  display: flex; flex-direction: column; gap: .3rem;
+}
+.tc-article ul li { padding-left: 1.2rem; position: relative; }
+.tc-article ul li::before {
+  content: '—';
+  position: absolute; left: 0;
+  color: rgba(255,255,255,.2);
+}
+.tc-article strong { font-weight: 500; color: rgba(255,255,255,.75); }
+
+/* ── FOOTER ── */
+footer {
+  border-top: 1px solid var(--border);
+  background: rgba(5,5,6,.6);
+  padding: 2.5rem 0;
+}
+.footer-inner {
+  max-width: 1100px; margin: 0 auto; padding: 0 2rem;
+  display: flex; align-items: center; justify-content: space-between;
+  flex-wrap: wrap; gap: 1rem;
+}
+.footer-brand {
+  font-family: var(--font-h); font-size: .65rem; font-weight: 300;
+  letter-spacing: .16em; color: var(--muted);
+}
+.footer-links {
+  display: flex; gap: 2rem; list-style: none;
+  font-size: .66rem; font-weight: 300; letter-spacing: .1em; text-transform: uppercase;
+}
+.footer-links a { color: var(--muted); transition: color .2s; }
+.footer-links a:hover { color: var(--white); }
+.footer-copy { font-size: .65rem; font-weight: 300; color: rgba(255,255,255,.15); }
+
+@media (max-width: 600px) {
+  nav { padding: 1rem 1.2rem; }
+  main { padding: 110px 1.2rem 5rem; }
+  .footer-inner { flex-direction: column; text-align: center; }
+  .footer-links { flex-wrap: wrap; justify-content: center; gap: .8rem; }
+}
+</style>
+</head>
+<body>
+
+<canvas id="galaxy"></canvas>
+
+<nav>
+  <div class="nav-logo">
+    <svg width="26" height="26" viewBox="0 0 28 28" fill="none">
+      <path d="M5 9.5 Q5 7 7.5 7 L20.5 7 Q23 7 23 9.5 L23 22 Q23 24.5 20.5 24.5 L7.5 24.5 Q5 24.5 5 22 Z" fill="rgba(255,255,255,.08)" stroke="rgba(255,255,255,.75)" stroke-width="1.1" stroke-linejoin="round"/>
+      <path d="M5 9.5 L23 9.5" stroke="rgba(255,255,255,.75)" stroke-width="1.1"/>
+      <path d="M10 12.5 L14 15.5 L18 12.5" stroke="rgba(255,255,255,.55)" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+      <path d="M7.5 18 L7.5 22" stroke="rgba(255,255,255,.25)" stroke-width=".9" stroke-dasharray="1.5 1.5" stroke-linecap="round"/>
+      <path d="M20.5 18 L20.5 22" stroke="rgba(255,255,255,.25)" stroke-width=".9" stroke-dasharray="1.5 1.5" stroke-linecap="round"/>
+    </svg>
+    BOLSILLO
+  </div>
+  <a href="index.html" class="nav-back">← Volver al sitio</a>
+</nav>
+
+<main>
+  <p class="tc-eyebrow">Bolsillo Producciones SPA · Providencia, Santiago</p>
+  <h1 class="tc-title">Términos y<br>Condiciones</h1>
+  <div class="tc-divider"></div>
+  <p class="tc-intro">Al contratar cualquiera de nuestros servicios, el cliente declara haber leído, entendido y aceptado las siguientes condiciones generales.</p>
+
+  <div class="tc-article">
+    <div class="tc-article-num">Artículo 01</div>
+    <h2>Reserva de fecha / sesión</h2>
+    <p>La fecha queda bloqueada al recibir el anticipo del <strong>50%</strong>. Sin este pago, la fecha permanece disponible para otros clientes.</p>
+  </div>
+
+  <div class="tc-article">
+    <div class="tc-article-num">Artículo 02</div>
+    <h2>Anticipo y forma de pago</h2>
+    <p>Anticipo del <strong>50%</strong> al confirmar la reserva. El saldo restante debe cancelarse antes o el día del servicio. El pago se realiza por transferencia bancaria a la cuenta indicada.</p>
+  </div>
+
+  <div class="tc-article">
+    <div class="tc-article-num">Artículo 03</div>
+    <h2>Reagendamiento</h2>
+    <p>El cliente puede reagendar la sesión una vez sin costo adicional, siempre que lo solicite con al menos <strong>4 días hábiles de anticipación</strong>. Reagendamientos con menos de 4 días hábiles o una segunda modificación quedan sujetos a disponibilidad y pueden implicar un cargo administrativo.</p>
+  </div>
+
+  <div class="tc-article">
+    <div class="tc-article-num">Artículo 04</div>
+    <h2>Cancelaciones por parte del cliente</h2>
+    <ul>
+      <li>Cancelación con más de 15 días de anticipación: devolución del <strong>50% del anticipo</strong>.</li>
+      <li>Cancelación con menos de 15 días: <strong>sin devolución</strong> del anticipo.</li>
+    </ul>
+  </div>
+
+  <div class="tc-article">
+    <div class="tc-article-num">Artículo 05</div>
+    <h2>Cancelaciones por fuerza mayor</h2>
+    <p>En caso de fuerza mayor (desastre natural, accidente, enfermedad grave debidamente acreditada), se reprograma la sesión sin costo o se devuelve el <strong>100% del anticipo</strong>, a elección del cliente.</p>
+  </div>
+
+  <div class="tc-article">
+    <div class="tc-article-num">Artículo 06</div>
+    <h2>Responsabilidad por fallo técnico</h2>
+    <p>Si ocurre una falla de equipo imputable a Bolsillo Producciones que impida la realización o entrega del servicio, se ofrecerá al cliente el reembolso del anticipo pagado o la reprogramación de la sesión sin costo, a elección del cliente. Bolsillo Producciones no se hace responsable por factores externos fuera de su control (cortes de luz, condiciones climáticas extremas, etc.).</p>
+  </div>
+
+  <div class="tc-article">
+    <div class="tc-article-num">Artículo 07</div>
+    <h2>Edición y estilo fotográfico</h2>
+    <p>Las imágenes se editan bajo el estilo personal del fotógrafo (color, tono, retoque). No se realizan montajes digitales ni cambios de fondo sin acuerdo previo y explícito. <strong>No se utiliza inteligencia artificial generativa</strong> en ninguna etapa del proceso de edición o retoque.</p>
+  </div>
+
+  <div class="tc-article">
+    <div class="tc-article-num">Artículo 08</div>
+    <h2>Entrega de archivos</h2>
+    <p>Las fotografías se entregan en galería digital privada de alta resolución en formato JPG, dentro de los plazos indicados en cada paquete. Los archivos RAW no se incluyen salvo contrato especial.</p>
+  </div>
+
+  <div class="tc-article">
+    <div class="tc-article-num">Artículo 09</div>
+    <h2>RAW y archivos originales</h2>
+    <p>Los archivos RAW no se entregan por defecto. Están disponibles como add-on mediante contrato especial con un costo adicional de <strong>$100.000 CLP</strong>.</p>
+  </div>
+
+  <div class="tc-article">
+    <div class="tc-article-num">Artículo 10</div>
+    <h2>Derechos de imagen</h2>
+    <p>El fotógrafo se reserva el derecho de publicar las imágenes en su portafolio y redes sociales con fines de difusión artística y comercial, salvo indicación escrita contraria del cliente antes de la sesión.</p>
+  </div>
+
+  <div class="tc-article">
+    <div class="tc-article-num">Artículo 11</div>
+    <h2>Propiedad intelectual</h2>
+    <p>Las fotografías son propiedad intelectual de Bolsillo Producciones. Los clientes reciben una licencia de uso personal o comercial según el paquete contratado. Queda prohibida la reventa o cesión de las imágenes a terceros sin autorización escrita.</p>
+  </div>
+
+  <div class="tc-article">
+    <div class="tc-article-num">Artículo 12</div>
+    <h2>Traslados</h2>
+    <p>Para servicios realizados en exteriores, los traslados dentro de un radio de <strong>25 km</strong> desde nuestro estudio en Constitución 8, Bellavista, están incluidos en el valor del servicio. Para locaciones fuera de ese radio, el costo de traslado se cotiza y acuerda con el cliente previo a la sesión.</p>
+  </div>
+
+  <div class="tc-article">
+    <div class="tc-article-num">Artículo 13</div>
+    <h2>IVA y documentos tributarios</h2>
+    <p>Todos los precios son <strong>netos (sin IVA)</strong>. Si el cliente requiere boleta o factura, se agrega el <strong>19% de IVA</strong> al valor acordado.</p>
+  </div>
+
+  <div class="tc-article">
+    <div class="tc-article-num">Artículo 14</div>
+    <h2>Validez de la cotización</h2>
+    <p>Las cotizaciones tienen validez de <strong>15 días</strong> desde su emisión. Transcurrido ese plazo, los precios pueden ser actualizados sin previo aviso.</p>
+  </div>
+</main>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-brand">BOLSILLO PRODUCCIONES SPA</div>
+    <ul class="footer-links">
+      <li><a href="index.html">Inicio</a></li>
+      <li><a href="index.html#contacto">Contacto</a></li>
+    </ul>
+    <span class="footer-copy">© 2026 Bolsillo Producciones. Todos los derechos reservados.</span>
+  </div>
+</footer>
+
+<script>
+(function() {
+  const canvas = document.getElementById('galaxy');
+  const ctx = canvas.getContext('2d');
+  let W, H, particles = [], animId;
+  function resize() { W = canvas.width = window.innerWidth; H = canvas.height = window.innerHeight; }
+  function Particle() {
+    this.reset = function() {
+      this.x = Math.random()*W; this.y = Math.random()*H;
+      this.r = Math.random()*1.1+.1; this.alpha = Math.random()*.6+.05;
+      this.speed = Math.random()*.12+.02; this.twinkle = Math.random()*Math.PI*2;
+      this.twinkleSpeed = Math.random()*.008+.002; this.drift = (Math.random()-.5)*.06;
+    };
+    this.reset();
+  }
+  function init() { resize(); particles=[]; const c=Math.min(Math.floor(W*H/3500),340); for(let i=0;i<c;i++) particles.push(new Particle()); }
+  function draw() {
+    ctx.clearRect(0,0,W,H);
+    [{x:W*.18,y:H*.28,r:Math.min(W,H)*.38,a:.022},{x:W*.82,y:H*.65,r:Math.min(W,H)*.32,a:.018}].forEach(b=>{
+      const g=ctx.createRadialGradient(b.x,b.y,0,b.x,b.y,b.r);
+      g.addColorStop(0,`rgba(255,255,255,${b.a})`); g.addColorStop(1,'rgba(255,255,255,0)');
+      ctx.fillStyle=g; ctx.beginPath(); ctx.arc(b.x,b.y,b.r,0,Math.PI*2); ctx.fill();
+    });
+    particles.forEach(p=>{
+      p.twinkle+=p.twinkleSpeed; p.y-=p.speed; p.x+=p.drift;
+      if(p.y<-2){p.y=H+2;p.x=Math.random()*W;} if(p.x<-2||p.x>W+2)p.reset();
+      const a=p.alpha*(.5+.5*Math.sin(p.twinkle));
+      ctx.beginPath(); ctx.arc(p.x,p.y,p.r,0,Math.PI*2); ctx.fillStyle=`rgba(255,255,255,${a})`; ctx.fill();
+    });
+    animId=requestAnimationFrame(draw);
+  }
+  window.addEventListener('resize',()=>{cancelAnimationFrame(animId);init();draw();});
+  init(); draw();
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Audiovisual — Bolsillo Producciones</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@200;300;700;900&family=Inter:wght@300;400&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html,body{height:100%;}
+body{background:#050506;color:#F8F8F8;font-family:'Inter',sans-serif;display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:100svh;text-align:center;padding:2rem;overflow:hidden;}
+#galaxy{position:fixed;inset:0;z-index:0;pointer-events:none;}
+.content{position:relative;z-index:1;display:flex;flex-direction:column;align-items:center;gap:1.2rem;max-width:520px;}
+.back{position:fixed;top:1.5rem;left:2rem;z-index:10;font-family:'Unbounded',sans-serif;font-size:.62rem;font-weight:300;letter-spacing:.18em;color:rgba(255,255,255,.4);text-decoration:none;transition:color .2s;display:flex;align-items:center;gap:.5rem;}
+.back:hover{color:#F8F8F8;}
+.eyebrow{font-family:'Unbounded',sans-serif;font-size:.58rem;font-weight:300;letter-spacing:.28em;text-transform:uppercase;color:rgba(255,255,255,.28);}
+h1{font-family:'Unbounded',sans-serif;font-weight:900;font-size:clamp(2.5rem,10vw,6rem);line-height:.9;letter-spacing:-.02em;}
+.sub{font-family:'Unbounded',sans-serif;font-weight:200;font-size:clamp(.9rem,2vw,1.3rem);letter-spacing:.18em;color:rgba(255,255,255,.4);font-style:italic;}
+.divider{width:40px;height:1px;background:rgba(255,255,255,.2);margin:.4rem auto;}
+p{font-size:.9rem;font-weight:300;color:rgba(255,255,255,.5);line-height:1.8;max-width:360px;}
+.pill{display:inline-flex;align-items:center;gap:.5rem;padding:.55rem 1.4rem;border-radius:40px;border:1px solid rgba(255,255,255,.15);background:rgba(255,255,255,.06);font-family:'Unbounded',sans-serif;font-size:.62rem;font-weight:300;letter-spacing:.1em;color:rgba(255,255,255,.5);margin-top:.4rem;}
+.dot-anim{display:inline-block;animation:blink 1.4s ease-in-out infinite;}
+.dot-anim:nth-child(2){animation-delay:.2s;}
+.dot-anim:nth-child(3){animation-delay:.4s;}
+@keyframes blink{0%,80%,100%{opacity:.15;}40%{opacity:1;}}
+.cta{margin-top:.5rem;display:inline-flex;align-items:center;gap:.5rem;padding:.72rem 1.8rem;background:rgba(255,255,255,.92);color:#0A0A0A;font-family:'Unbounded',sans-serif;font-size:.65rem;font-weight:500;letter-spacing:.12em;text-transform:uppercase;border-radius:40px;text-decoration:none;transition:background .2s,transform .15s;}
+.cta:hover{background:#fff;transform:translateY(-2px);}
+
+/* ═══════════════════════════════════════
+   PRELOADER
+═══════════════════════════════════════ */
+#preloader {
+  position: fixed; inset: 0; z-index: 9999;
+  background: #050506;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  gap: 2rem;
+  transition: opacity .6s ease, visibility .6s ease;
+}
+#preloader.hidden { opacity: 0; visibility: hidden; pointer-events: none; }
+.pre-wordmark {
+  font-family: 'Unbounded', sans-serif;
+  font-size: clamp(2rem, 8vw, 4.5rem);
+  font-weight: 700; letter-spacing: .05em;
+  color: #F8F8F8; line-height: 1; user-select: none;
+}
+.pre-wordmark span {
+  display: inline-block; opacity: 0;
+  transform: translateY(12px);
+  animation: preLetterIn .5s ease-out forwards;
+}
+.pre-wordmark span:nth-child(1){animation-delay:.00s}
+.pre-wordmark span:nth-child(2){animation-delay:.06s}
+.pre-wordmark span:nth-child(3){animation-delay:.12s}
+.pre-wordmark span:nth-child(4){animation-delay:.18s}
+.pre-wordmark span:nth-child(5){animation-delay:.24s}
+.pre-wordmark span:nth-child(6){animation-delay:.30s}
+.pre-wordmark span:nth-child(7){animation-delay:.36s}
+.pre-wordmark span:nth-child(8){animation-delay:.42s}
+@keyframes preLetterIn { to { opacity:1; transform:translateY(0); } }
+.pre-progress-wrap { display:flex; flex-direction:column; align-items:center; gap:.7rem; width:100%; }
+.pre-bar-track {
+  width: clamp(180px,40vw,320px); height:1px;
+  background: rgba(255,255,255,.1); border-radius:1px;
+  overflow:hidden; position:relative;
+}
+.pre-bar-fill {
+  position:absolute; left:0; top:0; bottom:0;
+  width:0%; background:#F8F8F8; border-radius:1px;
+  transition: width .25s ease-out;
+}
+.pre-bar-fill::after {
+  content:''; position:absolute; right:0; top:0; bottom:0; width:40px;
+  background: linear-gradient(to right, transparent, rgba(255,255,255,.6), transparent);
+  animation: shimmer 1s ease-in-out infinite;
+}
+@keyframes shimmer {
+  0%{opacity:0;transform:scaleX(.5)}
+  50%{opacity:1;transform:scaleX(1)}
+  100%{opacity:0;transform:scaleX(.5)}
+}
+.pre-counter {
+  font-family:'Unbounded',sans-serif; font-size:.6rem; font-weight:300;
+  letter-spacing:.28em; color:rgba(255,255,255,.3);
+  text-transform:uppercase; min-width:6ch; text-align:center;
+}
+
+</style>
+</head>
+<body>
+<div id="preloader" role="status" aria-label="Cargando sitio">
+  <div class="pre-wordmark" aria-hidden="true"><span>B</span><span>O</span><span>L</span><span>S</span><span>I</span><span>L</span><span>L</span><span>O</span></div>
+  <div class="pre-progress-wrap">
+    <div class="pre-bar-track">
+      <div class="pre-bar-fill" id="preBarFill"></div>
+    </div>
+    <div class="pre-counter" id="preCounter">0%</div>
+  </div>
+</div>
+
+<canvas id="galaxy"></canvas>
+<a href="index.html" class="back">← Volver</a>
+<div class="content">
+  <p class="eyebrow">Bolsillo Producciones</p>
+  <h1>AUDIO<br>VISUAL</h1>
+  <p class="sub">en construcción</p>
+  <div class="divider"></div>
+  <p>Estamos preparando algo grande. Nuestra área de producción audiovisual estará disponible muy pronto.</p>
+  <div class="pill">
+    Cargando<span class="dot-anim">.</span><span class="dot-anim">.</span><span class="dot-anim">.</span>
+  </div>
+  <a href="https://wa.me/56986740998" target="_blank" rel="noopener" class="cta">
+    Mientras tanto, escríbenos →
+  </a>
+</div>
+<script>
+(function(){
+  const canvas=document.getElementById('galaxy'),ctx=canvas.getContext('2d');
+  let W,H,particles=[],animId;
+  function resize(){W=canvas.width=window.innerWidth;H=canvas.height=window.innerHeight;}
+  function P(){this.reset=function(){this.x=Math.random()*W;this.y=Math.random()*H;this.r=Math.random()*1.1+.1;this.alpha=Math.random()*.5+.05;this.speed=Math.random()*.1+.02;this.twinkle=Math.random()*Math.PI*2;this.twinkleSpeed=Math.random()*.008+.002;this.drift=(Math.random()-.5)*.05;};this.reset();}
+  function init(){resize();particles=[];const c=Math.min(Math.floor(W*H/4000),260);for(let i=0;i<c;i++)particles.push(new P());}
+  function draw(){
+    ctx.clearRect(0,0,W,H);
+    particles.forEach(p=>{p.twinkle+=p.twinkleSpeed;p.y-=p.speed;p.x+=p.drift;if(p.y<-2){p.y=H+2;p.x=Math.random()*W;}if(p.x<-2||p.x>W+2)p.reset();const a=p.alpha*(.5+.5*Math.sin(p.twinkle));ctx.beginPath();ctx.arc(p.x,p.y,p.r,0,Math.PI*2);ctx.fillStyle=`rgba(255,255,255,${a})`;ctx.fill();});
+    animId=requestAnimationFrame(draw);
+  }
+  window.addEventListener('resize',()=>{cancelAnimationFrame(animId);init();draw();});
+  init();draw();
+})();
+
+/* ── Preloader ── */
+(function() {
+  var bar    = document.getElementById('preBarFill');
+  var ctr    = document.getElementById('preCounter');
+  var loader = document.getElementById('preloader');
+  if (!loader) return;
+  var n = 0;
+  var iv = setInterval(function() {
+    n = Math.min(100, n + Math.ceil(Math.random() * 8 + 3));
+    if (bar) bar.style.width = n + '%';
+    if (ctr) ctr.textContent  = n + '%';
+    if (n >= 100) {
+      clearInterval(iv);
+      setTimeout(function() {
+        loader.classList.add('hidden');
+      }, 350);
+    }
+  }, 50);
+})();
+</script>
+</body>
+</html>

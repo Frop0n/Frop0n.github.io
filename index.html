@@ -1,336 +1,1726 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bolsillo Producciones — Santiago, Chile</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@200;300;400;700;900&family=Montserrat:wght@400;500;600;700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#050506;--glass:rgba(255,255,255,.07);--glass2:rgba(255,255,255,.12);
+  --border:rgba(255,255,255,.10);--border2:rgba(255,255,255,.20);
+  --white:#F8F8F8;--mid:rgba(255,255,255,.55);--muted:rgba(255,255,255,.28);
+  --font-h:'Unbounded',sans-serif;--font-t:'Montserrat',sans-serif;--font-b:'Inter',sans-serif;
+  --r:12px;--r2:20px;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{background:var(--bg);color:var(--white);font-family:var(--font-b);font-size:16px;line-height:1.75;overflow-x:hidden;}
+img{display:block;max-width:100%;}
+a{color:inherit;text-decoration:none;}
+button{cursor:pointer;border:none;background:none;font-family:inherit;color:inherit;}
 
-    <!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-JQ53RWYRE9"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
+#galaxy{position:fixed;inset:0;z-index:0;pointer-events:none;will-change:transform;}
+/* Content isolation — ensures everything renders above the canvas on all browsers */
+#page-wrap{position:relative;z-index:1;}
+/* body::after removed — gradient baked into galaxy canvas */
+nav,section,footer,.strip,.mobile-menu{position:relative;z-index:2;}
 
-  gtag('config', 'G-JQ53RWYRE9');
-</script>
-    
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" type="image/png" href="https://huggingface.co/spaces/Frop0n/bolsillo-vortex-visualizer/resolve/main/images/LOGO_SIN_FONDO%20(1).png">
-<title>BOLSILLO | Creative Media Production</title>
-    <link rel="stylesheet" href="style.css">
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
-    <script src="https://unpkg.com/feather-icons"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/gsap@3.11.4/dist/gsap.min.js"></script>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@900&family=Poppins:wght@300;400;700&family=Rubik:wght@700&display=swap" rel="stylesheet">
+/* ── NAV ── */
+nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:1.2rem 2.5rem;transition:all .4s ease;}
+nav.scrolled{background:rgba(5,5,6,.85);backdrop-filter:blur(30px);border-bottom:1px solid var(--border);}
+.nav-logo{font-family:var(--font-h);font-size:.75rem;font-weight:400;letter-spacing:.18em;color:var(--white);display:flex;align-items:center;gap:.65rem;}
+.nav-center{display:flex;gap:2.5rem;list-style:none;font-size:.72rem;font-weight:300;letter-spacing:.14em;text-transform:uppercase;}
+.nav-center a{color:rgba(255,255,255,.7);transition:color .2s;}
+.nav-center a:hover{color:var(--white);}
+.nav-right{display:flex;align-items:center;gap:1.2rem;}
+.nav-social{display:flex;gap:.8rem;align-items:center;}
+.nav-social a{color:var(--muted);transition:color .2s;display:flex;align-items:center;}
+.nav-social a:hover{color:var(--white);}
+.nav-cta{font-size:.68rem;font-weight:500;letter-spacing:.12em;text-transform:uppercase;padding:.55rem 1.4rem;border-radius:40px;background:rgba(255,255,255,.1);border:1px solid var(--border2);color:var(--white);backdrop-filter:blur(12px);transition:background .25s;}
+.nav-cta:hover{background:rgba(255,255,255,.18);}
+.hamburger{display:none;flex-direction:column;gap:5px;padding:4px;cursor:pointer;}
+.hamburger span{display:block;width:22px;height:1.5px;background:var(--white);border-radius:2px;}
+.mobile-menu{display:none;position:fixed;inset:0;z-index:99;background:rgba(5,5,6,.97);backdrop-filter:blur(30px);flex-direction:column;align-items:center;justify-content:center;gap:2.5rem;}
+.mobile-menu.open{display:flex;}
+.mobile-menu a{font-family:var(--font-h);font-size:1.4rem;font-weight:200;letter-spacing:.1em;color:var(--white);}
+
+/* ── HERO ── */
+#hero{min-height:100svh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:120px 2rem 5rem;gap:.9rem;}
+.hero-city{font-family:var(--font-h);font-size:.62rem;font-weight:300;letter-spacing:.28em;text-transform:uppercase;color:var(--mid);}
+.hero-brand{font-family:var(--font-h);font-weight:900;font-size:clamp(4rem,14vw,11rem);line-height:.88;letter-spacing:-.02em;color:var(--white);}
+.hero-sub{font-family:var(--font-h);font-weight:200;font-size:clamp(.9rem,2.5vw,1.8rem);letter-spacing:.22em;color:var(--mid);font-style:italic;margin-top:-.2rem;}
+.hero-tagline{font-size:.88rem;font-weight:300;color:rgba(255,255,255,.52);max-width:400px;line-height:1.7;margin:.3rem auto 0;}
+.hero-divider{width:1px;height:36px;background:linear-gradient(to bottom,transparent,var(--border2),transparent);margin:.3rem auto;}
+.hero-cotiza{font-family:var(--font-t);font-weight:700;font-size:clamp(1.3rem,3vw,2rem);letter-spacing:-.01em;}
+.hero-service-btns{display:flex;gap:1rem;flex-wrap:wrap;align-items:center;justify-content:center;margin-top:.2rem;}
+.service-btn{display:inline-flex;align-items:center;gap:.65rem;padding:.85rem 2rem;border-radius:var(--r);font-family:var(--font-h);font-size:.7rem;font-weight:400;letter-spacing:.14em;text-transform:uppercase;border:1px solid var(--border2);background:rgba(255,255,255,.07);backdrop-filter:blur(16px);transition:background .25s,border-color .25s,transform .2s;}
+.service-btn:hover{transform:translateY(-2px);border-color:rgba(255,255,255,.4);background:rgba(255,255,255,.12);}
+.service-btn-or{font-family:var(--font-h);font-size:.85rem;font-weight:200;color:var(--muted);letter-spacing:.1em;}
+.hero-main-cta{display:inline-flex;align-items:center;gap:.5rem;padding:.72rem 2rem;border-radius:40px;background:rgba(255,255,255,.92);color:#0A0A0A;font-family:var(--font-h);font-size:.65rem;font-weight:500;letter-spacing:.12em;text-transform:uppercase;transition:background .2s,transform .15s;margin-top:.6rem;}
+.hero-main-cta:hover{background:#fff;transform:translateY(-2px);}
+
+/* ── STRIP ── */
+.strip{overflow:hidden;padding:.8rem 0;border-top:1px solid var(--border);border-bottom:1px solid var(--border);background:rgba(255,255,255,.02);display:flex;position:relative;z-index:2;}
+.strip-track{display:flex;flex-shrink:0;align-items:center;white-space:nowrap;animation:ticker 32s linear infinite;will-change:transform;}
+.strip-track span{font-family:var(--font-h);font-size:.68rem;font-weight:300;letter-spacing:.22em;color:rgba(255,255,255,.4);padding:0 1.8rem;}
+.strip-track span.dot{padding:0;opacity:.3;}
+@keyframes ticker{from{transform:translateX(0);}to{transform:translateX(-100%);}}
+
+/* ── SECTION BASE ── */
+section{padding:6rem 0;}
+.container{max-width:1100px;margin:0 auto;padding:0 2rem;}
+.section-label{font-family:var(--font-h);font-size:.58rem;font-weight:300;letter-spacing:.28em;text-transform:uppercase;color:rgba(255,255,255,.52);margin-bottom:.8rem;}
+.section-title{font-family:var(--font-t);font-size:clamp(1.8rem,3.5vw,3rem);font-weight:700;line-height:1.05;letter-spacing:-.01em;margin-bottom:.8rem;}
+.divider{width:32px;height:1px;background:rgba(255,255,255,.25);margin:1rem 0 2rem;}
+
+/* ── SERVICIOS ── */
+/* ── Servicios tabs — editorial index style ── */
+.servicios-tabs-wrap{
+  position: relative;
+  margin-bottom: 2.5rem;
+}
+/* Bottom border of the rail */
+.servicios-tabs{
+  display: flex;
+  gap: 0;
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid rgba(255,255,255,.1);
+  border-radius: 0;
+  width: 100%;
+  padding: 0;
+  position: relative;
+}
+/* Sliding indicator — JS sets left/width via inline style */
+.tab-indicator{
+  position: absolute;
+  bottom: -1px;            /* sit exactly on the rail border */
+  height: 2px;
+  background: var(--white);
+  border-radius: 2px;
+  transition: left .35s cubic-bezier(.4,0,.2,1),
+              width .35s cubic-bezier(.4,0,.2,1);
+  pointer-events: none;
+  z-index: 1;
+}
+.tab-btn{
+  flex: 1;
+  padding: .9rem .5rem .75rem;  /* slightly less bottom padding */
+  border-radius: 0;
+  font-family: var(--font-h);
+  font-size: .58rem;
+  font-weight: 300;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  border: none;
+  border-bottom: 2px solid transparent;
+  background: transparent;
+  color: rgba(255,255,255,.35);
+  cursor: pointer;
+  white-space: nowrap;
+  text-align: center;
+  position: relative;
+  margin-bottom: -1px;
+  user-select: none;
+  /* Text + number lift together on active */
+  transition: color .3s ease, transform .3s cubic-bezier(.4,0,.2,1);
+}
+/* Number label */
+.tab-btn::before{
+  content: attr(data-num);
+  display: block;
+  font-size: .46rem;
+  letter-spacing: .18em;
+  color: rgba(255,255,255,.18);
+  margin-bottom: .22rem;
+  transition: color .3s ease;
+}
+/* Hover — brighten */
+.tab-btn:hover{
+  color: rgba(255,255,255,.7);
+  transform: translateY(-1px);
+}
+.tab-btn:hover::before{ color: rgba(255,255,255,.4); }
+
+/* Active — lift up + bright, no individual border (indicator handles it) */
+.tab-btn.active{
+  color: var(--white);
+  font-weight: 600;
+  transform: translateY(-3px);   /* lift effect */
+  pointer-events: none;
+}
+.tab-btn.active::before{ color: rgba(255,255,255,.55); }
+
+/* ── Mobile ── */
+@media(max-width:700px){
+  .servicios-tabs-wrap{
+    margin-left: -1.2rem;
+    margin-right: -1.2rem;
+  }
+  /* Fade edges — key scroll affordance */
+  .servicios-tabs-wrap::before,
+  .servicios-tabs-wrap::after{
+    content: '';
+    position: absolute; top: 0; bottom: 1px;
+    width: 2.8rem; z-index: 2; pointer-events: none;
+  }
+  .servicios-tabs-wrap::before{
+    left: 0;
+    background: linear-gradient(to right, #050506 30%, transparent 100%);
+  }
+  .servicios-tabs-wrap::after{
+    right: 0;
+    background: linear-gradient(to left, #050506 30%, transparent 100%);
+  }
+  .servicios-tabs{
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    width: 100%;
+    padding: 0 2.8rem;
+  }
+  .servicios-tabs::-webkit-scrollbar{ display: none; }
+  .tab-btn{
+    flex: 0 0 auto;
+    padding: .85rem 1.2rem .7rem;
+    font-size: .55rem;
+  }
+  /* Lift is more subtle on mobile */
+  .tab-btn.active{ transform: translateY(-2px); }
+}
+
+
+.servicios-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;}
+
+/* Card base */
+.servicio-card{border-radius:var(--r2);border:1px solid var(--border);background:var(--glass);backdrop-filter:blur(20px);overflow:hidden;aspect-ratio:4/5;position:relative;transition:border-color .3s,transform .3s;display:none;}
+.servicio-card.active{display:block;}
+.servicio-card:hover{border-color:rgba(255,255,255,.3);transform:translateY(-4px);}
+.servicio-card-bg{position:absolute;inset:0;background:linear-gradient(160deg,rgba(255,255,255,.04) 0%,transparent 60%);}
+.servicio-card-num{position:absolute;top:1.2rem;left:1.4rem;font-family:var(--font-h);font-size:.55rem;font-weight:300;letter-spacing:.16em;color:rgba(255,255,255,.5);}
+.servicio-card-label{position:absolute;bottom:0;left:0;right:0;padding:2rem 1.4rem 1.4rem;background:linear-gradient(to top,rgba(5,5,6,.85) 0%,transparent 100%);}
+.servicio-card-title{font-family:var(--font-t);font-size:.95rem;font-weight:700;color:var(--white);line-height:1.2;}
+.servicio-card-tag{font-family:var(--font-h);font-size:.58rem;font-weight:300;letter-spacing:.12em;color:rgba(255,255,255,.65);display:block;margin-bottom:.4rem;}
+.client-card{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;}
+.client-placeholder{font-family:var(--font-h);font-size:.65rem;font-weight:300;color:rgba(255,255,255,.15);letter-spacing:.1em;text-align:center;line-height:1.8;}
+
+/* Video embed card */
+.video-card{position:absolute;inset:0;}
+.video-card iframe{width:100%;height:100%;border:none;pointer-events:none;}
+.video-card-overlay{position:absolute;inset:0;display:flex;align-items:flex-end;cursor:pointer;}
+.video-card-overlay:hover .play-circle{background:rgba(255,255,255,.28);}
+.play-circle{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:48px;height:48px;border-radius:50%;background:rgba(255,255,255,.18);border:1px solid rgba(255,255,255,.3);display:flex;align-items:center;justify-content:center;backdrop-filter:blur(8px);transition:background .25s;}
+
+/* IG Reel card */
+.reel-card{position:absolute;inset:0;overflow:hidden;}
+.reel-card iframe{width:100%;height:100%;border:none;transform:scale(1.01);}
+.reel-fallback{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.6rem;background:rgba(10,10,10,.7);}
+.reel-fallback a{display:inline-flex;align-items:center;gap:.4rem;padding:.55rem 1.2rem;border-radius:40px;background:rgba(255,255,255,.1);border:1px solid var(--border2);font-family:var(--font-h);font-size:.6rem;letter-spacing:.1em;color:var(--white);transition:background .2s;}
+.reel-fallback a:hover{background:rgba(255,255,255,.2);}
+.reel-label{font-family:var(--font-h);font-size:.55rem;letter-spacing:.14em;color:var(--muted);text-align:center;}
+
+/* Photo card */
+.photo-card{position:absolute;inset:0;}
+.photo-card img{width:100%;height:100%;object-fit:cover;object-position:center top;}
+
+
+/* ── SAM Carousel ── */
+.sam-carousel{border-radius:20px;border:1px solid rgba(255,255,255,.1);aspect-ratio:4/3;position:relative;overflow:hidden;background:#0a0a0b;width:100%;}
+.sam-carousel>img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center;display:block;}
+.sam-controls{position:absolute;bottom:.9rem;left:0;right:0;display:flex;align-items:center;justify-content:center;gap:.8rem;z-index:2;}
+.sam-arrow{width:32px;height:32px;border-radius:50%;background:rgba(5,5,6,.65);border:1px solid rgba(255,255,255,.25);color:#F8F8F8;display:flex;align-items:center;justify-content:center;cursor:pointer;backdrop-filter:blur(8px);transition:background .2s;}
+.sam-arrow:hover{background:rgba(255,255,255,.18);}
+.sam-dots{display:flex;gap:.4rem;align-items:center;}
+.sam-dot{width:6px;height:6px;border-radius:50%;background:rgba(255,255,255,.3);cursor:pointer;border:none;padding:0;transition:background .25s,transform .25s;}
+.sam-dot.active{background:#F8F8F8;transform:scale(1.4);}
+
+/* ── LOGRO ── */
+.logro-grid{display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:center;}
+.logro-img-wrap{border-radius:var(--r2);overflow:hidden;border:1px solid var(--border);aspect-ratio:16/10;position:relative;display:block;cursor:pointer;}
+.logro-img-wrap img{width:100%;height:100%;object-fit:cover;transition:transform .5s ease;}
+.logro-img-wrap:hover img{transform:scale(1.04);}
+.logro-text p{font-size:.92rem;font-weight:300;color:rgba(255,255,255,.76);line-height:1.85;margin-bottom:1.2rem;}
+
+/* ── MISION ── */
+.mv-grid{display:grid;grid-template-columns:1fr 1fr;border-radius:var(--r2);overflow:hidden;border:1px solid var(--border);}
+.mv-card{background:var(--glass);backdrop-filter:blur(20px);padding:3.5rem 3rem;}
+.mv-card h2{font-family:var(--font-h);font-size:clamp(1.6rem,2.5vw,2.4rem);font-weight:700;margin-bottom:1.5rem;}
+.mv-card p{font-size:.9rem;font-weight:300;color:rgba(255,255,255,.75);line-height:1.85;margin-bottom:1rem;}
+
+/* ── EQUIPO ── */
+.equipo-tabs{display:flex;gap:.5rem;margin-bottom:1.5rem;}
+.equipo-list{display:none;}
+.equipo-list.active{display:block;}
+
+/* ─ Closed state row ─ */
+.member-row{
+  border-radius:var(--r2);
+  border:1px solid var(--border);
+  background:rgba(255,255,255,.05);
+  backdrop-filter:blur(18px);
+  margin-bottom:6px;
+  overflow:hidden;
+  transition:border-color .4s ease, background .4s ease;
+  cursor:pointer;
+}
+.member-row:not(.open):hover{
+  border-color:rgba(255,255,255,.25);
+  background:rgba(255,255,255,.08);
+}
+.member-row.open{
+  border-color:rgba(255,255,255,.18);
+  background:rgba(255,255,255,.04);
+  cursor:default;
+}
+
+/* Header — shown in BOTH states, but transforms */
+.member-header{
+  display:flex;align-items:center;gap:1.1rem;
+  padding:1rem 1.4rem;
+  cursor:pointer;
+  user-select:none;
+  transition:padding .4s ease;
+}
+.member-row.open .member-header{
+  padding:.7rem 1.4rem;
+  border-bottom:1px solid var(--border);
+  cursor:default;
+}
+
+/* Avatar — circular when closed, hidden when open (photo takes over) */
+.member-avatar{
+  width:56px; height:56px;
+  border-radius:50%;
+  overflow:hidden; flex-shrink:0;
+  border:1px solid rgba(255,255,255,.2);
+  background:rgba(255,255,255,.06);
+  transition:width .45s cubic-bezier(.4,0,.2,1),
+             height .45s cubic-bezier(.4,0,.2,1),
+             border-radius .45s cubic-bezier(.4,0,.2,1),
+             opacity .3s ease,
+             margin .45s ease;
+}
+.member-row.open .member-avatar{
+  width:0; height:0; opacity:0;
+  border:none; margin:0; padding:0;
+}
+.member-avatar img{width:100%;height:100%;object-fit:cover;object-position:center top;}
+.member-avatar-ph{
+  width:100%;height:100%;
+  display:flex;align-items:center;justify-content:center;
+  font-family:var(--font-h);font-size:.88rem;color:rgba(255,255,255,.3);
+}
+
+/* Name + role in header */
+.member-header-text{ flex:1; min-width:0; }
+.member-name{
+  font-family:var(--font-t);
+  font-size:.95rem; font-weight:700;
+  color:#F8F8F8; line-height:1.2;
+  transition:font-size .35s ease, opacity .35s ease;
+}
+/* When open, header collapses — hide name and role */
+.member-row.open .member-name{
+  opacity:0;
+  max-height:0;
+  overflow:hidden;
+  margin:0;
+}
+.member-role-header{
+  font-size:.72rem; font-weight:300;
+  color:rgba(255,255,255,.55); letter-spacing:.04em;
+  transition:opacity .3s ease, max-height .35s ease;
+  overflow:hidden; max-height:2rem;
+}
+.member-row.open .member-role-header{
+  opacity:0; max-height:0;
+}
+.member-toggle{
+  width:26px; height:26px; border-radius:50%;
+  border:1px solid rgba(255,255,255,.2);
+  display:flex;align-items:center;justify-content:center;
+  color:rgba(255,255,255,.55); font-size:.8rem; flex-shrink:0;
+  transition:transform .45s cubic-bezier(.4,0,.2,1), border-color .25s, color .25s;
+}
+.member-row.open .member-toggle{
+  transform:rotate(45deg);
+  border-color:rgba(255,255,255,.35);
+  color:rgba(255,255,255,.75);
+}
+
+/* ─ Animated body ─ */
+.member-body{
+  display:grid;
+  grid-template-rows:0fr;
+  transition:grid-template-rows .5s cubic-bezier(.4,0,.2,1);
+}
+.member-row.open .member-body{ grid-template-rows:1fr; }
+.member-body-inner{ min-height:0; overflow:hidden; }
+
+/* ─ Expanded panel: photo left (portrait) + info right ─ */
+.member-card{
+  display:flex;
+  flex-direction:row;
+  overflow:hidden;
+  border-radius: inherit;
+}
+
+/* Photo column */
+.member-photo-col{
+  position:relative;
+  overflow:hidden;
+  background:rgba(255,255,255,.04);
+  width:260px;
+  min-width:260px;
+  max-width:260px;
+  align-self:stretch;
+  cursor:pointer;
+  flex-shrink:0;
+}
+.member-photo-col::after {
+  content: '⤢';
+  position: absolute; bottom: .6rem; right: .7rem;
+  font-size: .8rem; color: rgba(255,255,255,.5);
+  background: rgba(0,0,0,.35);
+  border-radius: 6px; padding: .15rem .4rem;
+  pointer-events: none;
+  opacity: 0; transition: opacity .2s;
+  z-index: 1;
+}
+.member-row.open .member-photo-col:hover::after { opacity: 1; }
+.member-photo-col img{
+  position: absolute;
+  inset: 0;
+  width:100%; height:100%;
+  object-fit:cover;
+  object-position: center 10%;
+  display:block;
+  opacity:0;
+  will-change: opacity;
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  transition: opacity .5s .15s ease;
+}
+.member-row.open .member-photo-col img{
+  opacity:1;
+}
+/* Per-member photo position fine-tuning */
+.member-martin .member-photo-col img  { object-position: center 5%; }
+.member-photo-ph{
+  width:100%;height:100%;min-height:300px;
+  display:flex;align-items:center;justify-content:center;
+  font-family:var(--font-h);font-size:5rem;font-weight:300;
+  color:rgba(255,255,255,.08);
+  opacity:0;
+  transition:opacity .5s .1s ease;
+}
+.member-row.open .member-photo-ph{ opacity:1; }
+
+/* Info column */
+.member-info-col{
+  padding:1.8rem 2rem;
+  display:flex; flex-direction:column; gap:.9rem;
+  opacity:0;
+  transform:translateY(10px);
+  transition:opacity .5s .18s ease, transform .5s .18s ease;
+}
+.member-row.open .member-info-col{
+  opacity:1; transform:translateY(0);
+}
+/* Name in info col */
+/* Name row — name + founder badge + IG */
+.member-info-name-row{
+  display:flex;
+  align-items:center;
+  flex-wrap:wrap;
+  gap:.5rem;
+  margin-bottom:-.3rem;
+}
+.member-info-name{
+  font-family:var(--font-h);
+  font-size:clamp(1.15rem, 2.2vw, 1.6rem);
+  font-weight:700;
+  color:var(--white);
+  line-height:1.1;
+  letter-spacing:.01em;
+}
+/* IG link pill */
+.member-ig-link{
+  display:inline-flex;
+  align-items:center;
+  gap:.35rem;
+  padding:.22rem .7rem;
+  border-radius:40px;
+  border:1px solid rgba(255,255,255,.14);
+  font-family:var(--font-h);
+  font-size:.52rem;
+  font-weight:300;
+  letter-spacing:.08em;
+  color:rgba(255,255,255,.45);
+  transition:border-color .2s, color .2s, background .2s;
+}
+.member-ig-link:hover{
+  border-color:rgba(255,255,255,.35);
+  color:rgba(255,255,255,.8);
+  background:rgba(255,255,255,.05);
+}
+.member-info-role{
+  font-family:var(--font-h);
+  font-size:.58rem; font-weight:300;
+  letter-spacing:.2em; text-transform:uppercase;
+  color:rgba(255,255,255,.55);
+  padding-bottom:.9rem;
+  border-bottom:1px solid rgba(255,255,255,.12);
+}
+.member-info-bio{
+  font-size:.9rem; font-weight:300;
+  color:rgba(255,255,255,.78);
+  line-height:1.9;
+}
+
+/* Skills / Interests blocks */
+.member-info-section{
+  display:flex; flex-direction:column; gap:.5rem;
+}
+.member-info-section-label{
+  font-family:var(--font-h);
+  font-size:.52rem; font-weight:400;
+  letter-spacing:.2em; text-transform:uppercase;
+  color:rgba(255,255,255,.45);
+}
+.member-tag-row{
+  display:flex; flex-wrap:wrap; gap:.35rem;
+}
+
+/* Tags */
+.member-tag{
+  padding:.3rem .9rem;
+  border-radius:40px;
+  border:1px solid rgba(255,255,255,.16);
+  background:rgba(255,255,255,.05);
+  font-family:var(--font-h);
+  font-size:.56rem; font-weight:300;
+  letter-spacing:.09em; text-transform:uppercase;
+  color:rgba(255,255,255,.58);
+  transition:border-color .2s, color .2s;
+}
+.member-tag:hover{
+  border-color:rgba(255,255,255,.32);
+  color:rgba(255,255,255,.82);
+}
+/* Founder tag — warm accent */
+.member-tag-founder{
+  border-color:rgba(210,175,120,.35);
+  color:rgba(210,175,120,.8);
+  background:rgba(210,175,120,.06);
+}
+.member-tag-founder:hover{
+  border-color:rgba(210,175,120,.6);
+  color:rgba(210,175,120,1);
+}
+
+/* Bottom tags area */
+.member-info-bottom{
+  display:flex; flex-direction:column; gap:1rem;
+  margin-top:auto; padding-top:.8rem;
+  border-top:1px solid var(--border);
+}
+
+@media(max-width:700px){
+  .member-card{
+    flex-direction: column;
+  }
+
+  .member-photo-col{
+    width: 100% !important;
+    min-width: 0 !important;
+    max-width: 100% !important;
+    min-height: 0 !important;
+    height: auto;
+    background: transparent;
+    display: flex;
+    justify-content: center;
+    padding: 1.6rem 1.6rem .8rem;
+    position: static;
+  }
+  .member-photo-col img{
+    position: static;
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    object-fit: cover;
+    object-position: center center;
+    border: 2px solid rgba(255,255,255,.2);
+    flex-shrink: 0;
+    opacity: 0;
+    transition: opacity .5s .15s ease;
+  }
+  .member-row.open .member-photo-col img{
+    opacity: 1;
+  }
+  .member-photo-ph{
+    width: 110px; height: 110px;
+    min-height: 0;
+    border-radius: 50%;
+    font-size: 2.5rem;
+    border: 2px solid rgba(255,255,255,.1);
+  }
+
+  .member-info-col{
+    padding: .4rem 1.4rem 1.4rem;
+    gap: .9rem;
+    text-align: center;
+    align-items: center;
+  }
+  .member-info-name-row{
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: .4rem;
+  }
+  .member-info-role{ text-align: center; }
+  .member-info-bio{ text-align: left; }
+  .member-tag-row{ justify-content: center; }
+  .member-info-name{ font-size: 1.05rem; }
+}
+@media(max-width:480px){
+  .member-photo-col img{ width:95px; height:95px; }
+  .member-photo-ph{ width:95px; height:95px; }
+  .member-info-col{ padding:.3rem 1.1rem 1.2rem; }
+}
+
+/* ── REDES SOCIALES (Behold) ── */
+#redes{background:transparent;padding:5rem 0;}
+.behold-wrap{border-radius:var(--r2);overflow:hidden;border:1px solid var(--border);}
+
+/* ── CTA BOX ── */
+.cta-box{border-radius:var(--r2);border:1px solid var(--border);background:var(--glass);backdrop-filter:blur(24px);padding:4rem 3rem;text-align:center;position:relative;overflow:hidden;}
+.cta-box::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 80% 120% at 50% 0%,rgba(255,255,255,.04) 0%,transparent 60%);pointer-events:none;}
+.cta-box h2{font-family:var(--font-h);font-size:clamp(1.3rem,2.5vw,2rem);font-weight:700;margin-bottom:.8rem;}
+.cta-box p{font-size:.9rem;font-weight:300;color:rgba(255,255,255,.72);margin-bottom:2rem;line-height:1.8;}
+.cta-actions{display:flex;gap:.8rem;justify-content:center;flex-wrap:wrap;}
+
+/* ── CONTACT FORM (Te tincó) ── */
+#contacto{background:transparent;padding:4rem 0 6rem;}
+.contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:start;}
+.contact-info p{color:rgba(255,255,255,.62);font-size:.88rem;font-weight:300;line-height:1.9;margin-bottom:1.5rem;}
+.contact-detail{display:flex;flex-direction:column;gap:.8rem;}
+.contact-row{display:flex;align-items:center;gap:.8rem;font-size:.82rem;font-weight:300;color:rgba(255,255,255,.65);}
+.contact-row .icon{opacity:.7;width:18px;text-align:center;display:flex;align-items:center;color:var(--white);flex-shrink:0;}
+.contact-row a{color:rgba(255,255,255,.6);transition:color .2s;}
+.contact-row a:hover{color:var(--white);}
+.contact-form{display:flex;flex-direction:column;gap:.8rem;}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:.8rem;}
+.form-group{display:flex;flex-direction:column;gap:.35rem;}
+.form-label{font-family:var(--font-h);font-size:.58rem;font-weight:300;letter-spacing:.16em;text-transform:uppercase;color:rgba(255,255,255,.45);}
+.form-input,.form-select,.form-textarea{background:var(--glass);backdrop-filter:blur(16px);border:1px solid var(--border);border-radius:var(--r);padding:.8rem 1rem;color:var(--white);font-family:var(--font-b);font-size:.86rem;font-weight:300;transition:border-color .2s;width:100%;}
+.form-input::placeholder{color:rgba(255,255,255,.32);}
+.form-input:focus,.form-select:focus,.form-textarea:focus{outline:none;border-color:rgba(255,255,255,.5);}
+.form-select option{background:#111;color:var(--white);}
+.form-textarea{resize:vertical;min-height:100px;}
+.form-submit{align-self:flex-start;padding:.85rem 2.4rem;background:rgba(255,255,255,.92);color:#0A0A0A;font-family:var(--font-h);font-size:.68rem;font-weight:400;letter-spacing:.14em;text-transform:uppercase;border-radius:40px;border:none;cursor:pointer;transition:background .2s,transform .15s;}
+.form-submit:hover{background:#fff;transform:translateY(-2px);}
+
+/* ── BUTTONS ── */
+.btn-primary{display:inline-flex;align-items:center;gap:.5rem;padding:.78rem 2rem;background:rgba(255,255,255,.92);color:#0A0A0A;font-family:var(--font-h);font-size:.65rem;font-weight:500;letter-spacing:.12em;text-transform:uppercase;border-radius:40px;border:none;cursor:pointer;transition:background .2s,transform .15s;}
+.btn-primary:hover{background:#fff;transform:translateY(-2px);}
+.btn-outline{display:inline-flex;align-items:center;gap:.5rem;padding:.78rem 2rem;background:transparent;color:var(--white);font-family:var(--font-h);font-size:.65rem;font-weight:300;letter-spacing:.12em;text-transform:uppercase;border-radius:40px;border:1px solid var(--border2);transition:background .2s,border-color .2s;}
+.btn-outline:hover{background:rgba(255,255,255,.08);border-color:rgba(255,255,255,.5);}
+
+/* ── FOOTER ── */
+footer{padding:2.5rem 0;border-top:1px solid var(--border);background:rgba(5,5,6,.6);}
+.footer-inner{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1rem;}
+.footer-brand{font-family:var(--font-h);font-size:.62rem;font-weight:300;letter-spacing:.16em;color:var(--muted);}
+.footer-links{display:flex;gap:2rem;list-style:none;font-size:.66rem;font-weight:300;letter-spacing:.1em;text-transform:uppercase;}
+.footer-links a{color:rgba(255,255,255,.45);transition:color .2s;}
+.footer-links a:hover{color:var(--white);}
+.footer-copy{font-size:.62rem;font-weight:300;color:rgba(255,255,255,.35);text-align:right;}
+
+/* ── ANIMATIONS ── */
+/* Reveal animations — always defined so JS can toggle them */
+/* Reveal animations — elements VISIBLE by default.
+   JS adds .js-animate to body to opt-in to animations.
+   If JS fails or is slow, content is always visible. */
+.js-animate .reveal{opacity:0;transform:translateY(20px);transition:opacity .6s ease-out,transform .6s ease-out;}
+.js-animate .reveal.in{opacity:1;transform:none;}
+.js-animate .slide-left{opacity:0;transform:translateX(-24px);transition:opacity .55s ease-out,transform .55s ease-out;}
+.js-animate .slide-left.in{opacity:1;transform:none;}
+.js-animate .slide-right{opacity:0;transform:translateX(24px);transition:opacity .55s ease-out,transform .55s ease-out;}
+.js-animate .slide-right.in{opacity:1;transform:none;}
+@media(prefers-reduced-motion:reduce){
+  .js-animate .reveal,
+  .js-animate .slide-left,
+  .js-animate .slide-right{opacity:1!important;transform:none!important;transition:none!important;}
+}
+
+/* ── RESPONSIVE ── */
+@media(max-width:900px){
+  nav{padding:1rem 1.5rem;}
+  .nav-center,.nav-right{display:none;}
+  .hamburger{display:flex;}
+  .logro-grid{grid-template-columns:1fr;gap:3rem;}
+  .mv-grid{grid-template-columns:1fr;}
+  .servicios-grid{grid-template-columns:repeat(2,1fr);}
+  .contact-grid{grid-template-columns:1fr;gap:3rem;}
+  .form-row{grid-template-columns:1fr;}
+}
+@media(max-width:600px){
+  section{padding:4rem 0;}
+  .container{padding:0 1.2rem;}
+  .hero-brand{font-size:clamp(3rem,15vw,5rem);}
+  .hero-service-btns{flex-direction:column;align-items:center;}
+  .service-btn{width:100%;max-width:280px;justify-content:center;}
+  .servicios-grid{grid-template-columns:1fr;}
+  .mv-card{padding:2.5rem 1.5rem;}
+  .cta-box{padding:2.5rem 1.5rem;}
+  .cta-actions{flex-direction:column;align-items:center;}
+  .footer-inner{flex-direction:column;text-align:center;gap:1.5rem;}
+  .footer-links{flex-wrap:wrap;justify-content:center;}
+  .footer-copy{text-align:center;}
+}
+
+/* ── Clientes — logo strip ── */
+#clientes {
+  background: transparent;
+  border-top: none;
+  border-bottom: none;
+  position: relative;
+  overflow: hidden;
+}
+#clientes .container { position: relative; z-index: 1; }
+.clients-strip {
+  padding: 2rem 0;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 1.8rem 3rem;
+}
+.client-logo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform .25s cubic-bezier(.34,1.56,.64,1);
+}
+.client-logo:hover,
+.client-logo:active { transform: scale(1.18); }
+.client-logo img {
+  height: 73px;
+  width: auto;
+  max-width: 224px;
+  object-fit: contain;
+  display: block;
+}
+}
+/* Size overrides */
+.client-logo.cl-md img        { height: 110px; max-width: 280px; }
+.client-logo.cl-big img       { height: 132px; max-width: 280px; }
+.client-logo.cl-paparolla img { height: 164px; max-width: 280px; }
+.client-logo.cl-sm img        { height: 62px;  max-width: 182px; }
+.client-logo.cl-lg img        { height: 56px;  max-width: 308px; }
+.client-logo.cl-xl img        { height: 45px;  max-width: 392px; }
+
+@media (max-width: 600px) {
+  .client-logo img       { height: 44px; max-width: 130px; }
+  .client-logo.cl-md img { height: 54px; max-width: 150px; }
+  .client-logo.cl-sm img { height: 38px; max-width: 110px; }
+  .client-logo.cl-lg img { height: 34px; max-width: 180px; }
+  .client-logo.cl-xl img { height: 28px; max-width: 230px; }
+  .clients-strip { gap: 1.4rem 2rem; padding: 1.4rem 1.2rem; }
+}
+
+.client-pill-invite {
+  padding: .5rem 1.4rem; border-radius: 40px;
+  background: rgba(255,255,255,.1); border: 1px dashed rgba(255,255,255,.35);
+  font-size: .72rem; font-weight: 500; letter-spacing: .1em; text-transform: uppercase;
+  color: rgba(255,255,255,.6); font-style: italic;
+  transition: border-color .2s, color .2s, background .2s;
+  align-self: center; white-space: nowrap;
+}
+.client-pill-invite:hover { border-color: rgba(255,255,255,.6); color: rgba(255,255,255,.9); background: rgba(255,255,255,.15); }
+
+
+/* ═══════════════════════════════════════
+   PRELOADER
+═══════════════════════════════════════ */
+#preloader {
+  position: fixed; inset: 0; z-index: 9999;
+  background: #050506;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  gap: 2rem;
+  transition: opacity .6s ease, visibility .6s ease;
+}
+#preloader.hidden { opacity: 0; visibility: hidden; pointer-events: none; }
+.pre-wordmark {
+  font-family: 'Unbounded', sans-serif;
+  font-size: clamp(2rem, 8vw, 4.5rem);
+  font-weight: 700; letter-spacing: .05em;
+  color: #F8F8F8; line-height: 1; user-select: none;
+}
+.pre-wordmark span {
+  display: inline-block; opacity: 0;
+  transform: translateY(12px);
+  animation: preLetterIn .5s ease-out forwards;
+}
+.pre-wordmark span:nth-child(1){animation-delay:.00s}
+.pre-wordmark span:nth-child(2){animation-delay:.06s}
+.pre-wordmark span:nth-child(3){animation-delay:.12s}
+.pre-wordmark span:nth-child(4){animation-delay:.18s}
+.pre-wordmark span:nth-child(5){animation-delay:.24s}
+.pre-wordmark span:nth-child(6){animation-delay:.30s}
+.pre-wordmark span:nth-child(7){animation-delay:.36s}
+.pre-wordmark span:nth-child(8){animation-delay:.42s}
+@keyframes preLetterIn { to { opacity:1; transform:translateY(0); } }
+.pre-progress-wrap { display:flex; flex-direction:column; align-items:center; gap:.7rem; width:100%; }
+.pre-bar-track {
+  width: clamp(180px,40vw,320px); height:1px;
+  background: rgba(255,255,255,.1); border-radius:1px;
+  overflow:hidden; position:relative;
+}
+.pre-bar-fill {
+  position:absolute; left:0; top:0; bottom:0;
+  width:0%; background:#F8F8F8; border-radius:1px;
+  transition: width .25s ease-out;
+}
+.pre-bar-fill::after {
+  content:''; position:absolute; right:0; top:0; bottom:0; width:40px;
+  background: linear-gradient(to right, transparent, rgba(255,255,255,.6), transparent);
+  animation: shimmer 1s ease-in-out infinite;
+}
+@keyframes shimmer {
+  0%{opacity:0;transform:scaleX(.5)}
+  50%{opacity:1;transform:scaleX(1)}
+  100%{opacity:0;transform:scaleX(.5)}
+}
+.pre-counter {
+  font-family:'Unbounded',sans-serif; font-size:.6rem; font-weight:300;
+  letter-spacing:.28em; color:rgba(255,255,255,.3);
+  text-transform:uppercase; min-width:6ch; text-align:center;
+}
+
+
+/* ── Nav confirm modal ── */
+.nav-modal-overlay{display:none;position:fixed;inset:0;z-index:800;background:rgba(5,5,6,.9);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);align-items:center;justify-content:center;padding:1.5rem;}
+.nav-modal-overlay.open{display:flex;}
+.nav-modal-box{background:#111112;border:1px solid rgba(255,255,255,.18);border-radius:20px;padding:2.4rem 2rem;max-width:420px;width:100%;}
+.nav-modal-box h3{font-family:'Unbounded',sans-serif;font-size:.95rem;font-weight:600;color:#F8F8F8;margin-bottom:.7rem;line-height:1.4;}
+.nav-modal-box p{font-size:.88rem;font-weight:300;color:rgba(255,255,255,.6);line-height:1.75;margin-bottom:1.6rem;}
+.nav-modal-actions{display:flex;gap:.7rem;}
+.nav-modal-confirm{flex:1;padding:.75rem 1rem;background:rgba(255,255,255,.92);color:#0A0A0A;font-family:'Unbounded',sans-serif;font-size:.65rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;border-radius:40px;border:none;cursor:pointer;transition:background .2s;}
+.nav-modal-confirm:hover{background:#fff;}
+.nav-modal-cancel{padding:.75rem 1.2rem;background:transparent;color:rgba(255,255,255,.45);font-family:'Unbounded',sans-serif;font-size:.65rem;font-weight:300;letter-spacing:.1em;text-transform:uppercase;border:1px solid rgba(255,255,255,.15);border-radius:40px;cursor:pointer;transition:color .2s,border-color .2s;}
+.nav-modal-cancel:hover{color:#F8F8F8;border-color:rgba(255,255,255,.35);}
+
+
+/* ── Lightbox ── */
+#lightbox{display:none;position:fixed;inset:0;z-index:900;background:rgba(5,5,6,.95);backdrop-filter:blur(16px);align-items:center;justify-content:center;padding:1.5rem;cursor:zoom-out;}
+#lightbox.open{display:flex;}
+#lightbox img{max-width:92vw;max-height:88vh;object-fit:contain;border-radius:12px;box-shadow:0 24px 80px rgba(0,0,0,.7);cursor:default;}
+#lightbox-close{position:fixed;top:1.2rem;right:1.4rem;width:38px;height:38px;border-radius:50%;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);color:#F8F8F8;font-size:1.1rem;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:background .2s;}
+#lightbox-close:hover{background:rgba(255,255,255,.2);}
+body.scroll-locked { overflow: hidden; }
+#samImg{cursor:zoom-in;}
+
+
+
+
+/* ── Tab separator chevrons ── */
+.tab-sep {
+  display: flex;
+  align-items: center;
+  align-self: center;
+  color: rgba(255,255,255,.18);
+  flex-shrink: 0;
+  padding-bottom: 2px; /* align with text baseline */
+  pointer-events: none;
+  transition: color .3s ease;
+}
+/* Brighten the separator that follows the active tab */
+.tab-btn.active + .tab-sep {
+  color: rgba(255,255,255,.45);
+  animation: sepPulse 1.8s ease-in-out infinite;
+}
+@keyframes sepPulse {
+  0%, 100% { color: rgba(255,255,255,.3);  transform: translateX(0); }
+  50%       { color: rgba(255,255,255,.65); transform: translateX(2px); }
+}
+@media(max-width:700px) {
+  .tab-sep { padding: 0 .1rem; }
+}
+
+
+/* ── Hero scroll hint ── */
+.hero-scroll-hint {
+  display: flex; flex-direction: column; align-items: center;
+  gap: .3rem; margin-top: .8rem; opacity: .45;
+  animation: hintBob 2s ease-in-out infinite;
+  cursor: default;
+  pointer-events: none;
+}
+.hero-scroll-hint:hover { opacity: .45; }
+@keyframes hintBob {
+  0%,100% { transform: translateY(0); }
+  50%      { transform: translateY(5px); }
+}
+.hero-scroll-hint span {
+  font-family: var(--font-h); font-size: .55rem; font-weight: 300;
+  letter-spacing: .2em; text-transform: uppercase; color: rgba(255,255,255,.7);
+}
+.hero-scroll-hint svg { display: block; }
+.hero-scroll-hint svg:nth-child(2) { animation: bounceArrow 1.6s ease-in-out infinite; animation-delay: .15s; }
+.hero-scroll-hint svg:nth-child(3) { animation: bounceArrow 1.6s ease-in-out infinite; animation-delay: .3s; }
+.hero-scroll-hint svg:nth-child(4) { animation: bounceArrow 1.6s ease-in-out infinite; animation-delay: .45s; }
+@keyframes bounceArrow {
+  0%,100% { transform:translateY(0); opacity:.35; }
+  50%      { transform:translateY(4px); opacity:1; }
+}
+.hero-scroll-hint svg:nth-child(3) { opacity: .6; }
+.hero-scroll-hint svg:nth-child(4) { opacity: .35; }
+
+</style>
 </head>
-<body class="bg-black text-white font-poppins overflow-x-hidden">
-    <custom-navbar></custom-navbar>
-    <!-- Preloader -->
-<div id="preloader" class="fixed inset-0 z-50 flex items-center justify-center bg-black">
-        <div class="preloader-text text-5xl md:text-7xl font-black tracking-tighter">
-            <span>B</span>
-            <span>O</span>
-            <span>L</span>
-            <span>S</span>
-            <span>I</span>
-            <span>L</span>
-            <span>L</span>
-            <span>O</span>
-        </div>
+<body>
+<div id="preloader" role="status" aria-label="Cargando sitio">
+  <div class="pre-wordmark" aria-hidden="true"><span>B</span><span>O</span><span>L</span><span>S</span><span>I</span><span>L</span><span>L</span><span>O</span></div>
+  <div class="pre-progress-wrap">
+    <div class="pre-bar-track">
+      <div class="pre-bar-fill" id="preBarFill"></div>
     </div>
-    
-    <!-- Particle Canvas Container -->
-<div id="particle-container" class="fixed top-0 left-0 w-full h-full -z-10"></div>
-    
-    <!-- Main Content -->
-    <main class="relative min-h-screen flex flex-col">
-        <!-- Hero Section -->
-        <section class="hero-section flex-grow flex flex-col justify-center items-center px-4 py-20 text-center">
-            <div id="logo-container">
-            <div id="particle-text-container" class="relative w-full h-48 sm:h-64 md:h-80 flex items-center justify-center">
-                <canvas id="particle-text" class="w-full h-full"></canvas>
-            </div>
+    <div class="pre-counter" id="preCounter">0%</div>
+  </div>
 </div>
-            <p class="text-xl md:text-2xl max-w-2xl mx-auto mb-8 text-center leading-relaxed text-white/90">
-                Conectamos personas con soluciones a través de experiencias audiovisuales impactantes
-            </p>
-            <div class="flex flex-col items-center">
-                <a href="#contact" class="px-8 py-4 rounded-full font-bold text-lg hover:scale-105 transition-transform duration-300 backdrop-blur-md bg-white/30 border border-white/30 shadow-lg hover:shadow-xl">
-                    Contáctanos
-                </a>
-                <!-- Scroll Indicator -->
-                <div class="mt-8 animate-bounce cursor-pointer hover:opacity-100 transition-opacity">
-                    <i data-feather="chevron-down" class="w-8 h-8 opacity-70"></i>
-                </div>
+
+<canvas id="galaxy"></canvas>
+
+<div id="page-wrap">
+
+<!-- NAV -->
+<nav id="navbar">
+  <div class="nav-logo">
+    <svg width="26" height="26" viewBox="0 0 28 28" fill="none">
+      <path d="M5 9.5 Q5 7 7.5 7 L20.5 7 Q23 7 23 9.5 L23 22 Q23 24.5 20.5 24.5 L7.5 24.5 Q5 24.5 5 22 Z" fill="rgba(255,255,255,.08)" stroke="rgba(255,255,255,.75)" stroke-width="1.1" stroke-linejoin="round"/>
+      <path d="M5 9.5 L23 9.5" stroke="rgba(255,255,255,.75)" stroke-width="1.1"/>
+      <path d="M10 12.5 L14 15.5 L18 12.5" stroke="rgba(255,255,255,.55)" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+      <path d="M7.5 18 L7.5 22" stroke="rgba(255,255,255,.25)" stroke-width=".9" stroke-dasharray="1.5 1.5" stroke-linecap="round"/>
+      <path d="M20.5 18 L20.5 22" stroke="rgba(255,255,255,.25)" stroke-width=".9" stroke-dasharray="1.5 1.5" stroke-linecap="round"/>
+    </svg>
+    BOLSILLO
+  </div>
+  <ul class="nav-center">
+    <li><a href="#servicios">Servicios</a></li>
+    <li><a href="#logro">Nosotros</a></li>
+    <li><a href="#equipo">Equipo</a></li>
+    <li><a href="#contacto">Contacto</a></li>
+  </ul>
+  <div class="nav-right">
+    <div class="nav-social">
+      <a href="https://instagram.com/bolsilloprod" target="_blank" rel="noopener" aria-label="Instagram">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>
+      </a>
+      <a href="https://www.youtube.com/watch?v=lHeRSLsOWSU" target="_blank" rel="noopener" aria-label="YouTube">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.95-1.96C18.88 4 12 4 12 4s-6.88 0-8.59.46A2.78 2.78 0 0 0 1.46 6.42 29 29 0 0 0 1 12a29 29 0 0 0 .46 5.58 2.78 2.78 0 0 0 1.95 1.96C5.12 20 12 20 12 20s6.88 0 8.59-.46a2.78 2.78 0 0 0 1.95-1.96A29 29 0 0 0 23 12a29 29 0 0 0-.46-5.58z"/><polygon points="9.75 15.02 15.5 12 9.75 8.98 9.75 15.02" fill="currentColor" stroke="none"/></svg>
+      </a>
+      <a href="https://wa.me/56939461500" target="_blank" rel="noopener" aria-label="WhatsApp">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413z"/></svg>
+      </a>
+    </div>
+    <a href="https://wa.me/56939461500" target="_blank" rel="noopener" class="nav-cta">Contáctanos</a>
+  </div>
+  <button class="hamburger" onclick="toggleMobile()" aria-label="Menú">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<div class="mobile-menu" id="mobileMenu">
+  <a href="#servicios"  onclick="toggleMobile()">Servicios</a>
+  <a href="#logro"      onclick="toggleMobile()">Nosotros</a>
+  <a href="#equipo"     onclick="toggleMobile()">Equipo</a>
+  <a href="#contacto"   onclick="toggleMobile()">Contacto</a>
 </div>
-        </section>
-</main>
-        <!-- Services Section -->
-        <section id="services" class="py-20 px-4 bg-gray-900/85 backdrop-blur-sm" style="view-timeline-name: --services;">
-<div class="max-w-6xl mx-auto">
-                <div class="text-center mb-16">
-                    <h2 class="text-4xl md:text-5xl font-bold mb-4">Servicios Integrales</h2>
-                    <p class="text-xl text-gray-300 max-w-2xl mx-auto">
-                        Soluciones completas para potenciar tu presencia digital y audiovisual
-                    </p>
-                </div>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                    <!-- Mobile Accordion -->
-                    <div class="md:hidden space-y-4 w-full">
-                        <div class="service-accordion">
-                            <button class="accordion-toggle w-full flex justify-between items-center px-6 py-4 rounded-xl font-bold bg-purple-500/20 text-purple-400 border border-purple-400/50 transition-all">
-                                <span>Estrategias Digitales</span>
-                                <i data-feather="chevron-down" class="transform transition-transform duration-300"></i>
-                            </button>
-                            <div class="accordion-content hidden bg-gray-800/85 p-6 rounded-b-xl border border-t-0 border-gray-700/50">
-                                <div class="space-y-6">
-                                    <div class="bg-gray-700/50 p-4 rounded-lg">
-                                        <div class="flex items-center gap-3 mb-2">
-                                            <div class="w-8 h-8 rounded-md bg-purple-500/20 flex items-center justify-center">
-                                                <i data-feather="refresh-cw" class="w-4 h-4 text-purple-400"></i>
-                                            </div>
-                                            <h4 class="text-lg font-semibold">Plan Reactivación</h4>
-                                        </div>
-                                        <p class="text-gray-300 pl-11">Manual de marca + 12 piezas mensuales + producción audiovisual + dirección creativa.</p>
-                                    </div>
-                                    
-                                    <div class="bg-gray-700/50 p-4 rounded-lg">
-                                        <div class="flex items-center gap-3 mb-2">
-                                            <div class="w-8 h-8 rounded-md bg-purple-500/20 flex items-center justify-center">
-                                                <i data-feather="trending-up" class="w-4 h-4 text-purple-400"></i>
-                                            </div>
-                                            <h4 class="text-lg font-semibold">Plan Crecimiento</h4>
-                                        </div>
-                                        <p class="text-gray-300 pl-11">Todo lo del Plan Reactivación + gestión de publicaciones + análisis de métricas.</p>
-                                    </div>
-                                    
-                                    <div class="bg-gray-700/50 p-4 rounded-lg">
-                                        <div class="flex items-center gap-3 mb-2">
-                                            <div class="w-8 h-8 rounded-md bg-purple-500/20 flex items-center justify-center">
-                                                <i data-feather="target" class="w-4 h-4 text-purple-400"></i>
-                                            </div>
-                                            <h4 class="text-lg font-semibold">Plan Estratégico</h4>
-                                        </div>
-                                        <p class="text-gray-300 pl-11">Planes anteriores + inversión publicitaria + análisis FODA + objetivos SMART.</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <div class="service-accordion">
-                            <button class="accordion-toggle w-full flex justify-between items-center px-6 py-4 rounded-xl font-bold bg-blue-500/20 text-blue-400 border border-blue-400/50 transition-all">
-                                <span>Producción Audiovisual</span>
-                                <i data-feather="chevron-down" class="transform transition-transform duration-300"></i>
-                            </button>
-                            <div class="accordion-content hidden bg-gray-800/85 p-6 rounded-b-xl border border-t-0 border-gray-700/50">
-                                <div class="space-y-6">
-                                    <div class="bg-gray-700/50 p-4 rounded-lg">
-                                        <div class="flex items-center gap-3 mb-2">
-                                            <div class="w-8 h-8 rounded-md bg-blue-500/20 flex items-center justify-center">
-                                                <i data-feather="film" class="w-4 h-4 text-blue-400"></i>
-                                            </div>
-                                            <h4 class="text-lg font-semibold">Videos Corporativos</h4>
-                                        </div>
-                                        <p class="text-gray-300 pl-11">Presentamos tu empresa con identidad visual profesional para productos y servicios.</p>
-                                    </div>
-                                    
-                                    <div class="bg-gray-700/50 p-4 rounded-lg">
-                                        <div class="flex items-center gap-3 mb-2">
-                                            <div class="w-8 h-8 rounded-md bg-blue-500/20 flex items-center justify-center">
-                                                <i data-feather="calendar" class="w-4 h-4 text-blue-400"></i>
-                                            </div>
-                                            <h4 class="text-lg font-semibold">Cobertura de Eventos</h4>
-                                        </div>
-                                        <p class="text-gray-300 pl-11">Registramos profesionalmente inauguraciones, lanzamientos y activaciones de marca.</p>
-                                    </div>
-                                    
-                                    <div class="bg-gray-700/50 p-4 rounded-lg">
-                                        <div class="flex items-center gap-3 mb-2">
-                                            <div class="w-8 h-8 rounded-md bg-blue-500/20 flex items-center justify-center">
-                                                <i data-feather="edit" class="w-4 h-4 text-blue-400"></i>
-                                            </div>
-                                            <h4 class="text-lg font-semibold">Postproducción</h4>
-                                        </div>
-                                        <p class="text-gray-300 pl-11">Edición profesional, motion graphics, corrección de color y diseño de identidad.</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-<!-- Desktop Columns -->
-                    <div id="production-service" class="service-column bg-gray-800/85 p-8 rounded-xl border border-gray-700/50 hidden md:block">
-<div class="flex items-center gap-4 mb-6">
-                            <div class="w-14 h-14 rounded-lg bg-blue-500/20 flex items-center justify-center">
-                                <i data-feather="video" class="w-6 h-6 text-blue-400"></i>
-                            </div>
-                            <h3 class="text-2xl font-bold">Producción Audiovisual</h3>
-                        </div>
-                        
-                        <div class="space-y-6">
-                            <div class="bg-gray-700/50 p-4 rounded-lg">
-                                <div class="flex items-center gap-3 mb-2">
-                                    <div class="w-8 h-8 rounded-md bg-blue-500/20 flex items-center justify-center">
-                                        <i data-feather="film" class="w-4 h-4 text-blue-400"></i>
-                                    </div>
-                                    <h4 class="text-lg font-semibold">Videos Corporativos</h4>
-                                </div>
-                                <p class="text-gray-300 pl-11">Presentamos tu empresa con identidad visual profesional para productos y servicios.</p>
-                            </div>
-                            
-                            <div class="bg-gray-700/50 p-4 rounded-lg">
-                                <div class="flex items-center gap-3 mb-2">
-                                    <div class="w-8 h-8 rounded-md bg-blue-500/20 flex items-center justify-center">
-                                        <i data-feather="calendar" class="w-4 h-4 text-blue-400"></i>
-                                    </div>
-                                    <h4 class="text-lg font-semibold">Cobertura de Eventos</h4>
-                                </div>
-                                <p class="text-gray-300 pl-11">Registramos profesionalmente inauguraciones, lanzamientos y activaciones de marca.</p>
-                            </div>
-                            
-                            <div class="bg-gray-700/50 p-4 rounded-lg">
-                                <div class="flex items-center gap-3 mb-2">
-                                    <div class="w-8 h-8 rounded-md bg-blue-500/20 flex items-center justify-center">
-                                        <i data-feather="edit" class="w-4 h-4 text-blue-400"></i>
-                                    </div>
-                                    <h4 class="text-lg font-semibold">Postproducción</h4>
-                                </div>
-                                <p class="text-gray-300 pl-11">Edición profesional, motion graphics, corrección de color y diseño de identidad.</p>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- Marketing Column -->
-                    <div id="marketing-service" class="service-column bg-gray-800/85 p-8 rounded-xl border border-gray-700/50 md:block hidden">
-<div class="flex items-center gap-4 mb-6">
-                            <div class="w-14 h-14 rounded-lg bg-purple-500/20 flex items-center justify-center">
-                                <i data-feather="bar-chart-2" class="w-6 h-6 text-purple-400"></i>
-                            </div>
-                            <h3 class="text-2xl font-bold">Estrategias Digitales</h3>
-                        </div>
-                        
-                        <div class="space-y-6">
-                            <div class="bg-gray-700/50 p-4 rounded-lg">
-                                <div class="flex items-center gap-3 mb-2">
-                                    <div class="w-8 h-8 rounded-md bg-purple-500/20 flex items-center justify-center">
-                                        <i data-feather="refresh-cw" class="w-4 h-4 text-purple-400"></i>
-                                    </div>
-                                    <h4 class="text-lg font-semibold">Plan Reactivación</h4>
-                                </div>
-                                <p class="text-gray-300 pl-11">Manual de marca + 12 piezas mensuales + producción audiovisual + dirección creativa.</p>
-                            </div>
-                            
-                            <div class="bg-gray-700/50 p-4 rounded-lg">
-                                <div class="flex items-center gap-3 mb-2">
-                                    <div class="w-8 h-8 rounded-md bg-purple-500/20 flex items-center justify-center">
-                                        <i data-feather="trending-up" class="w-4 h-4 text-purple-400"></i>
-                                    </div>
-                                    <h4 class="text-lg font-semibold">Plan Crecimiento</h4>
-                                </div>
-                                <p class="text-gray-300 pl-11">Todo lo del Plan Reactivación + gestión de publicaciones + análisis de métricas.</p>
-                            </div>
-                            
-                            <div class="bg-gray-700/50 p-4 rounded-lg">
-                                <div class="flex items-center gap-3 mb-2">
-                                    <div class="w-8 h-8 rounded-md bg-purple-500/20 flex items-center justify-center">
-                                        <i data-feather="target" class="w-4 h-4 text-purple-400"></i>
-                                    </div>
-                                    <h4 class="text-lg font-semibold">Plan Estratégico</h4>
-                                </div>
-                                <p class="text-gray-300 pl-11">Planes anteriores + inversión publicitaria + análisis FODA + objetivos SMART.</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-        <!-- Fullscreen Work Section -->
-        <section id="work">
-            <behance-carousel></behance-carousel>
+
+<!-- HERO -->
+<section id="hero">
+  <p class="hero-city reveal">Santiago, Chile</p>
+  <h1 class="hero-brand reveal">BOLSILLO</h1>
+  <p class="hero-sub reveal">producciones</p>
+  <p class="hero-tagline reveal">Nuestras Cámaras y equipo están listos para grabar,<br>solo faltan tus ideas.</p>
+  <div class="hero-divider reveal"></div>
+  <p class="hero-cotiza reveal">Revisa nuestro portafolio</p>
+  <div class="hero-service-btns reveal">
+    <a href="audiovisual.html" class="service-btn" onclick="event.preventDefault();openNavModal('¿Ir al portafolio Audiovisual?','Conoce nuestros servicios de producción de video, reels y contenido audiovisual para marcas y artistas.','audiovisual.html')">Audiovisual</a>
+    <span class="service-btn-or">o de</span>
+    <a href="fotografia.html" class="service-btn" onclick="event.preventDefault();openNavModal('¿Ir al portafolio de Fotografía?','Verás nuestros trabajos favoritos de Retratos, gastronomía, eventos y más hechos por nuestro equipo de Bolsillo!','fotografia.html')">Fotografía</a>
+  </div>
+  <a href="https://wa.me/56939461500" target="_blank" rel="noopener" class="hero-main-cta reveal">Escríbenos por WhatsApp →</a>
+  <div class="hero-scroll-hint reveal">
+    <span style="pointer-events:none;cursor:default">Más información de nuestra empresa</span>
+    <div style="display:flex;flex-direction:column;align-items:center;gap:2px;pointer-events:none">
+      <svg width="16" height="10" viewBox="0 0 16 10" fill="none"><polyline points="1 1 8 9 15 1" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <svg width="16" height="10" viewBox="0 0 16 10" fill="none"><polyline points="1 1 8 9 15 1" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <svg width="16" height="10" viewBox="0 0 16 10" fill="none"><polyline points="1 1 8 9 15 1" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </div>
+  </div>
 </section>
-<!-- Team Section -->
-        <section id="team" class="py-20 px-4 bg-gray-900/85 backdrop-blur-sm">
-<div class="max-w-3xl mx-auto">
-                <div class="text-center mb-16">
-                    <span class="text-blue-400 text-lg font-medium">Quiénes somos</span>
-                    <h2 class="text-4xl md:text-5xl font-bold mt-2">Nuestro Equipo</h2>
-                </div>
 
-                <div class="team-carousel relative">
-                    <div class="team-member bg-gray-800/50 p-8 rounded-xl border border-gray-700/50 transition-all text-center">
-                        <div class="w-32 h-32 mx-auto rounded-full bg-blue-500/10 flex items-center justify-center mb-6">
-                            <i data-feather="film" class="w-12 h-12 text-blue-400"></i>
-                        </div>
-                        <h3 class="text-2xl font-bold">Francisco Palomo</h3>
-                        <p class="text-gray-400 mt-2 mb-4">Director de Postproducción</p>
-                        <div class="flex justify-center gap-4">
-                            <a href="https://instagram.com/Frop0n" target="_blank" class="social-link">
-                                <i data-feather="instagram" class="w-6 h-6 text-blue-400"></i>
-                            </a>
-                        </div>
-                    </div>
+<!-- STRIP -->
+<div class="strip" aria-hidden="true">
+  <div class="strip-track"><span>FOTOGRAFÍA</span><span class="dot">·</span><span>VIDEO CORPORATIVO</span><span class="dot">·</span><span>REDES SOCIALES</span><span class="dot">·</span><span>REGISTRO DE EVENTOS</span><span class="dot">·</span><span>VIDEOCLIPS</span><span class="dot">·</span><span>SESIONES DE ESTUDIO</span><span class="dot">·</span></div>
+  <div class="strip-track" aria-hidden="true"><span>FOTOGRAFÍA</span><span class="dot">·</span><span>VIDEO CORPORATIVO</span><span class="dot">·</span><span>REDES SOCIALES</span><span class="dot">·</span><span>REGISTRO DE EVENTOS</span><span class="dot">·</span><span>VIDEOCLIPS</span><span class="dot">·</span><span>SESIONES DE ESTUDIO</span><span class="dot">·</span></div>
+</div>
 
-                    <div class="team-nav flex justify-center mt-8 gap-4">
-                        <button class="team-prev px-4 py-2 rounded-full bg-gray-700/50 hover:bg-gray-600/50 transition">
-                            <i data-feather="chevron-left" class="w-6 h-6"></i>
-                        </button>
-                        <div class="team-dots flex gap-2 items-center">
-                            <!-- Dots will be added by JS -->
-                        </div>
-                        <button class="team-next px-4 py-2 rounded-full bg-gray-700/50 hover:bg-gray-600/50 transition">
-                            <i data-feather="chevron-right" class="w-6 h-6"></i>
-                        </button>
-                    </div>
-                </div>
+
+<!-- SERVICIOS -->
+<section id="servicios">
+  <div class="container">
+    <p class="section-label reveal slide-left">Lo que hacemos</p>
+    <h2 class="section-title reveal slide-left">Nuestros servicios</h2>
+    <div class="divider reveal"></div>
+    <div class="servicios-tabs-wrap">
+    <div class="servicios-tabs reveal" id="serviciosTabs">
+      <div class="tab-indicator" id="tabIndicator"></div>
+      <button class="tab-btn active" data-cat="redes" data-num="01">Redes sociales</button><span class="tab-sep" aria-hidden="true"><svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg><svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg><svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg></span>
+      <button class="tab-btn" data-cat="corporativo" data-num="02">Video corporativo</button><span class="tab-sep" aria-hidden="true"><svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg><svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg><svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg></span>
+      <button class="tab-btn" data-cat="fotografia" data-num="03">Fotografía</button><span class="tab-sep" aria-hidden="true"><svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg><svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg><svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg></span>
+      <button class="tab-btn" data-cat="videoclips" data-num="05">Videoclips y sesiones</button>
+    </div>
+  </div><!-- end tabs-wrap -->
+    <div class="servicios-grid" id="serviciosGrid">
+
+      <!-- REDES SOCIALES -->
+      <div class="servicio-card active" data-cat="redes" data-num="01">
+        <div class="servicio-card-bg"></div>
+        <div class="servicio-card-num">01</div>
+        <div class="reel-card">
+          <iframe src="https://www.instagram.com/reel/DVPMD4hiV3w/embed/" allowfullscreen scrolling="no" loading="lazy"></iframe>
+        </div>
+        <div class="servicio-card-label">
+          <span class="servicio-card-tag">Redes sociales</span>
+          <span class="servicio-card-title">Paparolla</span>
+        </div>
+      </div>
+      <div class="servicio-card active" data-cat="redes" data-num="01">
+        <div class="servicio-card-bg"></div>
+        <div class="servicio-card-num">02</div>
+        <div class="reel-card">
+          <iframe src="https://www.instagram.com/reel/DYAM7ZfhJ1l/embed/" allowfullscreen scrolling="no" loading="lazy"></iframe>
+        </div>
+        <div class="servicio-card-label">
+          <span class="servicio-card-tag">Redes sociales</span>
+          <span class="servicio-card-title">Café Puente</span>
+        </div>
+      </div>
+      <div class="servicio-card active" data-cat="redes" data-num="01">
+        <div class="servicio-card-bg"></div>
+        <div class="servicio-card-num">03</div>
+        <div class="reel-card">
+          <iframe src="https://www.instagram.com/reel/DUEpYG4jdzn/embed/" allowfullscreen scrolling="no" loading="lazy"></iframe>
+        </div>
+        <div class="servicio-card-label">
+          <span class="servicio-card-tag">Redes sociales</span>
+          <span class="servicio-card-title">Hotel W</span>
+        </div>
+      </div>
+
+      <!-- VIDEO CORPORATIVO (placeholders) -->
+      <div class="servicio-card" data-cat="corporativo" data-num="02">
+        <div class="servicio-card-bg"></div>
+        <div class="servicio-card-num">01</div>
+        <div class="photo-card">
+          <img src="https://img.youtube.com/vi/nmu42PzIoHU/maxresdefault.jpg" alt="Tricolor" loading="lazy" style="object-position:center center;">
+        </div>
+        <a class="video-card-overlay" href="https://www.youtube.com/watch?v=nmu42PzIoHU" target="_blank" rel="noopener">
+          <div class="play-circle"><svg width="16" height="16" viewBox="0 0 24 24" fill="white"><polygon points="5 3 19 12 5 21 5 3"/></svg></div>
+        </a>
+        <div class="servicio-card-label"><span class="servicio-card-tag">Video corporativo</span><span class="servicio-card-title">Tricolor</span></div>
+      </div>
+      <!-- FOTOGRAFÍA — 1 foto por categoría de bolsillo/fotografia -->
+      <div class="servicio-card" data-cat="fotografia" data-num="03">
+        <div class="servicio-card-bg"></div>
+        <div class="servicio-card-num">01</div>
+        <div class="photo-card"><img src="https://live.staticflickr.com/65535/55313190446_ba5d1ce40b_b.jpg" alt="Retratos en estudio" loading="lazy"></div>
+        <div class="servicio-card-label"><span class="servicio-card-tag">Fotografía · Retratos</span><span class="servicio-card-title">Estudio</span></div>
+      </div>
+      <div class="servicio-card" data-cat="fotografia" data-num="03">
+        <div class="servicio-card-bg"></div>
+        <div class="servicio-card-num">02</div>
+        <div class="photo-card"><img src="https://live.staticflickr.com/65535/55313339243_89522eb1ae_b.jpg" alt="Gastronomía" loading="lazy"></div>
+        <div class="servicio-card-label"><span class="servicio-card-tag">Fotografía · Gastronomía</span><span class="servicio-card-title">Marcas</span></div>
+      </div>
+      <div class="servicio-card" data-cat="fotografia" data-num="03">
+        <div class="servicio-card-bg"></div>
+        <div class="servicio-card-num">03</div>
+        <div class="photo-card"><img src="https://live.staticflickr.com/65535/55312276122_d6f6fbf6a4_b.jpg" alt="Eventos sociales" loading="lazy"></div>
+        <div class="servicio-card-label"><span class="servicio-card-tag">Fotografía · Eventos</span><span class="servicio-card-title">Social</span></div>
+      </div>
+      <div class="servicio-card" data-cat="fotografia" data-num="03">
+        <div class="servicio-card-bg"></div>
+        <div class="servicio-card-num">04</div>
+        <div class="photo-card"><img src="https://live.staticflickr.com/65535/55312278287_3b64e6baf0_b.jpg" alt="Headshots" loading="lazy"></div>
+        <div class="servicio-card-label"><span class="servicio-card-tag">Fotografía · Corporativo</span><span class="servicio-card-title">Headshots</span></div>
+      </div>
+      <div class="servicio-card" data-cat="fotografia" data-num="03">
+        <div class="servicio-card-bg"></div>
+        <div class="servicio-card-num">05</div>
+        <div class="photo-card"><img src="https://live.staticflickr.com/65535/55313341393_5282a8ca2c_b.jpg" alt="Música" loading="lazy"></div>
+        <div class="servicio-card-label"><span class="servicio-card-tag">Fotografía · Música</span><span class="servicio-card-title">Audiovisual</span></div>
+      </div>
+      <div class="servicio-card" data-cat="fotografia" data-num="03">
+        <div class="servicio-card-bg"></div>
+        <div class="servicio-card-num">06</div>
+        <div class="photo-card"><img src="https://live.staticflickr.com/65535/55316717545_45a9afa362_w.jpg" alt="Foto en locación" loading="lazy" style="object-position:center center;"></div>
+        <div class="servicio-card-label"><span class="servicio-card-tag">Fotografía · Locación</span><span class="servicio-card-title">Foto en locación</span></div>
+      </div>
+
+      <!-- VIDEOCLIPS Y SESIONES — YouTube thumbnails -->
+      <div class="servicio-card" data-cat="videoclips" data-num="05">
+        <div class="servicio-card-bg"></div>
+        <div class="servicio-card-num">01</div>
+        <div class="photo-card">
+          <img src="https://img.youtube.com/vi/lHeRSLsOWSU/maxresdefault.jpg" alt="Kala Baldosa" loading="lazy" style="object-position:center center;">
+        </div>
+        <a class="video-card-overlay" href="https://www.youtube.com/watch?v=lHeRSLsOWSU" target="_blank" rel="noopener">
+          <div class="play-circle"><svg width="16" height="16" viewBox="0 0 24 24" fill="white"><polygon points="5 3 19 12 5 21 5 3"/></svg></div>
+        </a>
+        <div class="servicio-card-label"><span class="servicio-card-tag">Videoclip</span><span class="servicio-card-title">Kala Baldosa</span></div>
+      </div>
+      <div class="servicio-card" data-cat="videoclips" data-num="05">
+        <div class="servicio-card-bg"></div>
+        <div class="servicio-card-num">02</div>
+        <div class="photo-card">
+          <img src="https://img.youtube.com/vi/IWeVQ36Za5U/maxresdefault.jpg" alt="Dany Barrera" loading="lazy" style="object-position:center center;">
+        </div>
+        <a class="video-card-overlay" href="https://www.youtube.com/watch?v=IWeVQ36Za5U" target="_blank" rel="noopener">
+          <div class="play-circle"><svg width="16" height="16" viewBox="0 0 24 24" fill="white"><polygon points="5 3 19 12 5 21 5 3"/></svg></div>
+        </a>
+        <div class="servicio-card-label"><span class="servicio-card-tag">Playthrough</span><span class="servicio-card-title">Dany Barrera</span></div>
+      </div>
+      <div class="servicio-card" data-cat="videoclips" data-num="05">
+        <div class="servicio-card-bg"></div>
+        <div class="servicio-card-num">03</div>
+        <div class="photo-card">
+          <img src="https://img.youtube.com/vi/11hpLrzdjjw/maxresdefault.jpg" alt="Candelabro" loading="lazy" style="object-position:center center;">
+        </div>
+        <a class="video-card-overlay" href="https://www.youtube.com/watch?v=11hpLrzdjjw" target="_blank" rel="noopener">
+          <div class="play-circle"><svg width="16" height="16" viewBox="0 0 24 24" fill="white"><polygon points="5 3 19 12 5 21 5 3"/></svg></div>
+        </a>
+        <div class="servicio-card-label"><span class="servicio-card-tag">Postproducción de color</span><span class="servicio-card-title">Candelabro</span></div>
+      </div>
+      <div class="servicio-card" data-cat="videoclips" data-num="05">
+        <div class="servicio-card-bg"></div>
+        <div class="servicio-card-num">04</div>
+        <div class="photo-card">
+          <img src="https://img.youtube.com/vi/bnZw2MmKFl8/maxresdefault.jpg" alt="Sigrid y los Claveles" loading="lazy" style="object-position:center center;">
+        </div>
+        <a class="video-card-overlay" href="https://www.youtube.com/watch?v=bnZw2MmKFl8" target="_blank" rel="noopener">
+          <div class="play-circle"><svg width="16" height="16" viewBox="0 0 24 24" fill="white"><polygon points="5 3 19 12 5 21 5 3"/></svg></div>
+        </a>
+        <div class="servicio-card-label"><span class="servicio-card-tag">Sesión en vivo</span><span class="servicio-card-title">Sigrid y los Claveles</span></div>
+      </div>
+
+    </div><!-- end servicios-grid -->
+  </div>
+</section>
+
+<!-- CLIENTES -->
+<section id="clientes" style="padding:2.5rem 0">
+  <div class="container">
+    <p class="section-label reveal slide-left" style="text-align:center;margin-bottom:2rem">Han confiado en nosotros</p>
+    <div class="clients-strip reveal">
+      <div class="client-logo cl-sm"><img src="https://i.imgur.com/KFsszqW.png" alt="Cliente Bolsillo"></div>
+      <div class="client-logo cl-big"><img src="https://i.imgur.com/Kc9mzmf.png" alt="Cliente Bolsillo"></div>
+      <div class="client-logo cl-big"><img src="https://i.imgur.com/FWVXiKy.png" alt="Cliente Bolsillo"></div>
+      <div class="client-logo cl-sm"><img src="https://i.imgur.com/rpHrNhN.png" alt="Cliente Bolsillo"></div>
+      <div class="client-logo cl-sm"><img src="https://i.imgur.com/rEIBG6w.jpeg" alt="Cliente Bolsillo"></div>
+      <div class="client-logo"><img src="https://i.imgur.com/mSZGjsM.png" alt="Cliente Bolsillo"></div>
+      <div class="client-logo cl-big"><img src="https://i.imgur.com/yuTXUS1.png" alt="Cliente Bolsillo"></div>
+      <div class="client-logo cl-big"><img src="https://i.imgur.com/EjUgGZA.png" alt="Cliente Bolsillo"></div>
+      <div class="client-logo cl-paparolla"><img src="https://i.imgur.com/frVL8CK.png" alt="Cliente Bolsillo"></div>
+      <div class="client-logo cl-lg"><img src="https://i.imgur.com/qhtuVNK.png" alt="Cliente Bolsillo"></div>
+      <div class="client-logo"><img src="https://i.imgur.com/2hfmgBT.png" alt="Cliente Bolsillo"></div>
+      <div class="client-logo cl-sm"><img src="https://i.imgur.com/c1h9Yaw.jpeg" alt="Cliente Bolsillo"></div>
+      <div class="client-logo"><img src="https://i.imgur.com/SHvSTTR.png" alt="Cliente Bolsillo"></div>
+      <div class="client-logo cl-big"><img src="https://i.imgur.com/YBcOc6N.png" alt="Cliente Bolsillo"></div>
+      <a href="https://wa.me/56939461500" target="_blank" rel="noopener" class="client-pill-invite">¿Tu marca? →</a>
+    </div>
+  </div>
+</section>
+
+
+<!-- LOGRO / SAM -->
+<section id="logro">
+  <div class="container">
+    <div class="logro-grid">
+
+            <!-- SAM Carousel -->
+<div class="sam-carousel">
+  <img id="samImg" src="https://i.imgur.com/bnem5Bj.jpeg" alt="SAM 2026">
+  <div class="sam-controls">
+    <button class="sam-arrow" onclick="samMove(-1)" aria-label="Anterior">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"/></svg>
+    </button>
+    <div class="sam-dots" id="samDots"></div>
+    <button class="sam-arrow" onclick="samMove(1)" aria-label="Siguiente">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="9 18 15 12 9 6"/></svg>
+    </button>
+  </div>
+</div>
+
+
+      <div class="logro-text reveal slide-right">
+        <p class="section-label">Reconocimiento</p>
+        <h2 class="section-title">Santiago Music<br>Video Awards 2026</h2>
+        <div class="divider"></div>
+        <p>Seleccionados en el SAM 2026 en <strong style="color:var(--white)">tres categorías</strong>: Mejor Video, Mejor Coreografía y Mejor Actuación.</p>
+        <p>Ganadores del premio <strong style="color:var(--white)">Mejor Coreografía</strong>. Un reconocimiento al trabajo colectivo, la dirección y la visión creativa que pusimos en cada toma.</p>
+        <a href="https://www.youtube.com/watch?v=lHeRSLsOWSU&list=RDlHeRSLsOWSU&start_radio=1"
+           target="_blank" rel="noopener" class="btn-outline" style="margin-top:.5rem">
+          Ver en YouTube →
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MISIÓN / VISIÓN -->
+<!-- EQUIPO -->
+<section id="equipo">
+  <div class="container">
+    <p class="section-label reveal slide-left">El equipo</p>
+    <h2 class="section-title reveal slide-left">Quiénes somos</h2>
+    <div class="divider reveal"></div>
+    <div class="equipo-tabs reveal" id="equipoTabs">
+      <button class="tab-btn active" data-lista="fundadores">Fundadores</button>
+      <button class="tab-btn" data-lista="colaboradores">Colaboradores</button>
+    </div>
+
+    <div class="equipo-list active" id="lista-fundadores">
+
+      <!-- Francisco Palomo -->
+      <div class="member-row" onclick="toggleMember(this)">
+        <div class="member-header">
+          <div class="member-avatar"><img src="https://i.imgur.com/b9ABgkz.jpeg" alt="Francisco Palomo"></div>
+          <div class="member-header-text">
+            <div class="member-name">Francisco Palomo</div>
+            <div class="member-role-header">Director de Postproducción & Tecnología</div>
+          </div>
+          <div class="member-toggle">+</div>
+        </div>
+        <div class="member-body"><div class="member-body-inner">
+          <div class="member-card">
+            <div class="member-photo-col"><img src="https://i.imgur.com/b9ABgkz.jpeg" alt="Francisco Palomo"></div>
+            <div class="member-info-col">
+              <div class="member-info-name-row">
+                <div class="member-info-name">Francisco Palomo</div>
+              </div>
+              <div class="member-info-role">Director de Postproducción & Tecnología</div>
+              <div class="member-info-bio">Socio fundador de Bolsillo Producciones SPA. Responsable de la cadena de postproducción audiovisual y la infraestructura tecnológica del estudio.<br><br>Francisco trabaja con método. Entiende que la edición, el color y el flujo técnico no son el cierre de un proyecto sino el momento donde todo lo filmado se somete a una lectura crítica para encontrar su mejor versión. Funda Bolsillo con la convicción de que tomarse el tiempo necesario no es lentitud, es criterio, y que una infraestructura tecnológica bien pensada es lo que le da al equipo creativo la libertad de trabajar de la manera más óptima para el proyecto.</div>
             </div>
-        </section>
-<!-- Contact Section -->
-        <section id="contact" class="min-h-screen py-20 px-4 bg-gray-900/85 backdrop-blur-sm" style="view-timeline-name: --contact;">
-            <div class="max-w-6xl mx-auto">
-                <div class="text-center mb-16">
-                    <h2 class="text-4xl md:text-5xl font-bold mb-4">Contacto</h2>
-                    <p class="text-xl text-gray-300 max-w-2xl mx-auto">
-                        Conéctate con nosotros a través de nuestros canales
-                    </p>
-                </div>
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-8 max-w-4xl mx-auto">
-                    <div class="contact-method bg-gray-800/85 p-8 rounded-xl border border-gray-700/50 hover:border-green-500/30 transition-all flex flex-col items-center text-center">
-                        <i data-feather="message-square" class="w-12 h-12 mb-4 text-green-400"></i>
-                        <h3 class="text-2xl font-bold mb-4">WhatsApp</h3>
-                        <p class="text-gray-300 mb-4 px-4">Conversemos directamente</p>
-                        <a href="https://wa.me/56939461500" class="text-green-400 hover:text-green-300 font-medium">+56 9 3946 1500</a>
-                    </div>
-                    
-                    <div class="contact-method bg-gray-800/85 p-8 rounded-xl border border-gray-700/50 hover:border-blue-500/30 transition-all flex flex-col items-center text-center">
-                        <i data-feather="mail" class="w-12 h-12 mb-4 text-blue-400"></i>
-                        <h3 class="text-2xl font-bold mb-4">Correo Electrónico</h3>
-                        <p class="text-gray-300 mb-4 px-4">Escríbenos para consultas y cotizaciones</p>
-                        <a href="mailto:bolsillo.contactar@gmail.com" class="text-blue-400 hover:text-blue-300 font-medium break-all">bolsillo.contactar@gmail.com</a>
-                    </div>
-<div class="contact-method bg-gray-800/85 p-8 rounded-xl border border-gray-700/50 hover:border-pink-500/30 transition-all flex flex-col items-center text-center">
-                        <i data-feather="instagram" class="w-12 h-12 mb-4 text-pink-400"></i>
-                        <h3 class="text-2xl font-bold mb-4">Instagram</h3>
-                        <p class="text-gray-300 mb-4 px-4">Síguenos para ver nuestro trabajo</p>
-                        <a href="https://instagram.com/bolsilloprod" target="_blank" class="text-pink-400 hover:text-pink-300 font-medium">@bolsilloprod</a>
-                    </div>
-                    
-                    <div class="contact-method bg-gray-800/85 p-8 rounded-xl border border-gray-700/50 hover:border-blue-500/30 transition-all flex flex-col items-center text-center">
-                        <i data-feather="external-link" class="w-12 h-12 mb-4 text-blue-400"></i>
-                        <h3 class="text-2xl font-bold mb-4">Behance</h3>
-                        <p class="text-gray-300 mb-4 px-4">Explora nuestros proyectos</p>
-                        <a href="https://www.behance.net/bolsilloprod" target="_blank" class="text-blue-400 hover:text-blue-300 font-medium">bolsilloprod</a>
-                    </div>
-                </div>
-                
-                <p class="mt-16 text-gray-400 max-w-2xl mx-auto text-center">
-                    Atendemos empresas de toda la Región Metropolitana, con especial enfoque en emprendimientos que buscan profesionalizar su imagen digital.
-                </p>
+          </div>
+        </div></div>
+      </div>
+
+      <!-- Luis Mesa -->
+      <div class="member-row" onclick="toggleMember(this)">
+        <div class="member-header">
+          <div class="member-avatar"><img src="https://i.imgur.com/BSsS8Uz.jpeg" alt="Luis Mesa"></div>
+          <div class="member-header-text">
+            <div class="member-name">Luis Mesa</div>
+            <div class="member-role-header">Director Audiovisual</div>
+          </div>
+          <div class="member-toggle">+</div>
+        </div>
+        <div class="member-body"><div class="member-body-inner">
+          <div class="member-card">
+            <div class="member-photo-col"><img src="https://i.imgur.com/BSsS8Uz.jpeg" alt="Luis Mesa"></div>
+            <div class="member-info-col">
+              <div class="member-info-name-row">
+                <div class="member-info-name">Luis Mesa</div>
+              </div>
+              <div class="member-info-role">Director Audiovisual</div>
+              <div class="member-info-bio">Socio fundador de Bolsillo Producciones SPA. Encargado de la Dirección de Fotografía, Producción y Operación de Cámara en todos los proyectos del estudio.<br><br>Luis entiende el valor de cada plano como elemento clave para contar historia. Aprendió a juntar el equipo creativo trabajando como director en diversas producciones artísticas y publicitarias para distintos medios digitales. Funda Bolsillo con un aporte estético que adapta a cada pieza visual con un ojo crítico fundamental para que cada proyecto sea único e inconfundible.</div>
             </div>
-        </section>
-    <script src="components/navbar.js"></script>
-    <script src="components/behance-carousel.js"></script>
-    <script src="script.js"></script>
-<script>feather.replace();</script>
+          </div>
+        </div></div>
+      </div>
+
+      <!-- Massimo Pisano -->
+      <div class="member-row" onclick="toggleMember(this)">
+        <div class="member-header">
+          <div class="member-avatar"><img src="https://i.imgur.com/joNLtxV.jpeg" alt="Massimo Pisano"></div>
+          <div class="member-header-text">
+            <div class="member-name">Massimo Pisano</div>
+            <div class="member-role-header">Director Creativo y Guionista</div>
+          </div>
+          <div class="member-toggle">+</div>
+        </div>
+        <div class="member-body"><div class="member-body-inner">
+          <div class="member-card">
+            <div class="member-photo-col"><img src="https://i.imgur.com/joNLtxV.jpeg" alt="Massimo Pisano"></div>
+            <div class="member-info-col">
+              <div class="member-info-name-row">
+                <div class="member-info-name">Massimo Pisano</div>
+              </div>
+              <div class="member-info-role">Director Creativo y Guionista</div>
+              <div class="member-info-bio">Socio fundador de Bolsillo Producciones SPA. Director Creativo y Guionista del estudio.<br><br>Como mente creativa de Bolsillo Producciones, Massimo ha consolidado su carrera como guionista y director bajo una premisa fundamental: todo contenido tiene el potencial de transformarse a través de una vuelta de tuerca. Su objetivo principal es garantizar que cada pieza audiovisual de la productora cuente con un factor único que la haga destacar. Ya sea mediante un plano icónico, una estructura narrativa novedosa o diálogos que generen una empatía genuina, Massimo se asegura de que cada proyecto lleve un sello de identidad inconfundible y de alto impacto.</div>
+            </div>
+          </div>
+        </div></div>
+      </div>
+
+      <!-- Martín Rendón -->
+      <div class="member-row member-martin" onclick="toggleMember(this)">
+        <div class="member-header">
+          <div class="member-avatar"><img src="https://i.imgur.com/RapTfPB.jpeg" alt="Martín Rendón"></div>
+          <div class="member-header-text">
+            <div class="member-name">Martín Rendón</div>
+            <div class="member-role-header">Director de Producción Ejecutiva</div>
+          </div>
+          <div class="member-toggle">+</div>
+        </div>
+        <div class="member-body"><div class="member-body-inner">
+          <div class="member-card">
+            <div class="member-photo-col"><img src="https://i.imgur.com/RapTfPB.jpeg" alt="Martín Rendón" style="object-position:center 35%;"></div>
+            <div class="member-info-col">
+              <div class="member-info-name-row">
+                <div class="member-info-name">Martín Rendón</div>
+              </div>
+              <div class="member-info-role">Director de Producción Ejecutiva</div>
+              <div class="member-info-bio">Socio fundador de Bolsillo Producciones SPA. Encargado de la dirección de producción ejecutiva, el desarrollo comercial e institucional de la productora.<br><br>Martín Rendón es filósofo e ingeniero industrial. Se desempeña como Director de Producción Ejecutiva, liderando el desarrollo comercial e institucional de la productora, la coordinación estratégica de proyectos, la elaboración de presupuestos y propuestas, la gestión de relaciones con clientes y aliados, y la formulación de proyectos para fondos concursables. Además, participa en la planificación financiera y la optimización de procesos.</div>
+            </div>
+          </div>
+        </div></div>
+      </div>
+
+      <!-- Anton Diaz -->
+      <div class="member-row" onclick="toggleMember(this)">
+        <div class="member-header">
+          <div class="member-avatar"><img src="https://i.imgur.com/fmaUyBP.jpeg" alt="Anton Diaz"></div>
+          <div class="member-header-text">
+            <div class="member-name">Anton Diaz</div>
+            <div class="member-role-header">Director del área fotográfica</div>
+          </div>
+          <div class="member-toggle">+</div>
+        </div>
+        <div class="member-body"><div class="member-body-inner">
+          <div class="member-card">
+            <div class="member-photo-col"><img src="https://i.imgur.com/fmaUyBP.jpeg" alt="Anton Diaz"></div>
+            <div class="member-info-col">
+              <div class="member-info-name-row">
+                <div class="member-info-name">Anton Diaz</div>
+              </div>
+              <div class="member-info-role">Director del área fotográfica</div>
+              <div class="member-info-bio">Anton tiene una experiencia fotográfica completa desde la toma hasta el cuarto oscuro. Su comprensión de la fotoquímica y su interés por la fotografía analógica le entregan una comprensión más completa del medio.<br><br>Al haberse aplicado en moda, gastronomía y fotografía de productos — áreas donde el entendimiento técnico y estético deben ir juntos — tiene la capacidad de proporcionar estándares visuales altos en cada proyecto. Domina Lightroom, Capture One y Photoshop, y encuentra en el fanzine y la cultura analógica una fuente constante de inspiraciones que nutren su trabajo.</div>
+            </div>
+          </div>
+        </div></div>
+      </div>
+
+    </div>
+
+    <div class="equipo-list" id="lista-colaboradores">
+
+      <!-- Alexis "Gato" Igor -->
+      <div class="member-row" onclick="toggleMember(this)">
+        <div class="member-header">
+          <div class="member-avatar"><img src="https://i.imgur.com/Ut6jxRK.jpeg" alt="Alexis Igor"></div>
+          <div class="member-header-text">
+            <div class="member-name">Alexis "Gato" Igor</div>
+            <div class="member-role-header">Community Manager</div>
+          </div>
+          <div class="member-toggle">+</div>
+        </div>
+        <div class="member-body"><div class="member-body-inner">
+          <div class="member-card">
+            <div class="member-photo-col"><img src="https://i.imgur.com/Ut6jxRK.jpeg" alt="Alexis Igor"></div>
+            <div class="member-info-col">
+              <div class="member-info-name-row">
+                <div class="member-info-name">Alexis "Gato" Igor</div>
+              </div>
+              <div class="member-info-role">Community Manager</div>
+              <div class="member-info-bio">Colaborador de Bolsillo Producciones. Audiovisual autodidacta encargado del manejo de redes sociales, propuestas de contenido, BTS en rodajes y proyectos del estudio.<br><br>Con una propuesta creativa e innovadora, Gato se encarga de revisar contenido disponible, usando referentes que representen mejor la identidad de Bolsillo, buscando próximas propuestas y proyectos audiovisuales interesantes. Comprende la identidad de marca como una prioridad a la hora de crear contenido teniendo en perspectiva la visión y misión, destacando el profesionalismo de cada trabajo realizado.<br><br>Egresado de la carrera "Tourism & Hospitality", aprendió sobre relaciones públicas a través de los idiomas, tomando posteriormente un diplomado en Marketing Digital y Analytics, lo cual complementa con su propia búsqueda en el mundo audiovisual donde se ha desempeñado en áreas como fotografía, dirección de arte y producción.</div>
+            </div>
+          </div>
+        </div></div>
+      </div>
+
+      <!-- Vicente Rodriguez -->
+      <div class="member-row" onclick="toggleMember(this)">
+        <div class="member-header">
+          <div class="member-avatar"><img src="https://i.imgur.com/YuG1ocx.jpeg" alt="Vicente Rodriguez"></div>
+          <div class="member-header-text">
+            <div class="member-name">Vicente Rodriguez</div>
+            <div class="member-role-header">Socio Director | Ventas, Operaciones & Desarrollo</div>
+          </div>
+          <div class="member-toggle">+</div>
+        </div>
+        <div class="member-body"><div class="member-body-inner">
+          <div class="member-card">
+            <div class="member-photo-col"><img src="https://i.imgur.com/YuG1ocx.jpeg" alt="Vicente Rodriguez"></div>
+            <div class="member-info-col">
+              <div class="member-info-name-row">
+                <div class="member-info-name">Vicente Rodriguez</div>
+              </div>
+              <div class="member-info-role">Socio Director | Ventas, Operaciones & Desarrollo</div>
+              <div class="member-info-bio">Vicente cree que entender a las personas es la habilidad más valiosa en cualquier negocio. Lo aprendió ejerciendo como asesor financiero, donde el trabajo real no es manejar números sino descifrar necesidades, generar confianza y ofrecer algo que tenga sentido para quien lo recibe. Se incorpora a Bolsillo con ese mismo enfoque: hacia afuera, construyendo relaciones comerciales reales; hacia adentro, desarrollando la estructura y los procesos que permiten que el talento del equipo se traduzca en resultados consistentes.</div>
+            </div>
+          </div>
+        </div></div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- REDES SOCIALES BEHOLD -->
+<section id="redes">
+  <div class="container">
+    <p class="section-label reveal slide-left">Síguenos</p>
+    <h2 class="section-title reveal slide-left">Nuestras redes</h2>
+    <div class="divider reveal"></div>
+    <div class="behold-wrap reveal">
+      <div data-behold-id="p8L5Lni6vv4WWcW5UobM"></div>
+      <script>
+/* ── Preloader ── */
+(function() {
+  var bar    = document.getElementById('preBarFill');
+  var ctr    = document.getElementById('preCounter');
+  var loader = document.getElementById('preloader');
+  if (!loader) return;
+  var n = 0;
+  var iv = setInterval(function() {
+    n = Math.min(100, n + Math.ceil(Math.random() * 8 + 3));
+    if (bar) bar.style.width = n + '%';
+    if (ctr) ctr.textContent  = n + '%';
+    if (n >= 100) {
+      clearInterval(iv);
+      setTimeout(function() {
+        loader.classList.add('hidden');
+      }, 350);
+    }
+  }, 50);
+})();
+
+        (function() {
+          if (!window._beholdMainLoaded) {
+            const d=document,s=d.createElement("script");
+            s.type="module"; s.src="https://w.behold.so/widget.js";
+            d.head.append(s); window._beholdMainLoaded=true;
+          }
+        })();
+      </script>
+    </div>
+  </div>
+</section>
+
+<!-- ¿TIENES UN PROYECTO? -->
+<section id="contacto-cta" style="padding:4rem 0 2rem">
+  <div class="container">
+    <div class="cta-box reveal">
+      <h2>¿Tienes un proyecto en mente?</h2>
+      <p>Cuéntanos tu idea y encontramos juntos la forma de hacerla realidad.</p>
+      <div class="cta-actions">
+        <a href="https://wa.me/56939461500" target="_blank" rel="noopener" class="btn-primary">WhatsApp →</a>
+        <a href="mailto:bolsillo.contacto@gmail.com" class="btn-outline">Enviar email →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TE TINCÓ — FORMULARIO -->
+<section id="contacto" style="padding:2rem 0 6rem">
+  <div class="container">
+    <div class="contact-grid">
+      <div class="reveal">
+        <p class="section-label">Hablemos</p>
+        <h2 class="section-title slide-left">¿Te tincó?</h2>
+        <div class="divider"></div>
+        <p>Estamos en Constitución 8, Providencia — la casona de arte Tierra Luz. Escríbenos por acá o directo al WhatsApp y coordinamos sin complicaciones.</p>
+        <br>
+        <div class="contact-detail">
+          <div class="contact-row"><span class="icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg></span><span>Constitución 8, Providencia, Santiago</span></div>
+          <div class="contact-row"><span class="icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg></span><a href="https://wa.me/56939461500" target="_blank">+56 9 3946 1500 (Ventas)</a></div>
+          <div class="contact-row"><span class="icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg></span><a href="https://wa.me/56986740998" target="_blank">+56 9 8674 0998 (Fotografía)</a></div>
+          <div class="contact-row"><span class="icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg></span><a href="https://instagram.com/bolsilloprod" target="_blank">@bolsilloprod</a></div>
+          <div class="contact-row"><span class="icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></span><a href="mailto:bolsillo.contacto@gmail.com">bolsillo.contacto@gmail.com</a></div>
+        </div>
+      </div>
+      <div class="reveal">
+        <form class="contact-form" onsubmit="handleForm(event)">
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label">Nombre</label>
+              <input type="text" class="form-input" placeholder="Tu nombre" required>
+            </div>
+            <div class="form-group">
+              <label class="form-label">WhatsApp</label>
+              <input type="tel" class="form-input" placeholder="+56 9 ...">
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Servicio que te interesa</label>
+            <select class="form-select form-input">
+              <option value="">Selecciona un servicio</option>
+              <option>Redes sociales</option>
+              <option>Video corporativo</option>
+              <option>Fotografía</option>
+              <option>Videoclips y sesiones</option>
+              <option>Otro — quiero conversar</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Cuéntanos más</label>
+            <textarea class="form-textarea" placeholder="¿Qué tienes en mente? Cuéntanos tu proyecto..." rows="4"></textarea>
+          </div>
+          <button type="submit" class="form-submit">Enviar mensaje →</button>
+          <div id="form-success" style="display:none;color:rgba(255,255,255,.5);font-size:.82rem;margin-top:.5rem;font-style:italic">¡Mensaje enviado! Te contactamos pronto.</div>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="container">
+    <div class="footer-inner">
+      <div class="footer-brand">BOLSILLO PRODUCCIONES SPA</div>
+      <ul class="footer-links">
+        <li><a href="fotografia.html">Fotografía</a></li>
+        <li><a href="audiovisual.html">Audiovisual</a></li>
+        <li><a href="#equipo">Equipo</a></li>
+        <li><a href="#contacto">Contacto</a></li>
+      </ul>
+      <span class="footer-copy">© 2026 Bolsillo Producciones. Todos los derechos reservados.<br>Constitución 8, Providencia, Santiago.</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+/* Galaxy */
+(function(){
+  const canvas=document.getElementById('galaxy'),ctx=canvas.getContext('2d');
+  let W,H,particles=[],animId;
+  function resize(){W=canvas.width=window.innerWidth;H=canvas.height=window.innerHeight;}
+  function Particle(){this.reset=function(){this.x=Math.random()*W;this.y=Math.random()*H;this.r=Math.random()*1.1+.1;this.alpha=Math.random()*.6+.05;this.speed=Math.random()*.12+.02;this.twinkle=Math.random()*Math.PI*2;this.twinkleSpeed=Math.random()*.008+.002;this.drift=(Math.random()-.5)*.06;};this.reset();}
+  function init(){resize();particles=[];const c=Math.min(Math.floor(W*H/3500),340);for(let i=0;i<c;i++)particles.push(new Particle());}
+  function draw(){ctx.clearRect(0,0,W,H);[{x:W*.18,y:H*.28,r:Math.min(W,H)*.38,a:.022},{x:W*.82,y:H*.65,r:Math.min(W,H)*.32,a:.018},{x:W*.5,y:H*.5,r:Math.min(W,H)*.25,a:.012}].forEach(b=>{const g=ctx.createRadialGradient(b.x,b.y,0,b.x,b.y,b.r);g.addColorStop(0,`rgba(255,255,255,${b.a})`);g.addColorStop(1,'rgba(255,255,255,0)');ctx.fillStyle=g;ctx.beginPath();ctx.arc(b.x,b.y,b.r,0,Math.PI*2);ctx.fill();});particles.forEach(p=>{p.twinkle+=p.twinkleSpeed;p.y-=p.speed;p.x+=p.drift;if(p.y<-2){p.y=H+2;p.x=Math.random()*W;}if(p.x<-2||p.x>W+2)p.reset();const a=p.alpha*(.5+.5*Math.sin(p.twinkle));ctx.beginPath();ctx.arc(p.x,p.y,p.r,0,Math.PI*2);ctx.fillStyle=`rgba(255,255,255,${a})`;ctx.fill();});animId=requestAnimationFrame(draw);}
+  window.addEventListener('resize',()=>{cancelAnimationFrame(animId);init();draw();});
+  init();draw();
+})();
+
+window.addEventListener('scroll',()=>{document.getElementById('navbar').classList.toggle('scrolled',window.scrollY>50);});
+function toggleMobile(){document.getElementById('mobileMenu').classList.toggle('open');}
+
+/* Servicios tabs — sliding indicator */
+function moveTabIndicator(btn) {
+  var ind = document.getElementById('tabIndicator');
+  if (!ind || !btn) return;
+  ind.style.left  = btn.offsetLeft + 'px';
+  ind.style.width = btn.offsetWidth + 'px';
+}
+document.getElementById('serviciosTabs').addEventListener('click', function(e) {
+  var btn = e.target.closest('.tab-btn');
+  if (!btn) return;
+  this.querySelectorAll('.tab-btn').forEach(function(b){ b.classList.remove('active'); });
+  btn.classList.add('active');
+  moveTabIndicator(btn);
+  /* On mobile: scroll the active tab into center view */
+  var tabs = document.getElementById('serviciosTabs');
+  var scrollTarget = btn.offsetLeft - (tabs.offsetWidth / 2) + (btn.offsetWidth / 2);
+  tabs.scrollTo({ left: scrollTarget, behavior: 'smooth' });
+  var cat = btn.dataset.cat;
+  document.querySelectorAll('#serviciosGrid .servicio-card').forEach(function(c){
+    c.classList.toggle('active', c.dataset.cat === cat);
+  });
+});
+/* Show first tab cards on load */
+/* cards start active via HTML class — no JS needed */
+
+
+
+/* Init tab indicator on first load */
+document.addEventListener('DOMContentLoaded', function() {
+  var firstActive = document.querySelector('#serviciosTabs .tab-btn.active');
+  /* Slight delay so layout is calculated */
+  setTimeout(function() { moveTabIndicator(firstActive); }, 80);
+  window.addEventListener('resize', function() { moveTabIndicator(firstActive); });
+});
+
+/* Equipo tabs — switch lists */
+document.getElementById('equipoTabs').addEventListener('click',function(e){
+  const btn=e.target.closest('.tab-btn');
+  if(!btn)return;
+  this.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  const lista=btn.dataset.lista;
+  document.querySelectorAll('.equipo-list').forEach(l=>l.classList.remove('active'));
+  document.getElementById('lista-'+lista).classList.add('active');
+});
+
+/* Member accordion */
+function toggleMember(row){
+  const isOpen=row.classList.contains('open');
+  // close all in same list
+  row.closest('.equipo-list').querySelectorAll('.member-row.open').forEach(r=>r.classList.remove('open'));
+  if(!isOpen)row.classList.add('open');
+}
+
+/* Scroll reveal */
+/* ── Scroll reveal — progressive enhancement ──
+   Content is visible without JS. Animations are opt-in. */
+(function() {
+  // Only animate if browser supports everything needed
+  if (!('IntersectionObserver' in window) || !('classList' in document.body)) return;
+
+  // Opt-in: add .js-animate to body — this is what hides elements initially
+  // Do it before first paint to avoid FOUC
+  document.body.classList.add('js-animate');
+
+  const revealEls = Array.from(document.querySelectorAll('.reveal,.slide-left,.slide-right'));
+  if (!revealEls.length) return;
+
+  const io = new IntersectionObserver(function(entries) {
+    entries.forEach(function(e) {
+      if (e.isIntersecting) {
+        e.target.classList.add('in');
+        io.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0, rootMargin: '0px' });
+
+  revealEls.forEach(function(el) { io.observe(el); });
+
+  // Hard fallback: 1.5s after load, show everything
+  // Short timeout = snappy; long enough for observer to fire first
+  window.addEventListener('load', function() {
+    setTimeout(function() {
+      document.body.classList.remove('js-animate');
+      revealEls.forEach(function(el) { el.classList.add('in'); });
+    }, 1500);
+  });
+})();
+document.addEventListener('DOMContentLoaded',()=>{requestAnimationFrame(()=>setTimeout(()=>{document.querySelectorAll('#hero .reveal').forEach((el,i)=>setTimeout(()=>el.classList.add('in'),i*90));},150));});
+
+
+/* ── SAM Carousel ── */
+var _S = ["https://i.imgur.com/bnem5Bj.jpeg","https://i.imgur.com/dialgdV.jpeg","https://i.imgur.com/et7tEMB.jpeg","https://i.imgur.com/7jUAXLM.jpeg","https://i.imgur.com/hYpgoAw.jpeg","https://i.imgur.com/6MeY7mE.jpeg","https://i.imgur.com/PXxIIXq.jpeg"];
+var _si = 0;
+function samMove(d) {
+  _si = (_si + d + _S.length) % _S.length;
+  document.getElementById('samImg').src = _S[_si];
+  var ds = document.getElementById('samDots').children;
+  for (var i = 0; i < ds.length; i++) ds[i].classList.toggle('active', i === _si);
+}
+document.addEventListener('DOMContentLoaded', function() {
+  var wrap = document.getElementById('samDots');
+  if (!wrap) return;
+  _S.forEach(function(_, i) {
+    var d = document.createElement('button');
+    d.className = 'sam-dot' + (i === 0 ? ' active' : '');
+    d.setAttribute('aria-label', 'Imagen ' + (i+1));
+    (function(i){ d.onclick = function(){ _si = i; samMove(0); }; })(i);
+    wrap.appendChild(d);
+  });
+  setInterval(function(){ samMove(1); }, 4500);
+});
+
+
+
+/* ── Navigation modal ── */
+function openNavModal(title, desc, url) {
+  document.getElementById('navModalTitle').textContent = title;
+  document.getElementById('navModalDesc').textContent  = desc;
+  document.getElementById('navModalBtn').onclick = function(){ window.location.href = url; };
+  document.getElementById('navModal').classList.add('open');
+  document.body.classList.add('scroll-locked');
+}
+function closeNavModal() {
+  document.getElementById('navModal').classList.remove('open');
+  document.body.classList.remove('scroll-locked');
+}
+document.addEventListener('keydown', function(e){
+  if (e.key === 'Escape') closeNavModal();
+});
+/* Foto service cards → nav modal with category hash */
+document.addEventListener('DOMContentLoaded', function() {
+  var catMap = [
+    'cat-retratos',    /* card 01 */
+    'cat-marcas',      /* card 02 */
+    'cat-eventos',     /* card 03 */
+    'cat-corp',        /* card 04 */
+    'cat-audio',       /* card 05 */
+    'cat-inmob'        /* card 06 */
+  ];
+  document.querySelectorAll('.servicio-card[data-cat="fotografia"]').forEach(function(card, i) {
+    card.style.cursor = 'pointer';
+    var catId = catMap[i] || 'cat-retratos';
+    card.addEventListener('click', function() {
+      var url = 'fotografia.html#' + catId;
+      openNavModal(
+        '¿Ir al portafolio de Fotografía?',
+        'Verás nuestros trabajos favoritos de Retratos, gastronomía, eventos y más hechos por nuestro equipo de Bolsillo!',
+        url
+      );
+    });
+  });
+});
+
+/* ── Lightbox ── */
+function openLightbox(src) {
+  document.getElementById('lightboxImg').src = src;
+  document.getElementById('lightbox').classList.add('open');
+  document.body.classList.add('scroll-locked');
+}
+function closeLightbox() {
+  document.getElementById('lightbox').classList.remove('open');
+  document.body.classList.remove('scroll-locked');
+}
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'Escape') closeLightbox();
+});
+/* Member photo click → lightbox */
+document.addEventListener('click', function(e) {
+  var col = e.target.closest('.member-photo-col');
+  if (col) {
+    var img = col.querySelector('img');
+    if (img) openLightbox(img.src);
+  }
+});
+/* SAM image click → lightbox */
+document.addEventListener('DOMContentLoaded', function() {
+  var samImg = document.getElementById('samImg');
+  if (samImg) {
+    samImg.addEventListener('click', function() {
+      openLightbox(samImg.src);
+    });
+  }
+});
+
+/* Form */
+function handleForm(e){e.preventDefault();document.getElementById('form-success').style.display='block';e.target.reset();}
+</script>
+</div><!-- end #page-wrap -->
+<!-- Navigation confirm modal -->
+<div class="nav-modal-overlay" id="navModal" onclick="if(event.target===this)closeNavModal()">
+  <div class="nav-modal-box">
+    <h3 id="navModalTitle"></h3>
+    <p  id="navModalDesc"></p>
+    <div class="nav-modal-actions">
+      <button class="nav-modal-confirm" id="navModalBtn">Continuar →</button>
+      <button class="nav-modal-cancel"  onclick="closeNavModal()">Cancelar</button>
+    </div>
+  </div>
+</div>
+
+<!-- Lightbox -->
+<div id="lightbox" onclick="if(event.target===this)closeLightbox()">
+  <button id="lightbox-close" onclick="closeLightbox()" aria-label="Cerrar">✕</button>
+  <img id="lightboxImg" src="" alt="">
+</div>
+
 </body>
 </html>
