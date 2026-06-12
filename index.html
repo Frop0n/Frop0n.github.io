@@ -954,9 +954,9 @@ body.scroll-locked { overflow: hidden; }
   <div class="hero-divider reveal"></div>
   <p class="hero-cotiza reveal">Revisa nuestro portafolio</p>
   <div class="hero-service-btns reveal">
-    <a href="audiovisual.html" class="service-btn" onclick="event.preventDefault();openNavModal('¿Ir al portafolio Audiovisual?','Conoce nuestros servicios de producción de video, reels y contenido audiovisual para marcas y artistas.','audiovisual.html')">Audiovisual</a>
+    <a href="/audiovisual/" class="service-btn" onclick="event.preventDefault();openNavModal('¿Ir al portafolio Audiovisual?','Conoce nuestros servicios de producción de video, reels y contenido audiovisual para marcas y artistas.','/audiovisual/')">Audiovisual</a>
     <span class="service-btn-or">o de</span>
-    <a href="fotografia.html" class="service-btn" onclick="event.preventDefault();openNavModal('¿Ir al portafolio de Fotografía?','Verás nuestros trabajos favoritos de Retratos, gastronomía, eventos y más hechos por nuestro equipo de Bolsillo!','fotografia.html')">Fotografía</a>
+    <a href="/fotografia/" class="service-btn" onclick="event.preventDefault();openNavModal('¿Ir al portafolio de Fotografía?','Verás nuestros trabajos favoritos de Retratos, gastronomía, eventos y más hechos por nuestro equipo de Bolsillo!','/fotografia/')">Fotografía</a>
   </div>
   <a href="https://wa.me/56939461500" target="_blank" rel="noopener" class="hero-main-cta reveal">Escríbenos por WhatsApp →</a>
   <div class="hero-scroll-hint reveal">
@@ -1322,6 +1322,30 @@ body.scroll-locked { overflow: hidden; }
         </div></div>
       </div>
 
+      <!-- Felipe Bustos -->
+      <div class="member-row" onclick="toggleMember(this)">
+        <div class="member-header">
+          <div class="member-avatar"><img src="https://i.imgur.com/rBi24ci.jpeg" alt="Felipe Bustos"></div>
+          <div class="member-header-text">
+            <div class="member-name">Felipe Bustos</div>
+            <div class="member-role-header">Project Manager y Encargado Legal</div>
+          </div>
+          <div class="member-toggle">+</div>
+        </div>
+        <div class="member-body"><div class="member-body-inner">
+          <div class="member-card">
+            <div class="member-photo-col"><img src="https://i.imgur.com/rBi24ci.jpeg" alt="Felipe Bustos"></div>
+            <div class="member-info-col">
+              <div class="member-info-name-row">
+                <div class="member-info-name">Felipe Bustos</div>
+              </div>
+              <div class="member-info-role">Project Manager y Encargado Legal</div>
+              <div class="member-info-bio">Socio fundador de Bolsillo Producciones SpA. Actualmente se desempeña como Project Manager y encargado del área legal del estudio.<br><br>En su tiempo libre, Felipe es abogado. Llegó a Bolsillo con una necesidad creativa que lo impulsa a trabajar de manera distinta. Con su interés en la fotografía química y el audio, la naturaleza de este trabajo lo convoca.<br><br>Él se encarga de la planificación y gestión de cada proyecto, desde su ingreso a su término, para que cada departamento se mueva en sincronía dentro del flujo de trabajo y que los resultados lleguen a tiempo. Mantiene el orden que convierte las ideas del equipo en resultados concretos para cada cliente.</div>
+            </div>
+          </div>
+        </div></div>
+      </div>
+
     </div>
 
     <div class="equipo-list" id="lista-colaboradores">
@@ -1492,8 +1516,8 @@ body.scroll-locked { overflow: hidden; }
     <div class="footer-inner">
       <div class="footer-brand">BOLSILLO PRODUCCIONES SPA</div>
       <ul class="footer-links">
-        <li><a href="fotografia.html">Fotografía</a></li>
-        <li><a href="audiovisual.html">Audiovisual</a></li>
+        <li><a href="/fotografia/">Fotografía</a></li>
+        <li><a href="/audiovisual/">Audiovisual</a></li>
         <li><a href="#equipo">Equipo</a></li>
         <li><a href="#contacto">Contacto</a></li>
       </ul>
@@ -1662,7 +1686,7 @@ document.addEventListener('DOMContentLoaded', function() {
     card.style.cursor = 'pointer';
     var catId = catMap[i] || 'cat-retratos';
     card.addEventListener('click', function() {
-      var url = 'fotografia.html#' + catId;
+      var url = '/fotografia/#' + catId;
       openNavModal(
         '¿Ir al portafolio de Fotografía?',
         'Verás nuestros trabajos favoritos de Retratos, gastronomía, eventos y más hechos por nuestro equipo de Bolsillo!',
