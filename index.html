@@ -954,9 +954,9 @@ body.scroll-locked { overflow: hidden; }
   <div class="hero-divider reveal"></div>
   <p class="hero-cotiza reveal">Revisa nuestro portafolio</p>
   <div class="hero-service-btns reveal">
-    <a href="/audiovisual/" class="service-btn" onclick="event.preventDefault();openNavModal('¿Ir al portafolio Audiovisual?','Conoce nuestros servicios de producción de video, reels y contenido audiovisual para marcas y artistas.','/audiovisual/')">Audiovisual</a>
+    <a href="https://bolsilloprod.cl/audiovisual" class="service-btn" onclick="event.preventDefault();openNavModal('¿Ir al portafolio Audiovisual?','Conoce nuestros servicios de producción de video, reels y contenido audiovisual para marcas y artistas.','https://bolsilloprod.cl/audiovisual')">Audiovisual</a>
     <span class="service-btn-or">o de</span>
-    <a href="/fotografia/" class="service-btn" onclick="event.preventDefault();openNavModal('¿Ir al portafolio de Fotografía?','Verás nuestros trabajos favoritos de Retratos, gastronomía, eventos y más hechos por nuestro equipo de Bolsillo!','/fotografia/')">Fotografía</a>
+    <a href="https://bolsilloprod.cl/fotografia" class="service-btn" onclick="event.preventDefault();openNavModal('¿Ir al portafolio de Fotografía?','Verás nuestros trabajos favoritos de Retratos, gastronomía, eventos y más hechos por nuestro equipo de Bolsillo!','https://bolsilloprod.cl/fotografia')">Fotografía</a>
   </div>
   <a href="https://wa.me/56939461500" target="_blank" rel="noopener" class="hero-main-cta reveal">Escríbenos por WhatsApp →</a>
   <div class="hero-scroll-hint reveal">
@@ -1516,8 +1516,8 @@ body.scroll-locked { overflow: hidden; }
     <div class="footer-inner">
       <div class="footer-brand">BOLSILLO PRODUCCIONES SPA</div>
       <ul class="footer-links">
-        <li><a href="/fotografia/">Fotografía</a></li>
-        <li><a href="/audiovisual/">Audiovisual</a></li>
+        <li><a href="https://bolsilloprod.cl/fotografia">Fotografía</a></li>
+        <li><a href="https://bolsilloprod.cl/audiovisual">Audiovisual</a></li>
         <li><a href="#equipo">Equipo</a></li>
         <li><a href="#contacto">Contacto</a></li>
       </ul>
@@ -1686,7 +1686,7 @@ document.addEventListener('DOMContentLoaded', function() {
     card.style.cursor = 'pointer';
     var catId = catMap[i] || 'cat-retratos';
     card.addEventListener('click', function() {
-      var url = '/fotografia/#' + catId;
+      var url = 'https://bolsilloprod.cl/fotografia#' + catId;
       openNavModal(
         '¿Ir al portafolio de Fotografía?',
         'Verás nuestros trabajos favoritos de Retratos, gastronomía, eventos y más hechos por nuestro equipo de Bolsillo!',
