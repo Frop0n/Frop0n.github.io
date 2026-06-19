@@ -3,6 +3,8 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Bolsillo Fotografía — Santiago, Chile</title>
+<link rel="icon" type="image/png" href="https://i.imgur.com/EBkck9H.png">
+<link rel="apple-touch-icon" href="https://i.imgur.com/EBkck9H.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@200;300;400;700&family=Montserrat:wght@500;600;700&family=Inter:wght@300;400;500&family=DM+Sans:ital,opsz,wght@0,9..40,200;0,9..40,300;0,9..40,400;1,9..40,200&display=swap" rel="stylesheet">
 <style>
@@ -865,12 +867,17 @@ section { padding: 6rem 0; }
 /* Hint label next to the toggle */
 .cat-hint {
   font-size: .62rem; font-weight: 300; letter-spacing: .06em;
-  color: rgba(255,255,255,.4); font-style: italic;
+  color: rgba(255,255,255,.5); font-style: italic;
   white-space: nowrap;
   animation: hintFadeIn .6s .8s both;
   display: flex; align-items: center; gap: .3rem;
+  flex-shrink: 0;
 }
 .cat-hint svg { flex-shrink: 0; opacity: .5; }
+/* On narrow screens hide the text, keep only the pulse ring */
+@media (max-width: 500px) {
+  .cat-hint { display: none; }
+}
 @keyframes hintFadeIn {
   from { opacity: 0; transform: translateX(-6px); }
   to   { opacity: 1; transform: translateX(0); }
@@ -885,34 +892,24 @@ body.cat-opened .cat-toggle.hint-pulse::after {
 /* Price card tap hint */
 /* Price card bottom slot — always same height, no layout shift */
 .price-hint {
-  display: flex; align-items: center; justify-content: center; gap: .3rem;
-  margin-top: .75rem; padding-top: .65rem;
-  border-top: 1px dashed rgba(255,255,255,.12);
-  font-size: .6rem; font-weight: 300; letter-spacing: .05em;
-  color: rgba(255,255,255,.38); font-style: italic;
+  display: flex; align-items: center; justify-content: center;
+  margin-top: .75rem;
   min-height: 1.6rem; box-sizing: border-box;
-  animation: hintFadeIn .6s 1.4s both;
   pointer-events: none;
-  transition: color .2s, border-color .2s;
 }
-.price-hint svg { opacity: .4; flex-shrink: 0; transition: opacity .2s; }
-
-/* When price-opened: hide the hint text/icon but keep the space */
-body.price-opened .price-hint {
-  color: transparent;
-  border-color: transparent;
+.price-hint span {
+  background: rgba(255,255,255,.12); border: 1px solid rgba(255,255,255,.2);
+  border-radius: 20px; padding: .28rem .8rem;
+  font-size: .6rem; font-family: var(--font-h); letter-spacing: .08em;
+  color: var(--white); text-align: center;
+  transition: background .2s, border-color .2s, color .2s;
 }
-body.price-opened .price-hint svg { display: none; }
-
-/* Selected state: show ✓ Agregado in the same slot */
-.price-card.selected .price-hint,
-.agenda-card-new.selected .price-hint {
-  color: #4ade80 !important;
-  border-color: rgba(74,222,128,.25) !important;
-  font-style: normal;
-  font-family: var(--font-h);
-  letter-spacing: .12em;
-  text-transform: uppercase;
+/* Selected: green pill */
+.price-card.selected .price-hint span,
+.agenda-card-new.selected .price-hint span {
+  background: rgba(74,222,128,.12);
+  border-color: rgba(74,222,128,.3);
+  color: #4ade80;
 }
 
 .cat-body {
@@ -2680,6 +2677,19 @@ body, .contact-info p, .agenda-cta-text p,
 }
 .booking-input:focus { border-color: rgba(255,255,255,.38); }
 .booking-input::placeholder { color: rgba(255,255,255,.25); }
+.booking-input.invalid {
+  border-color: rgba(255,90,90,.6);
+  background: rgba(255,60,60,.07);
+}
+.booking-input.valid {
+  border-color: rgba(74,222,128,.4);
+}
+.booking-field-error {
+  font-size: .62rem; color: rgba(255,100,100,.85);
+  margin-top: .2rem; margin-bottom: .1rem;
+  display: none; padding-left: .2rem;
+}
+.booking-input.invalid ~ .booking-field-error { display: block; }
 .booking-submit {
   width: 100%;
   margin-top: 1rem;
@@ -3768,20 +3778,54 @@ document.getElementById('lightbox').addEventListener('touchend', e => {
 }, { passive: true });
 
 
-/* ── T&C checkbox in booking form ─────── */
-function toggleBookingSubmit() {
-  var cb  = document.getElementById('bookingTcCheck');
-  var btn = document.getElementById('bookingSubmitBtn');
-  btn.disabled = !cb.checked;
+/* ── Booking form validation ─────────── */
+function _validateField(input) {
+  var val = input.value.trim();
+  var ok  = val.length > 0;
+  if (input.type === 'email') ok = ok && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(val);
+  input.classList.toggle('invalid', !ok && input.dataset.touched === '1');
+  input.classList.toggle('valid',    ok);
+  return ok;
 }
 
-/* Intercept first click on TC checkbox — open modal instead */
+function _checkBookingReady() {
+  var name  = document.getElementById('bName');
+  var phone = document.getElementById('bPhone');
+  var email = document.getElementById('bEmail');
+  var cb    = document.getElementById('bookingTcCheck');
+  var btn   = document.getElementById('bookingSubmitBtn');
+  if (!btn) return;
+  var allValid = _validateField(name) && _validateField(phone) && _validateField(email) && cb && cb.checked;
+  btn.disabled = !allValid;
+}
+
+function toggleBookingSubmit() {
+  _checkBookingReady();
+}
+
+/* Live validation — show error only after user leaves the field */
 document.addEventListener('DOMContentLoaded', function() {
+  ['bName','bPhone','bEmail'].forEach(function(id) {
+    var el = document.getElementById(id);
+    if (!el) return;
+    el.addEventListener('blur', function() {
+      el.dataset.touched = '1';
+      _validateField(el);
+      _checkBookingReady();
+    });
+    el.addEventListener('input', function() {
+      if (el.dataset.touched === '1') {
+        _validateField(el);
+      }
+      _checkBookingReady();
+    });
+  });
+
   var cb = document.getElementById('bookingTcCheck');
   if (cb) {
     cb.addEventListener('click', function(e) {
-      if (!cb.checked) return; // unchecking is always allowed
-      e.preventDefault();      // don't check yet
+      if (!cb.checked) return;
+      e.preventDefault();
       openTcReader();
     });
   }
@@ -4142,11 +4186,18 @@ function toggleCart() {
 function showBookingForm() {
   document.getElementById('cartStep1').style.display = 'none';
   document.getElementById('cartStep2').style.display = 'block';
-  // Reset TC checkbox and disable submit
+  // Reset TC checkbox, button and field validation
   var cb = document.getElementById('bookingTcCheck');
   var btn = document.getElementById('bookingSubmitBtn');
   if (cb) cb.checked = false;
   if (btn) btn.disabled = true;
+  ['bName','bPhone','bEmail'].forEach(function(id) {
+    var el = document.getElementById(id);
+    if (el) {
+      el.classList.remove('valid','invalid');
+      el.dataset.touched = '';
+    }
+  });
 }
 function showCartStep1() {
   document.getElementById('cartStep1').style.display = 'block';
@@ -4197,14 +4248,12 @@ document.addEventListener('DOMContentLoaded', function() {
     if (!card.querySelector('.price-hint')) {
       var hint = document.createElement('div');
       hint.className = 'price-hint';
-      hint.dataset.default = 'toca para agregar';
-      hint.innerHTML = '<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 11V6a2 2 0 0 0-4 0v3M14 9V5a2 2 0 0 0-4 0v4M10 8.5V4a2 2 0 0 0-4 0v8l-1.7-1.7a1.5 1.5 0 0 0-2.1 2.1L4 16a6 6 0 0 0 6 6h2a6 6 0 0 0 6-6v-5"/></svg><span>toca para agregar</span>';
+      hint.innerHTML = '<span>+ Agregar</span>';
       card.appendChild(hint);
     }
     card.addEventListener('click', function(e) {
       if (e.target.closest('a, button')) return;
       // Mark hints as seen
-      document.body.classList.add('price-opened');
       toggleCardSelection(card);
       // Update hint text in this card based on selected state
       _updateHintText(card);
@@ -4212,16 +4261,12 @@ document.addEventListener('DOMContentLoaded', function() {
   });
 
   function _updateHintText(card) {
-    var hint = card.querySelector('.price-hint');
-    if (!hint) return;
-    var span = hint.querySelector('span');
-    var svg  = hint.querySelector('svg');
+    var span = card.querySelector('.price-hint span');
+    if (!span) return;
     if (card.classList.contains('selected')) {
-      if (span) span.textContent = '✓ Agregado';
-      if (svg)  svg.style.display = 'none';
+      span.textContent = '✓ Agregado';
     } else {
-      if (span) span.textContent = 'toca para agregar';
-      if (svg)  svg.style.display = '';
+      span.textContent = '+ Agregar';
     }
   }
 });
@@ -4460,10 +4505,13 @@ function handleForm(e) {
     <form id="bookingForm" class="open" onsubmit="submitBooking(event)">
       <label class="booking-label">Nombre</label>
       <input class="booking-input" id="bName" type="text" placeholder="Tu nombre" required>
+      <span class="booking-field-error">Ingresa tu nombre</span>
       <label class="booking-label">WhatsApp</label>
       <input class="booking-input" id="bPhone" type="tel" placeholder="+56 9 xxxx xxxx" required>
+      <span class="booking-field-error">Ingresa tu número de WhatsApp</span>
       <label class="booking-label">Email</label>
       <input class="booking-input" id="bEmail" type="email" placeholder="tu@correo.com" required>
+      <span class="booking-field-error">Ingresa un email válido</span>
       <label class="booking-label">¿Qué tienes en mente?</label>
       <textarea class="booking-input" id="bNotes" rows="3" placeholder="Cuéntanos lo que necesitas..." style="resize:none;min-height:72px"></textarea>
       <label class="booking-tc-wrap">
