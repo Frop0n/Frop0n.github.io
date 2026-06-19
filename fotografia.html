@@ -3,29 +3,6 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Bolsillo Fotografía — Santiago, Chile</title>
-<!-- Favicon -->
-<link rel="icon" type="image/png" href="https://i.imgur.com/EBkck9H.png">
-<link rel="apple-touch-icon" href="https://i.imgur.com/EBkck9H.png">
-
-<!-- SEO básico -->
-<meta name="description" content="Bolsillo Producciones — Fotografía en Santiago, Chile.">
-
-<!-- Open Graph -->
-<meta property="og:type" content="website">
-<meta property="og:url" content="https://bolsilloproducciones.cl/fotografia.html">
-<meta property="og:title" content="Bolsillo Fotografía — Santiago, Chile">
-<meta property="og:description" content="Fotografía y producción audiovisual en Santiago, Chile.">
-<meta property="og:image" content="https://i.imgur.com/vVMli9K.jpeg">
-<meta property="og:image:width" content="1200">
-<meta property="og:image:height" content="630">
-<meta property="og:locale" content="es_CL">
-<meta property="og:site_name" content="Bolsillo Producciones">
-
-<!-- Twitter Card -->
-<meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Bolsillo Fotografía — Santiago, Chile">
-<meta name="twitter:description" content="Fotografía y producción audiovisual en Santiago, Chile.">
-<meta name="twitter:image" content="https://i.imgur.com/vVMli9K.jpeg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@200;300;400;700&family=Montserrat:wght@500;600;700&family=Inter:wght@300;400;500&family=DM+Sans:ital,opsz,wght@0,9..40,200;0,9..40,300;0,9..40,400;1,9..40,200&display=swap" rel="stylesheet">
 <style>
@@ -462,6 +439,181 @@ section { padding: 6rem 0; }
 }
 
 /* ═══════════════════════════════════════
+   CÓMO AGENDAR — controlled slider
+═══════════════════════════════════════ */
+.agendar-track-wrap {
+  position: relative;
+  margin-top: 2rem;
+  user-select: none;
+}
+/* Viewport window */
+.agendar-viewport {
+  overflow: hidden;
+  width: 100%;
+  position: relative;
+}
+/* Moving rail */
+.agendar-track {
+  display: flex;
+  align-items: stretch;
+  gap: 0;
+  transition: transform .42s cubic-bezier(.4,0,.2,1);
+  cursor: grab;
+  will-change: transform;
+}
+.agendar-track.no-transition { transition: none; }
+
+.agendar-card {
+  flex-shrink: 0;
+  width: 240px;
+  min-height: 340px;
+  background: rgba(255,255,255,.05);
+  border: 1px solid rgba(255,255,255,.1);
+  border-radius: 16px;
+  padding: 1.4rem 1.2rem 1.2rem;
+  display: flex;
+  flex-direction: column;
+  gap: .7rem;
+  transition: border-color .3s, transform .42s cubic-bezier(.4,0,.2,1),
+              opacity .35s ease, background .3s;
+  opacity: .45;
+  transform: scale(.92);
+  box-sizing: border-box;
+}
+.agendar-card.active {
+  border-color: rgba(255,255,255,.3);
+  background: rgba(255,255,255,.09);
+  opacity: 1;
+  transform: scale(1);
+}
+
+.agendar-card-num {
+  font-family: var(--font-h);
+  font-size: .55rem; font-weight: 400;
+  letter-spacing: .2em; color: rgba(255,255,255,.5);
+}
+.agendar-card-title {
+  font-family: var(--font-h);
+  font-size: .82rem; font-weight: 600;
+  color: var(--white); letter-spacing: .02em;
+  line-height: 1.3;
+}
+.agendar-card-desc {
+  font-size: .82rem; font-weight: 300;
+  color: rgba(255,255,255,.72); line-height: 1.75;
+}
+
+/* Arrow connector between cards */
+.agendar-arrow {
+  font-size: 1.4rem; color: rgba(255,255,255,.3);
+  flex-shrink: 0; padding: 0 .4rem;
+  align-self: center; margin-bottom: 2rem;
+}
+
+/* Preview boxes */
+.agendar-preview {
+  margin-top: .4rem;
+  background: rgba(255,255,255,.04);
+  border: 1px solid rgba(255,255,255,.08);
+  border-radius: 10px;
+  overflow: hidden;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+/* Step 1 — category list */
+.agendar-preview-cat { padding: 0; justify-content: flex-start; }
+.ap-cat-item {
+  display: flex; align-items: center; gap: .6rem;
+  padding: .55rem .7rem;
+  border-bottom: 1px solid rgba(255,255,255,.06);
+}
+.ap-cat-item:last-child { border-bottom: none; }
+.ap-cat-dim { opacity: .4; }
+.ap-cat-icon {
+  font-family: var(--font-h); font-size: .5rem;
+  color: rgba(255,255,255,.4); width: 22px; height: 22px;
+  border: 1px solid rgba(255,255,255,.15); border-radius: 6px;
+  display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+}
+.ap-cat-name { font-size: .72rem; font-weight: 500; color: var(--white); line-height: 1.2; }
+.ap-cat-sub  { font-size: .62rem; color: rgba(255,255,255,.55); }
+.ap-chevron  { margin-left: auto; color: rgba(255,255,255,.4); font-size: .9rem; }
+
+/* Step 2 — price card */
+.ap-price-card {
+  padding: .8rem .9rem; display: flex; flex-direction: column; gap: .35rem;
+}
+.ap-price-name   { font-family: var(--font-h); font-size: .62rem; letter-spacing: .1em; color: rgba(255,255,255,.65); }
+.ap-price-amount { font-family: var(--font-h); font-size: 1rem; font-weight: 700; color: var(--white); }
+.ap-price-includes { display: flex; flex-direction: column; gap: .15rem; margin: .2rem 0; }
+.ap-price-row    { font-size: .68rem; color: rgba(255,255,255,.65); }
+.ap-add-btn {
+  margin-top: .3rem;
+  background: rgba(255,255,255,.12); border: 1px solid rgba(255,255,255,.2);
+  border-radius: 20px; padding: .3rem .7rem;
+  font-size: .6rem; font-family: var(--font-h); letter-spacing: .08em;
+  color: var(--white); text-align: center;
+}
+
+/* Step 3 — form fields */
+.ap-form { padding: .6rem .8rem; display: flex; flex-direction: column; gap: .4rem; }
+.ap-field {
+  display: flex; flex-direction: column; gap: .1rem;
+  border-bottom: 1px solid rgba(255,255,255,.07); padding-bottom: .35rem;
+}
+.ap-field:last-child { border-bottom: none; padding-bottom: 0; }
+.ap-field-label { font-size: .56rem; letter-spacing: .1em; text-transform: uppercase; color: rgba(255,255,255,.5); }
+.ap-field-val   { font-size: .72rem; color: rgba(255,255,255,.6); }
+
+/* Steps 4 & 5 */
+.ap-calendly, .ap-confirm {
+  display: flex; flex-direction: column; align-items: center;
+  justify-content: center; gap: .4rem;
+  padding: 1.1rem .8rem; color: rgba(255,255,255,.4);
+}
+.ap-calendly-text, .ap-confirm-text {
+  font-family: var(--font-h); font-size: .72rem; font-weight: 500;
+  color: var(--white); letter-spacing: .06em;
+}
+.ap-calendly-sub, .ap-confirm-sub {
+  font-size: .68rem; color: rgba(255,255,255,.6); text-align: center;
+}
+
+/* Nav buttons prev/next */
+.agendar-nav {
+  display: flex; align-items: center; justify-content: center;
+  gap: 1rem; margin-top: 1.2rem;
+}
+.agendar-nav-btn {
+  width: 36px; height: 36px; border-radius: 50%;
+  background: rgba(255,255,255,.07); border: 1px solid rgba(255,255,255,.15);
+  color: var(--white); font-size: 1.1rem;
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer; transition: background .2s, opacity .2s;
+}
+.agendar-nav-btn:hover { background: rgba(255,255,255,.15); }
+.agendar-nav-btn:disabled { opacity: .25; cursor: default; }
+
+/* Dots */
+.agendar-dots {
+  display: flex; justify-content: center; align-items: center;
+  gap: .4rem;
+}
+.agendar-dot {
+  width: 5px; height: 5px; border-radius: 50%;
+  background: rgba(255,255,255,.2); transition: background .25s, width .25s;
+  cursor: pointer;
+}
+.agendar-dot.active { background: rgba(255,255,255,.7); width: 14px; border-radius: 3px; }
+
+@media (max-width: 700px) {
+  .agendar-card { width: 82vw; min-height: 320px; }
+}
+
+/* ═══════════════════════════════════════
    INTRO
 ═══════════════════════════════════════ */
 #intro { background: transparent; }
@@ -692,8 +844,76 @@ section { padding: 6rem 0; }
   font-size: 1.1rem;
   color: var(--mid);
   transition: transform .35s cubic-bezier(.4,0,.2,1), border-color .25s, color .25s;
+  position: relative;
 }
 .cat-item.open .cat-toggle { transform: rotate(45deg); border-color: rgba(255,255,255,.4); color: var(--white); }
+
+/* Pulse ring on the hint toggle */
+.cat-toggle.hint-pulse::after {
+  content: '';
+  position: absolute; inset: -6px;
+  border-radius: 50%;
+  border: 1.5px solid rgba(255,255,255,.4);
+  animation: togglePulse 1.6s ease-out infinite;
+}
+@keyframes togglePulse {
+  0%   { transform: scale(.85); opacity: .8; }
+  70%  { transform: scale(1.4);  opacity: 0; }
+  100% { transform: scale(.85); opacity: 0; }
+}
+
+/* Hint label next to the toggle */
+.cat-hint {
+  font-size: .62rem; font-weight: 300; letter-spacing: .06em;
+  color: rgba(255,255,255,.4); font-style: italic;
+  white-space: nowrap;
+  animation: hintFadeIn .6s .8s both;
+  display: flex; align-items: center; gap: .3rem;
+}
+.cat-hint svg { flex-shrink: 0; opacity: .5; }
+@keyframes hintFadeIn {
+  from { opacity: 0; transform: translateX(-6px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+/* Hide hint once any colapsable has been opened */
+body.cat-opened .cat-hint,
+body.cat-opened .cat-toggle.hint-pulse::after {
+  display: none;
+  animation: none;
+}
+
+/* Price card tap hint */
+/* Price card bottom slot — always same height, no layout shift */
+.price-hint {
+  display: flex; align-items: center; justify-content: center; gap: .3rem;
+  margin-top: .75rem; padding-top: .65rem;
+  border-top: 1px dashed rgba(255,255,255,.12);
+  font-size: .6rem; font-weight: 300; letter-spacing: .05em;
+  color: rgba(255,255,255,.38); font-style: italic;
+  min-height: 1.6rem; box-sizing: border-box;
+  animation: hintFadeIn .6s 1.4s both;
+  pointer-events: none;
+  transition: color .2s, border-color .2s;
+}
+.price-hint svg { opacity: .4; flex-shrink: 0; transition: opacity .2s; }
+
+/* When price-opened: hide the hint text/icon but keep the space */
+body.price-opened .price-hint {
+  color: transparent;
+  border-color: transparent;
+}
+body.price-opened .price-hint svg { display: none; }
+
+/* Selected state: show ✓ Agregado in the same slot */
+.price-card.selected .price-hint,
+.agenda-card-new.selected .price-hint {
+  color: #4ade80 !important;
+  border-color: rgba(74,222,128,.25) !important;
+  font-style: normal;
+  font-family: var(--font-h);
+  letter-spacing: .12em;
+  text-transform: uppercase;
+}
 
 .cat-body {
   display: grid;
@@ -2503,58 +2723,12 @@ body, .contact-info p, .agenda-cta-text p,
 
 
 /* ── Add-to-cart hint on price cards ── */
-.price-card[data-selectable]::before {
-  content: '+ Agregar al carrito';
-  display: block;
-  font-family: var(--font-h);
-  font-size: .48rem;
-  font-weight: 400;
-  letter-spacing: .14em;
-  text-transform: uppercase;
-  color: rgba(255,255,255,.28);
-  text-align: center;
-  margin-top: .9rem;
-  padding-top: .7rem;
-  border-top: 1px dashed rgba(255,255,255,.1);
-  transition: color .25s, border-color .25s;
-}
-.price-card[data-selectable]:hover::before {
-  color: rgba(255,255,255,.55);
-  border-color: rgba(255,255,255,.22);
-}
-.price-card[data-selectable].selected::before {
-  content: '✓ Agregado';
-  color: #4ade80;
-  border-color: rgba(74,222,128,.2);
-}
-
-/* Same hint for agenda cards */
-.agenda-card-new[data-selectable]::before {
-  content: '+ Agregar al carrito';
-  display: block;
-  font-family: var(--font-h);
-  font-size: .48rem;
-  font-weight: 400;
-  letter-spacing: .14em;
-  text-transform: uppercase;
-  color: rgba(255,255,255,.28);
-  text-align: center;
-  margin-top: .8rem;
-  padding-top: .6rem;
-  border-top: 1px dashed rgba(255,255,255,.1);
-  transition: color .25s, border-color .25s;
-}
-.agenda-card-new[data-selectable]:hover::before {
-  color: rgba(255,255,255,.55);
-  border-color: rgba(255,255,255,.22);
-}
-.agenda-card-new[data-selectable].selected::before {
-  content: '✓ Agregado';
-  color: #4ade80;
-  border-color: rgba(74,222,128,.2);
-}
-/* Hide the ::after checkmark on agenda cards since ::before handles it */
+.price-card[data-selectable]::before,
+.agenda-card-new[data-selectable]::before,
 .agenda-card-new[data-selectable]::after { display: none; }
+
+/* price-hint visibility handled by body.price-opened and .selected in CSS above */
+body.price-opened .price-hint { /* already handled above */ }
 
 </style>
 </head>
@@ -2600,7 +2774,7 @@ body, .contact-info p, .agenda-cta-text p,
     <li><a href="#agenda">Agenda</a></li>
     <li><a href="#contacto">Contacto</a></li>
   </ul>
-  <a href="#" onclick="openCalendlyModal(event)" class="nav-cta">Preagenda</a>
+  <a href="#como-agendar" class="nav-cta">Preagenda</a>
   <button class="hamburger" onclick="toggleMobile()" aria-label="Menú">
     <span></span><span></span><span></span>
   </button>
@@ -2624,7 +2798,7 @@ body, .contact-info p, .agenda-cta-text p,
     </h1>
     <p class="hero-sub slide-up">Retratos · Gastronomía · Eventos<br>Marcas · Corporativo · Música</p>
     <div class="hero-actions slide-up">
-      <a href="#" onclick="openCalendlyModal(event)" class="btn-glass primary">Preagenda tu sesión</a>
+      <a href="#como-agendar" class="btn-glass primary">Preagenda tu sesión</a>
       <a href="#categorias" class="btn-glass">Ver servicios</a>
     </div>
   </div>
@@ -2655,6 +2829,120 @@ body, .contact-info p, .agenda-cta-text p,
   <div class="strip-track"><span>RETRATOS EN ESTUDIO</span><span class="dot">·</span><span>FOTOGRAFÍA GASTRONÓMICA</span><span class="dot">·</span><span>MARCAS Y PRODUCTOS</span><span class="dot">·</span><span>EVENTOS SOCIALES</span><span class="dot">·</span><span>CORPORATIVO</span><span class="dot">·</span><span>CONCIERTOS Y CULTURA</span><span class="dot">·</span></div>
   <div class="strip-track" aria-hidden="true"><span>RETRATOS EN ESTUDIO</span><span class="dot">·</span><span>FOTOGRAFÍA GASTRONÓMICA</span><span class="dot">·</span><span>MARCAS Y PRODUCTOS</span><span class="dot">·</span><span>EVENTOS SOCIALES</span><span class="dot">·</span><span>CORPORATIVO</span><span class="dot">·</span><span>CONCIERTOS Y CULTURA</span><span class="dot">·</span></div>
 </div>
+
+<!-- CÓMO AGENDAR -->
+<section id="como-agendar" style="padding:4rem 0 3rem;overflow:hidden">
+  <div class="container">
+    <p class="section-label reveal slide-left">Simple y rápido</p>
+    <h2 class="section-title reveal slide-left">¿Cómo agendar?</h2>
+    <div class="divider reveal"></div>
+  </div>
+
+  <!-- Horizontal timeline — controlled slider -->
+  <div class="agendar-track-wrap">
+    <div class="agendar-viewport">
+      <div class="agendar-track" id="agendarTrack">
+
+      <!-- STEP 1 -->
+      <div class="agendar-card">
+        <div class="agendar-card-num">01</div>
+        <div class="agendar-card-title">Elige tu servicio</div>
+        <div class="agendar-card-desc">Explora las categorías y encuentra el paquete que se ajusta a lo que necesitas.</div>
+        <div class="agendar-preview agendar-preview-cat">
+          <div class="ap-cat-item">
+            <div class="ap-cat-icon">01</div>
+            <div>
+              <div class="ap-cat-name">Retratos en estudio</div>
+              <div class="ap-cat-sub">Artistas · Familias · Actores</div>
+            </div>
+            <div class="ap-chevron">›</div>
+          </div>
+          <div class="ap-cat-item ap-cat-dim">
+            <div class="ap-cat-icon">02</div>
+            <div>
+              <div class="ap-cat-name">Gastronomía</div>
+              <div class="ap-cat-sub">Marcas · Restaurantes</div>
+            </div>
+            <div class="ap-chevron">›</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="agendar-arrow">›</div>
+
+      <!-- STEP 2 -->
+      <div class="agendar-card">
+        <div class="agendar-card-num">02</div>
+        <div class="agendar-card-title">Agrega al carrito</div>
+        <div class="agendar-card-desc">Aprieta el paquete que quieres y se agrega automáticamente a tu carrito.</div>
+        <div class="agendar-preview">
+          <div class="ap-price-card">
+            <div class="ap-price-name">Studio</div>
+            <div class="ap-price-amount">$60.000</div>
+            <div class="ap-price-includes">
+              <div class="ap-price-row">✓ 1 hora de sesión</div>
+              <div class="ap-price-row">✓ 15 fotos editadas</div>
+            </div>
+            <div class="ap-add-btn">+ Agregar</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="agendar-arrow">›</div>
+
+      <!-- STEP 3 -->
+      <div class="agendar-card">
+        <div class="agendar-card-num">03</div>
+        <div class="agendar-card-title">Rellena tus datos</div>
+        <div class="agendar-card-desc">En el carrito ingresa tu nombre, WhatsApp y correo para que podamos contactarte.</div>
+        <div class="agendar-preview">
+          <div class="ap-form">
+            <div class="ap-field"><span class="ap-field-label">Nombre</span><span class="ap-field-val">Tu nombre</span></div>
+            <div class="ap-field"><span class="ap-field-label">WhatsApp</span><span class="ap-field-val">+56 9 ····</span></div>
+            <div class="ap-field"><span class="ap-field-label">Email</span><span class="ap-field-val">tu@correo.com</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="agendar-arrow">›</div>
+
+      <!-- STEP 4 -->
+      <div class="agendar-card">
+        <div class="agendar-card-num">04</div>
+        <div class="agendar-card-title">Elige tu fecha</div>
+        <div class="agendar-card-desc">Te llevamos a Calendly donde eliges el día y hora que más te acomoda para venir al estudio.</div>
+        <div class="agendar-preview ap-calendly">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/><circle cx="8" cy="15" r="1" fill="currentColor"/><circle cx="12" cy="15" r="1" fill="currentColor"/></svg>
+          <div class="ap-calendly-text">Ir a Calendly →</div>
+          <div class="ap-calendly-sub">Elige día y hora disponible</div>
+        </div>
+      </div>
+
+      <div class="agendar-arrow">›</div>
+
+      <!-- STEP 5 -->
+      <div class="agendar-card">
+        <div class="agendar-card-num">05</div>
+        <div class="agendar-card-title">Confirmamos contigo</div>
+        <div class="agendar-card-desc">Te contactamos por WhatsApp para confirmar la fecha y coordinar los últimos detalles. ¡Listo!</div>
+        <div class="agendar-preview ap-confirm">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+          <div class="ap-confirm-text">¡Todo listo!</div>
+          <div class="ap-confirm-sub">Te escribimos por WhatsApp</div>
+        </div>
+      </div>
+
+    </div><!-- /agendar-track -->
+    </div><!-- /agendar-viewport -->
+
+    <!-- Nav -->
+    <div class="agendar-nav">
+      <button class="agendar-nav-btn" id="agendarPrev" onclick="agendarGo(-1)" aria-label="Anterior">&#8249;</button>
+      <div class="agendar-dots" id="agendarDots"></div>
+      <button class="agendar-nav-btn" id="agendarNext" onclick="agendarGo(1)" aria-label="Siguiente">&#8250;</button>
+    </div>
+  </div>
+</section>
 
 <!-- CATEGORÍAS -->
 <section id="categorias" style="padding-top:3rem">
@@ -2751,7 +3039,11 @@ body, .contact-info p, .agenda-cta-text p,
             <img src="https://live.staticflickr.com/65535/55313413149_b9606de6b8_b.jpg" alt="" loading="lazy" aria-hidden="true">
             <img src="https://live.staticflickr.com/65535/55313594885_553e9f1cc4_b.jpg" alt="" loading="lazy" aria-hidden="true">
           </div>
-          <div class="cat-toggle">+</div>
+          <div class="cat-hint" id="catHint">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M7 11.5a4.5 4.5 0 1 1 9 0c0 2.5-4.5 8-4.5 8S7 14 7 11.5z"/><circle cx="11.5" cy="11.5" r="1.5" fill="currentColor" stroke="none"/></svg>
+            toca para explorar
+          </div>
+          <div class="cat-toggle hint-pulse" id="marcasToggle">+</div>
         </div>
         <div class="cat-body"><div class="cat-body-inner">
           <p style="color:rgba(255,255,255,.62);font-size:.93rem;font-weight:300;margin-bottom:1.5rem;line-height:1.9">Fotografía de platos, productos y ambiente. Desde el top 5 de tu menú hasta catálogos completos para delivery e Instagram.</p>
@@ -3035,7 +3327,7 @@ body, .contact-info p, .agenda-cta-text p,
           <p>Escríbenos y en menos de 24 horas te contactaremos<br>para confirmar tu fecha y horario ideal.</p>
         </div>
         <div class="agenda-cta-btn-wrap">
-          <a href="#" onclick="openCalendlyModal(event)" class="btn-glass primary">Preagenda ahora</a>
+          <a href="#como-agendar" class="btn-glass primary">Preagenda ahora</a>
         </div>
       </div>
     </div>
@@ -3050,6 +3342,63 @@ body, .contact-info p, .agenda-cta-text p,
 </div>
 
 <!-- CONTACTO -->
+<!-- PORTAFOLIO DEL FOTÓGRAFO -->
+<section id="fotografo">
+  <div class="container">
+    <div class="foto-grid reveal">
+
+      <!-- Left: bio -->
+      <div class="foto-bio">
+        <p class="section-label slide-left">Detrás del lente</p>
+        <h2 class="section-title slide-left">Nuestro fotógrafo</h2>
+        <div class="divider slide-left"></div>
+        <div class="foto-profile slide-up">
+          <div class="foto-avatar">
+            <img src="https://i.imgur.com/mtsZSGf.png"
+                 alt="Fotógrafo de Bolsillo Producciones"
+                 onerror="this.style.display='none'">
+          </div>
+          <div class="foto-meta">
+            <p class="foto-name">Anton Diaz</p>
+            <p class="foto-title">Fotógrafo principal</p>
+          </div>
+        </div>
+        <p class="foto-desc slide-up">Egresado de la carrera de Fotografía Profesional en Arcos, 2021. Con 26 años y una visión editorial que mezcla luz natural, estudio controlado y narrativa visual. Especializado en retratos, gastronomía y eventos sociales en Santiago.</p>
+        <div class="foto-stats slide-up">
+          <div class="foto-stat">
+            <span class="foto-stat-n">2021</span>
+            <span class="foto-stat-l">Egresado Arcos</span>
+          </div>
+          <div class="foto-stat">
+            <span class="foto-stat-n">10+</span>
+            <span class="foto-stat-l">años de experiencia</span>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Right: IG feed -->
+      <div class="foto-feed slide-right">
+        <div class="foto-feed-label">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>
+          @midori.tiff
+        </div>
+        <div data-behold-id="IiGsbQeN0BouSPRACpQG" class="behold-feed-container"></div>
+        <script>
+          (function() {
+            if (!window._beholdLoaded) {
+              const d=document,s=d.createElement("script");
+              s.type="module"; s.src="https://w.behold.so/widget.js";
+              d.head.append(s); window._beholdLoaded = true;
+            }
+          })();
+        </script>
+      </div>
+
+    </div>
+  </div>
+</section>
+
 <section id="contacto">
   <div class="container">
     <div class="contact-grid">
@@ -3113,63 +3462,6 @@ body, .contact-info p, .agenda-cta-text p,
           <div id="form-success" style="display:none;color:var(--mid);font-size:.82rem;margin-top:.5rem;font-style:italic">¡Mensaje enviado! Te contactamos en menos de 24 horas.</div>
         </form>
       </div>
-    </div>
-  </div>
-</section>
-
-<!-- PORTAFOLIO DEL FOTÓGRAFO -->
-<section id="fotografo">
-  <div class="container">
-    <div class="foto-grid reveal">
-
-      <!-- Left: bio -->
-      <div class="foto-bio">
-        <p class="section-label slide-left">Detrás del lente</p>
-        <h2 class="section-title slide-left">Nuestro fotógrafo</h2>
-        <div class="divider slide-left"></div>
-        <div class="foto-profile slide-up">
-          <div class="foto-avatar">
-            <img src="https://i.imgur.com/mtsZSGf.png"
-                 alt="Fotógrafo de Bolsillo Producciones"
-                 onerror="this.style.display='none'">
-          </div>
-          <div class="foto-meta">
-            <p class="foto-name">Anton Diaz</p>
-            <p class="foto-title">Fotógrafo principal</p>
-          </div>
-        </div>
-        <p class="foto-desc slide-up">Egresado de la carrera de Fotografía Profesional en Arcos, 2021. Con 26 años y una visión editorial que mezcla luz natural, estudio controlado y narrativa visual. Especializado en retratos, gastronomía y eventos sociales en Santiago.</p>
-        <div class="foto-stats slide-up">
-          <div class="foto-stat">
-            <span class="foto-stat-n">2021</span>
-            <span class="foto-stat-l">Egresado Arcos</span>
-          </div>
-          <div class="foto-stat">
-            <span class="foto-stat-n">10+</span>
-            <span class="foto-stat-l">años de experiencia</span>
-          </div>
-
-        </div>
-      </div>
-
-      <!-- Right: IG feed -->
-      <div class="foto-feed slide-right">
-        <div class="foto-feed-label">
-          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>
-          @midori.tiff
-        </div>
-        <div data-behold-id="IiGsbQeN0BouSPRACpQG" class="behold-feed-container"></div>
-        <script>
-          (function() {
-            if (!window._beholdLoaded) {
-              const d=document,s=d.createElement("script");
-              s.type="module"; s.src="https://w.behold.so/widget.js";
-              d.head.append(s); window._beholdLoaded = true;
-            }
-          })();
-        </script>
-      </div>
-
     </div>
   </div>
 </section>
@@ -3327,6 +3619,9 @@ if (_heroRight) {
 
 /* ── Accordion ── */
 function toggleCat(id) {
+  /* Dismiss the hint the first time any colapsable is opened */
+  document.body.classList.add('cat-opened');
+
   var item   = document.getElementById(id);
   var isOpen = item.classList.contains('open');
 
@@ -3544,6 +3839,106 @@ function acceptTcFromReader() {
   }
   update();
   setInterval(update, 1000);
+})();
+
+/* ── Cómo Agendar — controlled slider ── */
+(function() {
+  var track    = document.getElementById('agendarTrack');
+  var dotsWrap = document.getElementById('agendarDots');
+  var prevBtn  = document.getElementById('agendarPrev');
+  var nextBtn  = document.getElementById('agendarNext');
+  if (!track || !dotsWrap) return;
+
+  var cards   = Array.from(track.querySelectorAll('.agendar-card'));
+  var arrows  = Array.from(track.querySelectorAll('.agendar-arrow'));
+  var total   = cards.length;
+  var current = 0;
+
+  function unitWidth() {
+    return cards[0].offsetWidth + (arrows.length ? arrows[0].offsetWidth : 0);
+  }
+
+  function offsetOf(idx) {
+    var viewW = track.parentElement.offsetWidth;
+    var cw    = cards[0].offsetWidth;
+    return idx * unitWidth() - (viewW / 2 - cw / 2);
+  }
+
+  function render(animate) {
+    if (!animate) track.classList.add('no-transition');
+    track.style.transform = 'translateX(' + (-offsetOf(current)) + 'px)';
+    if (!animate) requestAnimationFrame(function() { track.classList.remove('no-transition'); });
+
+    cards.forEach(function(c, i) { c.classList.toggle('active', i === current); });
+    dotsWrap.querySelectorAll('.agendar-dot').forEach(function(d, i) {
+      d.classList.toggle('active', i === current);
+    });
+    if (prevBtn) prevBtn.disabled = current === 0;
+    if (nextBtn) nextBtn.disabled = current === total - 1;
+  }
+
+  // Build dots
+  cards.forEach(function(_, i) {
+    var d = document.createElement('div');
+    d.className = 'agendar-dot';
+    d.addEventListener('click', function() { window.agendarGo(null, i); });
+    dotsWrap.appendChild(d);
+  });
+
+  window.agendarGo = function(dir, target) {
+    if (target !== undefined && target !== null) {
+      current = Math.max(0, Math.min(total - 1, target));
+    } else {
+      current = Math.max(0, Math.min(total - 1, current + dir));
+    }
+    render(true);
+  };
+
+  // Click inactive card to jump to it
+  cards.forEach(function(card, i) {
+    card.addEventListener('click', function(e) {
+      if (i !== current && Math.abs(dragDelta) < 5) {
+        window.agendarGo(null, i);
+        e.stopPropagation();
+      }
+    });
+  });
+
+  // Drag/swipe
+  var dragStart = null, dragDelta = 0, baseOffset = 0;
+
+  function onStart(x) {
+    dragStart  = x;
+    dragDelta  = 0;
+    baseOffset = offsetOf(current);
+    track.classList.add('no-transition');
+    track.style.cursor = 'grabbing';
+  }
+  function onMove(x) {
+    if (dragStart === null) return;
+    dragDelta = x - dragStart;
+    track.style.transform = 'translateX(' + (-(baseOffset - dragDelta)) + 'px)';
+  }
+  function onEnd() {
+    if (dragStart === null) return;
+    dragStart = null;
+    track.classList.remove('no-transition');
+    track.style.cursor = 'grab';
+    var threshold = cards[0].offsetWidth * 0.2;
+    if      (dragDelta < -threshold && current < total - 1) current++;
+    else if (dragDelta >  threshold && current > 0)         current--;
+    render(true);
+  }
+
+  track.addEventListener('mousedown',  function(e) { onStart(e.clientX); e.preventDefault(); });
+  window.addEventListener('mousemove', function(e) { onMove(e.clientX); });
+  window.addEventListener('mouseup',   onEnd);
+  track.addEventListener('touchstart', function(e) { onStart(e.touches[0].clientX); }, { passive: true });
+  track.addEventListener('touchmove',  function(e) { onMove(e.touches[0].clientX); },  { passive: true });
+  track.addEventListener('touchend',   onEnd, { passive: true });
+
+  window.addEventListener('resize', function() { render(false); });
+  render(false);
 })();
 
 /* ── Calendly redirect modal ─────────── */
@@ -3798,11 +4193,37 @@ function submitBooking(e) {
 document.addEventListener('DOMContentLoaded', function() {
   /* Price cards */
   document.querySelectorAll('.price-card[data-selectable], .agenda-card-new[data-selectable]').forEach(function(card) {
+    // Inject hint into every card
+    if (!card.querySelector('.price-hint')) {
+      var hint = document.createElement('div');
+      hint.className = 'price-hint';
+      hint.dataset.default = 'toca para agregar';
+      hint.innerHTML = '<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 11V6a2 2 0 0 0-4 0v3M14 9V5a2 2 0 0 0-4 0v4M10 8.5V4a2 2 0 0 0-4 0v8l-1.7-1.7a1.5 1.5 0 0 0-2.1 2.1L4 16a6 6 0 0 0 6 6h2a6 6 0 0 0 6-6v-5"/></svg><span>toca para agregar</span>';
+      card.appendChild(hint);
+    }
     card.addEventListener('click', function(e) {
       if (e.target.closest('a, button')) return;
+      // Mark hints as seen
+      document.body.classList.add('price-opened');
       toggleCardSelection(card);
+      // Update hint text in this card based on selected state
+      _updateHintText(card);
     });
   });
+
+  function _updateHintText(card) {
+    var hint = card.querySelector('.price-hint');
+    if (!hint) return;
+    var span = hint.querySelector('span');
+    var svg  = hint.querySelector('svg');
+    if (card.classList.contains('selected')) {
+      if (span) span.textContent = '✓ Agregado';
+      if (svg)  svg.style.display = 'none';
+    } else {
+      if (span) span.textContent = 'toca para agregar';
+      if (svg)  svg.style.display = '';
+    }
+  }
 });
 
 
@@ -3871,6 +4292,13 @@ document.addEventListener('DOMContentLoaded', function() {
               var top = window.pageYOffset + target.getBoundingClientRect().top - navH;
               window.scrollTo({ top: top, behavior: 'smooth' });
             }, 80);
+          }
+        } else {
+          /* Open Retratos by default only if nothing else is already open */
+          var anyOpen = document.querySelector('.cat-item.open');
+          if (!anyOpen) {
+            var retratos = document.getElementById('cat-retratos');
+            if (retratos) retratos.classList.add('open');
           }
         }
       }, 700);
