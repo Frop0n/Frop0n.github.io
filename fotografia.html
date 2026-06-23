@@ -309,14 +309,7 @@ nav.scrolled {
 .hero-photo-ph span { font-family: var(--font-h); font-size: .8rem; font-weight: 300; color: rgba(255,255,255,.3); letter-spacing: .14em; }
 .hero-photo-ph .ph-hint { font-size: .62rem; font-weight: 300; color: rgba(255,255,255,.15); letter-spacing: .06em; }
 
-/* Old placeholder (kept for backwards compat) */
-.hero-subj-ph {
-  position: absolute; bottom: 0; height: 85%;
-  display: flex; align-items: flex-end; justify-content: center;
-  opacity: 0; transform: translateX(20px);
-  transition: opacity .7s ease, transform .7s ease;
-}
-.hero-subj-ph.active { opacity: 1; transform: translateX(0); }
+
 
 /* Arrow buttons */
 .hero-arrow {
@@ -1424,7 +1417,6 @@ footer {
   text-transform: uppercase;
   justify-content: flex-end;
 }
-.behold-placeholder { flex: 1; display: flex; flex-direction: column; gap: .8rem; }
 .ig-grid {
   display: grid;
   grid-template-columns: repeat(5, 1fr);
@@ -1772,13 +1764,56 @@ footer {
 .hc-prev { left: .8rem; }
 .hc-next { right: .8rem; }
 
-/* ── Behold feed container ── */
-.behold-feed-container,
-[data-behold-id] {
+/* ── Behance feed grid ── */
+.behance-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 4px;
   width: 100%;
-  flex: 1;
+  min-height: 300px;
 }
-
+.bh-item {
+  position: relative;
+  aspect-ratio: 1;
+  overflow: hidden;
+  border-radius: 4px;
+  display: block;
+}
+.bh-item img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  transition: transform .4s ease;
+}
+.bh-item:hover img { transform: scale(1.06); }
+.bh-title {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: flex-end;
+  padding: .5rem .6rem;
+  font-family: var(--font-h);
+  font-size: .52rem;
+  font-weight: 300;
+  letter-spacing: .1em;
+  color: rgba(255,255,255,.9);
+  background: linear-gradient(to top, rgba(0,0,0,.55) 0%, transparent 60%);
+  opacity: 0;
+  transition: opacity .25s;
+}
+.bh-item:hover .bh-title { opacity: 1; }
+.bh-ver-mas {
+  display: block;
+  text-align: center;
+  font-family: var(--font-h);
+  font-size: .6rem;
+  font-weight: 300;
+  letter-spacing: .18em;
+  color: var(--muted);
+  text-transform: uppercase;
+  padding: .6rem 0 .2rem;
+  transition: color .2s;
+}
+.bh-ver-mas:hover { color: var(--white); }
 
 /* ═══════════════════════════════════════
    SLIDE-IN ANIMATIONS
@@ -2362,11 +2397,7 @@ body, .contact-info p, .agenda-cta-text p,
   color: var(--muted);
   text-transform: uppercase;
 }
-.foto-feed .behold-feed-container,
-.foto-feed [data-behold-id] {
-  width: 100%;
-  min-height: 300px;
-}
+
 
 @media (max-width: 900px) {
   .foto-grid { grid-template-columns: 1fr; gap: 3rem; }
@@ -3387,22 +3418,51 @@ body.price-opened .price-hint { /* already handled above */ }
         </div>
       </div>
 
-      <!-- Right: IG feed -->
+      <!-- Right: Behance feed -->
       <div class="foto-feed slide-right">
         <div class="foto-feed-label">
-          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>
-          @midori.tiff
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 3h7v2H3zM14 3h7v2h-7z"/><path d="M3 7h7c0 0 3 0 3 3s-3 3-3 3H3V7z"/><path d="M3 13h8c0 0 4 0 4 4s-4 4-4 4H3v-8z"/><path d="M14 10h7M14 14c0-2.2 1.8-4 4-4s3.5 1.3 3.9 3"/></svg>
+          behance / antondiaz
         </div>
-        <div data-behold-id="IiGsbQeN0BouSPRACpQG" class="behold-feed-container"></div>
-        <script>
-          (function() {
-            if (!window._beholdLoaded) {
-              const d=document,s=d.createElement("script");
-              s.type="module"; s.src="https://w.behold.so/widget.js";
-              d.head.append(s); window._beholdLoaded = true;
-            }
-          })();
-        </script>
+        <div class="behance-grid">
+          <a class="bh-item" href="https://www.behance.net/gallery/250988855/AKUTOANGEL" target="_blank" rel="noopener">
+            <img src="https://mir-s3-cdn-cf.behance.net/projects/404/cc5314250988855.Y3JvcCw1MTEzLDQwMDAsNDQzLDA.jpg" alt="AKUTOANGEL" loading="lazy">
+            <span class="bh-title">AKUTOANGEL</span>
+          </a>
+          <a class="bh-item" href="https://www.behance.net/gallery/250988497/KALA-2" target="_blank" rel="noopener">
+            <img src="https://mir-s3-cdn-cf.behance.net/projects/404/740d7a250988497.Y3JvcCw1MTEzLDQwMDAsNDQzLDA.jpg" alt="KALA 2" loading="lazy">
+            <span class="bh-title">KALA 2</span>
+          </a>
+          <a class="bh-item" href="https://www.behance.net/gallery/250988383/KALA" target="_blank" rel="noopener">
+            <img src="https://mir-s3-cdn-cf.behance.net/projects/404/7d951b250988383.Y3JvcCw0OTAyLDM4MzUsNDI0LDA.jpg" alt="KALA" loading="lazy">
+            <span class="bh-title">KALA</span>
+          </a>
+          <a class="bh-item" href="https://www.behance.net/gallery/250988283/IDOL" target="_blank" rel="noopener">
+            <img src="https://mir-s3-cdn-cf.behance.net/projects/404/1d49a9250988283.Y3JvcCwzOTk5LDMxMjgsMCwxNDM1.jpg" alt="IDOL" loading="lazy">
+            <span class="bh-title">IDOL</span>
+          </a>
+          <a class="bh-item" href="https://www.behance.net/gallery/250987951/Portafolio-Gastronomico" target="_blank" rel="noopener">
+            <img src="https://mir-s3-cdn-cf.behance.net/projects/404/b68959250987951.Y3JvcCw1MTEzLDQwMDAsNDQzLDA.jpg" alt="Portafolio Gastronómico" loading="lazy">
+            <span class="bh-title">Portafolio Gastronómico</span>
+          </a>
+          <a class="bh-item" href="https://www.behance.net/gallery/223174479/Marcille-Dungeon-Meshi" target="_blank" rel="noopener">
+            <img src="https://mir-s3-cdn-cf.behance.net/projects/404/ef4558223174479.Y3JvcCwzOTk5LDMxMjgsMCwxNDM1.png" alt="Marcille Dungeon Meshi" loading="lazy">
+            <span class="bh-title">Marcille Dungeon Meshi</span>
+          </a>
+          <a class="bh-item" href="https://www.behance.net/gallery/222842115/Tarde-en-la-playa" target="_blank" rel="noopener">
+            <img src="https://mir-s3-cdn-cf.behance.net/projects/404/a6e233222842115.Y3JvcCw0ODE0LDM3NjYsNDE3LDA.png" alt="Tarde en la playa" loading="lazy">
+            <span class="bh-title">Tarde en la playa</span>
+          </a>
+          <a class="bh-item" href="https://www.behance.net/gallery/187072775/Unidad-Familiar" target="_blank" rel="noopener">
+            <img src="https://mir-s3-cdn-cf.behance.net/projects/404/437b7b187072775.Y3JvcCw0NTc2LDM1NzksMCw4OTQ.jpg" alt="Unidad Familiar" loading="lazy">
+            <span class="bh-title">Unidad Familiar</span>
+          </a>
+          <a class="bh-item" href="https://www.behance.net/gallery/214569693/Tarde-en-el-parque" target="_blank" rel="noopener">
+            <img src="https://mir-s3-cdn-cf.behance.net/projects/404/2c3721214569693.Y3JvcCwyOTQ5LDIzMDcsNTI1LDE3OTY.jpg" alt="Tarde en el parque" loading="lazy">
+            <span class="bh-title">Tarde en el parque</span>
+          </a>
+        </div>
+        <a class="bh-ver-mas" href="https://www.behance.net/antondiaz" target="_blank" rel="noopener">Ver portafolio completo →</a>
       </div>
 
     </div>
@@ -3506,11 +3566,16 @@ body.price-opened .price-hint { /* already handled above */ }
 (function() {
   const canvas = document.getElementById('galaxy');
   const ctx = canvas.getContext('2d');
-  let W, H, particles = [], animId;
+  let W, H, particles = [], animId, blobs = [];
 
   function resize() {
     W = canvas.width  = window.innerWidth;
     H = canvas.height = window.innerHeight;
+    blobs = [
+      { x: W*.18, y: H*.28, r: Math.min(W,H)*.38, a: .022 },
+      { x: W*.82, y: H*.65, r: Math.min(W,H)*.32, a: .018 },
+      { x: W*.5,  y: H*.5,  r: Math.min(W,H)*.25, a: .012 },
+    ];
   }
 
   function Particle() {
@@ -3538,11 +3603,6 @@ body.price-opened .price-hint { /* already handled above */ }
     ctx.clearRect(0, 0, W, H);
 
     /* nebula gradient blobs */
-    const blobs = [
-      { x: W*.18, y: H*.28, r: Math.min(W,H)*.38, a: .022 },
-      { x: W*.82, y: H*.65, r: Math.min(W,H)*.32, a: .018 },
-      { x: W*.5,  y: H*.5,  r: Math.min(W,H)*.25, a: .012 },
-    ];
     blobs.forEach(b => {
       const g = ctx.createRadialGradient(b.x,b.y,0, b.x,b.y,b.r);
       g.addColorStop(0, `rgba(255,255,255,${b.a})`);
@@ -3596,7 +3656,7 @@ function toggleMobile() {
 }
 
 /* ── Hero rotator ────────────────────── */
-const subjects = document.querySelectorAll('.hero-photo, .hero-subj-ph, .hero-subject');
+const subjects = document.querySelectorAll('.hero-photo, .hero-subject');
 const dots = document.querySelectorAll('.hero-dot');
 let current = 0, autoTimer;
 
@@ -3799,9 +3859,8 @@ function _checkBookingReady() {
   btn.disabled = !allValid;
 }
 
-function toggleBookingSubmit() {
-  _checkBookingReady();
-}
+
+
 
 /* Live validation — show error only after user leaves the field */
 document.addEventListener('DOMContentLoaded', function() {
@@ -3831,17 +3890,7 @@ document.addEventListener('DOMContentLoaded', function() {
   }
 });
 
-function openTcReader() {
-  document.getElementById('tcReaderModal').classList.add('open');
-  document.body.classList.add('scroll-locked');
-  var scroll = document.querySelector('.tc-reader-scroll');
-  if (scroll) scroll.scrollTop = 0;
-}
 
-function closeTcReader() {
-  document.getElementById('tcReaderModal').classList.remove('open');
-  document.body.classList.remove('scroll-locked');
-}
 
 function acceptTcFromReader() {
   closeTcReader();
@@ -3871,7 +3920,7 @@ function acceptTcFromReader() {
     var h = Math.floor((diff % 86400000) / 3600000);
     var m = Math.floor((diff % 3600000) / 60000);
     var s = Math.floor((diff % 60000) / 1000);
-    function pad(n) { return n < 10 ? '0' + n : '' + n; }
+    function pad(n) { return n.toString().padStart(2, '0'); }
     var dEl = document.getElementById('cdDays');
     var hEl = document.getElementById('cdHours');
     var mEl = document.getElementById('cdMins');
@@ -3985,16 +4034,25 @@ function acceptTcFromReader() {
   render(false);
 })();
 
-/* ── Calendly redirect modal ─────────── */
-function openCalendlyModal(e) {
-  if (e) e.preventDefault();
-  document.getElementById('calendlyModal').classList.add('open');
+/* ── Modal helpers ───────────────────── */
+function openModal(id) {
+  document.getElementById(id).classList.add('open');
   document.body.classList.add('scroll-locked');
 }
-function closeCalendlyModal() {
-  document.getElementById('calendlyModal').classList.remove('open');
+function closeModal(id) {
+  document.getElementById(id).classList.remove('open');
   document.body.classList.remove('scroll-locked');
 }
+
+function openCalendlyModal(e) { if (e) e.preventDefault(); openModal('calendlyModal'); }
+function closeCalendlyModal() { closeModal('calendlyModal'); }
+
+function openTcReader() {
+  openModal('tcReaderModal');
+  var scroll = document.querySelector('.tc-reader-scroll');
+  if (scroll) scroll.scrollTop = 0;
+}
+function closeTcReader() { closeModal('tcReaderModal'); }
 // Close modals on overlay click
 const _cModal = document.getElementById('calendlyModal');
 if (_cModal) _cModal.addEventListener('click', function(e) {
@@ -4004,15 +4062,6 @@ if (_cModal) _cModal.addEventListener('click', function(e) {
 document.addEventListener('keydown', function(e) {
   if (e.key === 'Escape') closeCalendlyModal();
 });
-
-/* ── Form submit toggle ──────────────── */
-function toggleSubmit() {
-  const cb = document.getElementById('tcCheck');
-  const btn = document.getElementById('submitBtn');
-  if (!btn) return;
-  btn.disabled = !cb.checked;
-  btn.classList.toggle('form-submit-disabled', !cb.checked);
-}
 
 
 
@@ -4515,7 +4564,7 @@ function handleForm(e) {
       <label class="booking-label">¿Qué tienes en mente?</label>
       <textarea class="booking-input" id="bNotes" rows="3" placeholder="Cuéntanos lo que necesitas..." style="resize:none;min-height:72px"></textarea>
       <label class="booking-tc-wrap">
-        <input type="checkbox" class="booking-tc-input" id="bookingTcCheck" onchange="toggleBookingSubmit()">
+        <input type="checkbox" class="booking-tc-input" id="bookingTcCheck" onchange="_checkBookingReady()">
         <span class="booking-tc-label">He leído y acepto los <a href="terminos.html" target="_blank" rel="noopener">Términos y Condiciones</a> de Bolsillo Producciones.</span>
       </label>
       <button type="submit" class="booking-submit" id="bookingSubmitBtn" disabled>Ir a Calendly →</button>
