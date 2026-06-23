@@ -1,203 +1,573 @@
 <!DOCTYPE html>
-<html>
+<html lang="es">
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<title>Subir Reel — Bolsillo</title>
 <link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@300;400;600&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@ionic/core/css/ionic.bundle.css">
+<script type="module" src="https://cdn.jsdelivr.net/npm/@ionic/core/dist/ionic/ionic.esm.js"></script>
+<script nomodule src="https://cdn.jsdelivr.net/npm/@ionic/core/dist/ionic/ionic.js"></script>
 <style>
-*{box-sizing:border-box;margin:0;padding:0}
-body{background:#050506;font-family:'DM Sans',sans-serif;color:#F8F8F8;min-height:100vh}
-.wrap{max-width:640px;margin:0 auto;padding:48px 28px 56px}
-.header{text-align:center;margin-bottom:44px}
-.logo-label{font-family:'Unbounded',sans-serif;font-size:10px;letter-spacing:.22em;color:rgba(255,255,255,.3);text-transform:uppercase;margin-bottom:14px}
-.title{font-family:'Unbounded',sans-serif;font-size:22px;font-weight:600;line-height:1.2;color:#F8F8F8;margin-bottom:8px}
-.subtitle{font-size:14px;font-weight:300;color:rgba(255,255,255,.5);line-height:1.6}
-.divider{width:32px;height:1px;background:rgba(255,255,255,.25);margin:18px auto 0}
+  :root {
+    --bg: #050506;
+    --white: #F8F8F8;
+    --mid: rgba(255,255,255,.5);
+    --muted: rgba(255,255,255,.28);
+    --border: rgba(255,255,255,.1);
+    --glass: rgba(255,255,255,.05);
+    --green: #4ade80;
+    --green-dim: rgba(74,222,128,.07);
+    --green-border: rgba(74,222,128,.3);
+    --yellow-dim: rgba(255,200,50,.05);
+    --yellow-border: rgba(255,200,50,.2);
+    --font-h: 'Unbounded', sans-serif;
+    --font-b: 'DM Sans', sans-serif;
+  }
 
-.steps{display:flex;flex-direction:column;gap:0}
-.step{display:flex;gap:0;position:relative}
-.step-left{display:flex;flex-direction:column;align-items:center;width:52px;flex-shrink:0}
-.step-num{width:36px;height:36px;border-radius:50%;border:1px solid rgba(255,255,255,.2);display:flex;align-items:center;justify-content:center;font-family:'Unbounded',sans-serif;font-size:10px;font-weight:400;letter-spacing:.1em;color:rgba(255,255,255,.5);flex-shrink:0;background:#050506;position:relative;z-index:1}
-.step-num.accent{border-color:rgba(74,222,128,.5);color:#4ade80;background:rgba(74,222,128,.06)}
-.step-line{width:1px;flex:1;background:rgba(255,255,255,.1);margin:4px 0}
-.step-line.last{display:none}
-.step-content{padding:0 0 32px 18px;flex:1}
-.step-tag{font-family:'Unbounded',sans-serif;font-size:8px;letter-spacing:.18em;text-transform:uppercase;color:rgba(255,255,255,.3);margin-bottom:6px}
-.step-title{font-family:'Unbounded',sans-serif;font-size:14px;font-weight:600;color:#F8F8F8;margin-bottom:8px;line-height:1.3}
-.step-desc{font-size:13px;font-weight:300;color:rgba(255,255,255,.6);line-height:1.75}
-.step-desc strong{color:rgba(255,255,255,.85);font-weight:500}
+  * { box-sizing: border-box; margin: 0; padding: 0; }
 
-.step-card{margin-top:12px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.09);border-radius:12px;padding:14px 16px}
-.card-row{display:flex;align-items:center;gap:10px;font-size:12px;color:rgba(255,255,255,.5);padding:5px 0;border-bottom:1px solid rgba(255,255,255,.06)}
-.card-row:last-child{border-bottom:none}
-.card-icon{width:28px;height:28px;border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0}
-.card-icon.wt{background:rgba(50,200,150,.12);color:#32c896}
-.card-icon.wa{background:rgba(37,211,102,.12);color:#25D366}
-.card-icon.gd{background:rgba(66,133,244,.12);color:#4285F4}
-.card-text{flex:1}
-.card-text span{display:block;font-size:11px;color:rgba(255,255,255,.3);margin-top:1px}
+  ion-app { background: var(--bg); }
 
-.pill-row{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}
-.pill{font-family:'Unbounded',sans-serif;font-size:8px;letter-spacing:.1em;padding:5px 11px;border-radius:20px;border:1px solid rgba(255,255,255,.15);color:rgba(255,255,255,.5)}
-.pill.green{border-color:rgba(74,222,128,.35);color:#4ade80;background:rgba(74,222,128,.07)}
+  ion-content {
+    --background: transparent;
+    --padding-bottom: 120px;
+  }
 
-.meta-card{margin-top:12px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.09);border-radius:12px;padding:14px 16px;display:flex;align-items:center;gap:12px}
-.meta-logo{width:38px;height:38px;border-radius:9px;background:linear-gradient(135deg,#833ab4,#fd1d1d,#fcb045);display:flex;align-items:center;justify-content:center;color:#fff;font-size:10px;font-family:'Unbounded',sans-serif;font-weight:600;letter-spacing:.05em;flex-shrink:0}
-.meta-info{flex:1}
-.meta-name{font-family:'Unbounded',sans-serif;font-size:12px;font-weight:600;color:#F8F8F8}
-.meta-sub{font-size:11px;color:rgba(255,255,255,.4);margin-top:2px}
+  /* Galaxy canvas */
+  #galaxy {
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+  }
 
-.export-card{margin-top:12px;background:rgba(74,222,128,.06);border:1px solid rgba(74,222,128,.2);border-radius:12px;padding:14px 16px}
-.export-row{display:flex;justify-content:space-between;align-items:center;padding:4px 0}
-.export-label{font-size:12px;color:rgba(255,255,255,.45)}
-.export-val{font-family:'Unbounded',sans-serif;font-size:11px;color:#4ade80;letter-spacing:.06em}
+  /* Subtle nebula glow */
+  body::after {
+    content: '';
+    position: fixed; inset: 0; z-index: 1; pointer-events: none;
+    background:
+      radial-gradient(ellipse 70% 50% at 20% 30%, rgba(255,255,255,.03) 0%, transparent 60%),
+      radial-gradient(ellipse 60% 70% at 80% 70%, rgba(255,255,255,.025) 0%, transparent 55%);
+  }
 
-.tip-box{margin-top:12px;background:rgba(255,200,50,.05);border:1px solid rgba(255,200,50,.2);border-radius:10px;padding:11px 14px;display:flex;gap:10px;align-items:flex-start}
-.tip-icon{font-size:14px;flex-shrink:0;margin-top:1px}
-.tip-text{font-size:12px;color:rgba(255,255,255,.5);line-height:1.65}
-.tip-text strong{color:rgba(255,210,50,.8);font-weight:500}
+  .page-wrap {
+    position: relative;
+    z-index: 2;
+    max-width: 540px;
+    margin: 0 auto;
+    padding: 48px 20px 32px;
+  }
 
-.footer{margin-top:40px;padding-top:24px;border-top:1px solid rgba(255,255,255,.08);text-align:center}
-.footer-brand{font-family:'Unbounded',sans-serif;font-size:10px;letter-spacing:.2em;color:rgba(255,255,255,.2);text-transform:uppercase}
-.footer-sub{font-size:12px;color:rgba(255,255,255,.25);margin-top:6px}
+  /* Header */
+  .header {
+    text-align: center;
+    margin-bottom: 40px;
+  }
+  .logo-wrap {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+  }
+  .logo-wrap img {
+    height: 48px;
+    width: auto;
+    opacity: .88;
+  }
+  .footer-logo img {
+    height: 26px; width: auto;
+    opacity: .25;
+  }
+  .logo-text {
+    font-family: var(--font-h);
+    font-size: 10px;
+    letter-spacing: .22em;
+    color: var(--muted);
+    text-transform: uppercase;
+    margin-bottom: 14px;
+  }
+  .title {
+    font-family: var(--font-h);
+    font-size: clamp(18px, 5vw, 24px);
+    font-weight: 600;
+    line-height: 1.2;
+    color: var(--white);
+    margin-bottom: 10px;
+  }
+  .subtitle {
+    font-family: var(--font-b);
+    font-size: 14px;
+    font-weight: 300;
+    color: var(--mid);
+    line-height: 1.6;
+  }
+  .divider {
+    width: 32px;
+    height: 1px;
+    background: rgba(255,255,255,.25);
+    margin: 18px auto 0;
+  }
+
+  /* WhatsApp CTA — top */
+  .wa-cta-top {
+    margin-bottom: 36px;
+    display: flex;
+    justify-content: center;
+  }
+  .wa-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(37,211,102,.1);
+    border: 1px solid rgba(37,211,102,.35);
+    border-radius: 40px;
+    padding: 10px 20px;
+    font-family: var(--font-h);
+    font-size: 10px;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    color: #25D366;
+    text-decoration: none;
+    transition: background .2s, border-color .2s;
+  }
+  .wa-btn:hover, .wa-btn:active {
+    background: rgba(37,211,102,.18);
+    border-color: rgba(37,211,102,.6);
+  }
+  .wa-btn svg { flex-shrink: 0; }
+
+  /* Steps */
+  .steps { display: flex; flex-direction: column; }
+
+  .step { display: flex; gap: 0; position: relative; }
+
+  .step-left {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 48px;
+    flex-shrink: 0;
+  }
+  .step-num {
+    width: 34px; height: 34px;
+    border-radius: 50%;
+    border: 1px solid rgba(255,255,255,.2);
+    display: flex; align-items: center; justify-content: center;
+    font-family: var(--font-h);
+    font-size: 9px; font-weight: 400; letter-spacing: .1em;
+    color: var(--muted);
+    flex-shrink: 0;
+    background: var(--bg);
+    position: relative; z-index: 1;
+    transition: border-color .3s, color .3s;
+  }
+  .step-num.accent {
+    border-color: var(--green-border);
+    color: var(--green);
+    background: var(--green-dim);
+  }
+  .step-line {
+    width: 1px; flex: 1;
+    background: var(--border);
+    margin: 4px 0;
+  }
+  .step-line.last { display: none; }
+
+  .step-content { padding: 0 0 28px 16px; flex: 1; }
+
+  .step-tag {
+    font-family: var(--font-h);
+    font-size: 7px; letter-spacing: .2em; text-transform: uppercase;
+    color: var(--muted); margin-bottom: 5px;
+  }
+  .step-title {
+    font-family: var(--font-h);
+    font-size: 13px; font-weight: 600;
+    color: var(--white); margin-bottom: 8px; line-height: 1.3;
+  }
+  .step-desc {
+    font-family: var(--font-b);
+    font-size: 13px; font-weight: 300;
+    color: rgba(255,255,255,.6); line-height: 1.75;
+  }
+  .step-desc strong { color: rgba(255,255,255,.88); font-weight: 500; }
+
+  /* Cards */
+  .step-card {
+    margin-top: 12px;
+    background: var(--glass);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 12px 14px;
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+  }
+  .card-row {
+    display: flex; align-items: center; gap: 10px;
+    font-family: var(--font-b);
+    font-size: 12px; color: var(--mid);
+    padding: 6px 0;
+    border-bottom: 1px solid rgba(255,255,255,.06);
+  }
+  .card-row:last-child { border-bottom: none; }
+  .card-icon {
+    width: 28px; height: 28px; border-radius: 7px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 13px; flex-shrink: 0;
+  }
+  .card-icon.wt { background: rgba(50,200,150,.12); color: #32c896; }
+  .card-icon.wa-icon { background: rgba(37,211,102,.12); color: #25D366; }
+  .card-icon.gd { background: rgba(66,133,244,.12); color: #4285F4; }
+  .card-text { flex: 1; font-size: 12px; color: var(--mid); }
+  .card-text span { display: block; font-size: 11px; color: rgba(255,255,255,.28); margin-top: 1px; }
+
+  /* Pills */
+  .pill-row { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 10px; }
+  .pill {
+    font-family: var(--font-h);
+    font-size: 8px; letter-spacing: .1em;
+    padding: 5px 11px; border-radius: 20px;
+    border: 1px solid rgba(255,255,255,.15);
+    color: rgba(255,255,255,.45);
+  }
+  .pill.green {
+    border-color: var(--green-border);
+    color: var(--green);
+    background: var(--green-dim);
+  }
+
+  /* Meta app card */
+  .meta-card {
+    margin-top: 12px;
+    background: var(--glass);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 12px 14px;
+    display: flex; align-items: center; gap: 12px;
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+  }
+  .meta-logo {
+    width: 38px; height: 38px; border-radius: 10px;
+    background: linear-gradient(135deg, #833ab4, #fd1d1d, #fcb045);
+    display: flex; align-items: center; justify-content: center;
+    color: #fff; font-size: 10px;
+    font-family: var(--font-h); font-weight: 600;
+    flex-shrink: 0;
+  }
+  .meta-name { font-family: var(--font-h); font-size: 12px; font-weight: 600; color: var(--white); }
+  .meta-sub { font-family: var(--font-b); font-size: 11px; color: rgba(255,255,255,.38); margin-top: 2px; }
+
+  /* Export card */
+  .export-card {
+    margin-top: 12px;
+    background: rgba(74,222,128,.06);
+    border: 1px solid var(--green-border);
+    border-radius: 14px;
+    padding: 12px 14px;
+  }
+  .export-row {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 4px 0;
+    border-bottom: 1px solid rgba(74,222,128,.1);
+  }
+  .export-row:last-child { border-bottom: none; }
+  .export-label { font-family: var(--font-b); font-size: 12px; color: rgba(255,255,255,.45); }
+  .export-val { font-family: var(--font-h); font-size: 10px; color: var(--green); letter-spacing: .06em; }
+
+  /* Tip box */
+  .tip-box {
+    margin-top: 12px;
+    background: var(--yellow-dim);
+    border: 1px solid var(--yellow-border);
+    border-radius: 10px;
+    padding: 11px 13px;
+    display: flex; gap: 9px; align-items: flex-start;
+  }
+  .tip-icon { font-size: 13px; flex-shrink: 0; margin-top: 1px; }
+  .tip-text { font-family: var(--font-b); font-size: 12px; color: rgba(255,255,255,.5); line-height: 1.65; }
+  .tip-text strong { color: rgba(255,210,50,.85); font-weight: 500; }
+
+  /* Footer */
+  .footer {
+    margin-top: 36px;
+    padding-top: 22px;
+    border-top: 1px solid rgba(255,255,255,.08);
+    text-align: center;
+    display: flex; flex-direction: column; align-items: center; gap: 8px;
+  }
+
+  .footer-sub {
+    font-family: var(--font-b);
+    font-size: 11px; color: rgba(255,255,255,.22);
+  }
+
+  /* Floating WhatsApp button */
+  .wa-fab {
+    position: fixed;
+    bottom: calc(24px + env(safe-area-inset-bottom));
+    right: 20px;
+    z-index: 100;
+    display: flex; align-items: center; gap: 8px;
+    background: #25D366;
+    color: #fff;
+    border-radius: 40px;
+    padding: 12px 20px;
+    font-family: var(--font-h);
+    font-size: 9px; letter-spacing: .1em; text-transform: uppercase;
+    text-decoration: none;
+    box-shadow: 0 4px 24px rgba(37,211,102,.3);
+    transition: transform .2s, box-shadow .2s;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .wa-fab:active { transform: scale(.96); box-shadow: 0 2px 12px rgba(37,211,102,.25); }
+  .wa-fab svg { flex-shrink: 0; }
 </style>
 </head>
 <body>
-<div class="wrap">
 
-  <div class="header">
-    <div class="logo-label">Bolsillo Producciones</div>
-    <h1 class="title">Cómo subir tu Reel<br>a Instagram</h1>
-    <p class="subtitle">Sigue estos pasos para publicar tu video<br>con la máxima calidad posible.</p>
-    <div class="divider"></div>
-  </div>
+<ion-app>
+  <ion-content fullscreen>
+    <canvas id="galaxy"></canvas>
 
-  <div class="steps">
+    <div class="page-wrap">
 
-    <!-- Step 1 -->
-    <div class="step">
-      <div class="step-left">
-        <div class="step-num">01</div>
-        <div class="step-line"></div>
+      <!-- Header -->
+      <div class="header">
+        <div class="logo-wrap">
+          <img src="LOGO_BLANCO.png" alt="Bolsillo Producciones"
+               onerror="this.style.display='none';document.querySelector('.logo-text').style.display='block'">
+        </div>
+        <div class="logo-text" style="display:none">Bolsillo Producciones</div>
+        <h1 class="title">Cómo subir tu Reel<br>a Instagram</h1>
+        <p class="subtitle">Sigue estos pasos para publicar<br>con la máxima calidad posible.</p>
+        <div class="divider"></div>
       </div>
-      <div class="step-content">
-        <div class="step-tag">Recepción</div>
-        <div class="step-title">Recibe el archivo editado</div>
-        <div class="step-desc">Te enviaremos el Reel terminado por uno de estos canales. El archivo estará listo para descargar directamente a tu teléfono.</div>
-        <div class="step-card">
-          <div class="card-row">
-            <div class="card-icon wt">⇩</div>
-            <div class="card-text">WeTransfer<span>Link de descarga por correo o WhatsApp</span></div>
+
+      <!-- Steps -->
+      <div class="steps">
+
+        <!-- 01 -->
+        <div class="step">
+          <div class="step-left">
+            <div class="step-num">01</div>
+            <div class="step-line"></div>
           </div>
-          <div class="card-row">
-            <div class="card-icon gd">▲</div>
-            <div class="card-text">Google Drive<span>Carpeta compartida — descarga directa</span></div>
-          </div>
-          <div class="card-row">
-            <div class="card-icon wa">✦</div>
-            <div class="card-text">WhatsApp<span>Archivo adjunto — guardar en galería</span></div>
+          <div class="step-content">
+            <div class="step-tag">Recepción</div>
+            <div class="step-title">Recibe el archivo editado</div>
+            <div class="step-desc">Te enviaremos el Reel terminado por uno de estos canales. Estará listo para descargar directo a tu teléfono.</div>
+            <div class="step-card">
+              <div class="card-row">
+                <div class="card-icon wt">⇩</div>
+                <div class="card-text">WeTransfer<span>Link de descarga por correo o WhatsApp</span></div>
+              </div>
+              <div class="card-row">
+                <div class="card-icon gd">▲</div>
+                <div class="card-text">Google Drive<span>Carpeta compartida — descarga directa</span></div>
+              </div>
+              <div class="card-row">
+                <div class="card-icon wa-icon">✦</div>
+                <div class="card-text">WhatsApp<span>Archivo adjunto — guardar en galería</span></div>
+              </div>
+            </div>
+            <div class="tip-box">
+              <div class="tip-icon">⚠</div>
+              <div class="tip-text"><strong>Importante:</strong> si recibes el video por WhatsApp, descárgalo como <strong>documento</strong>, no como video. Esto preserva la calidad original.</div>
+            </div>
           </div>
         </div>
-        <div class="tip-box">
-          <div class="tip-icon">⚠</div>
-          <div class="tip-text"><strong>Importante:</strong> si recibes el video por WhatsApp, descárgalo como <strong>documento</strong>, no como imagen o video comprimido. Esto preserva la calidad original.</div>
+
+        <!-- 02 -->
+        <div class="step">
+          <div class="step-left">
+            <div class="step-num">02</div>
+            <div class="step-line"></div>
+          </div>
+          <div class="step-content">
+            <div class="step-tag">Descarga</div>
+            <div class="step-title">Descarga el video a tu teléfono</div>
+            <div class="step-desc">Asegúrate de que el archivo quede guardado en tu galería o en "Archivos" antes de continuar. <strong>No lo abras directo desde la app</strong> — descárgalo primero.</div>
+            <div class="pill-row">
+              <span class="pill">Galería / Fotos</span>
+              <span class="pill">Archivos / Descargas</span>
+              <span class="pill green">✓ Video guardado</span>
+            </div>
+          </div>
         </div>
+
+        <!-- 03 -->
+        <div class="step">
+          <div class="step-left">
+            <div class="step-num">03</div>
+            <div class="step-line"></div>
+          </div>
+          <div class="step-content">
+            <div class="step-tag">Aplicación</div>
+            <div class="step-title">Abre Meta Edits e importa el video</div>
+            <div class="step-desc">Descarga <strong>Meta Edits</strong> si aún no la tienes. Toca <strong>"+"</strong> o "Nuevo proyecto" y selecciona el video descargado.</div>
+            <div class="meta-card">
+              <div class="meta-logo">Ed</div>
+              <div>
+                <div class="meta-name">Meta Edits</div>
+                <div class="meta-sub">App Store y Google Play · Gratis</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 04 -->
+        <div class="step">
+          <div class="step-left">
+            <div class="step-num accent">04</div>
+            <div class="step-line"></div>
+          </div>
+          <div class="step-content">
+            <div class="step-tag">Exportar</div>
+            <div class="step-title">Exporta en 4K desde Edits</div>
+            <div class="step-desc">Este paso es <strong>fundamental</strong>. Exportar desde Edits preserva la calidad máxima y evita la compresión automática de Instagram.</div>
+            <div class="export-card">
+              <div class="export-row">
+                <span class="export-label">Resolución</span>
+                <span class="export-val">4K (2160p)</span>
+              </div>
+              <div class="export-row">
+                <span class="export-label">Formato</span>
+                <span class="export-val">MP4 / H.264</span>
+              </div>
+              <div class="export-row">
+                <span class="export-label">Destino</span>
+                <span class="export-val">Directo a Instagram</span>
+              </div>
+            </div>
+            <div class="tip-box">
+              <div class="tip-icon">★</div>
+              <div class="tip-text">Toca <strong>"Compartir" → "Instagram Reels"</strong> desde Edits. Evita una recompresión extra y el Reel se ve exactamente como lo editamos.</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 05 -->
+        <div class="step">
+          <div class="step-left">
+            <div class="step-num accent">05</div>
+            <div class="step-line last"></div>
+          </div>
+          <div class="step-content">
+            <div class="step-tag">Publicar</div>
+            <div class="step-title">Publica en Instagram como Reel</div>
+            <div class="step-desc">Instagram se abrirá con el video listo. Agrega caption, hashtags, música si quieres, y toca <strong>Compartir</strong>. ¡Listo!</div>
+            <div class="pill-row">
+              <span class="pill">Caption + hashtags</span>
+              <span class="pill">Portada del Reel</span>
+              <span class="pill green">↑ Publicar</span>
+            </div>
+          </div>
+        </div>
+
       </div>
+
+      <!-- Footer -->
+      <div class="footer">
+        <div class="footer-logo">
+          <img src="LOGO_BLANCO.png" alt="Bolsillo"
+               onerror="this.parentElement.innerHTML='<span style=\'font-family:var(--font-h);font-size:9px;letter-spacing:.18em;color:rgba(255,255,255,.2)\'>BOLSILLO</span>'">
+        </div>
+        <div class="footer-sub">¿Dudas? Escríbenos antes de publicar.</div>
+      </div>
+
     </div>
+  </ion-content>
+</ion-app>
 
-    <!-- Step 2 -->
-    <div class="step">
-      <div class="step-left">
-        <div class="step-num">02</div>
-        <div class="step-line"></div>
-      </div>
-      <div class="step-content">
-        <div class="step-tag">Descarga</div>
-        <div class="step-title">Descarga el video a tu teléfono</div>
-        <div class="step-desc">Asegúrate de que el archivo quede guardado en tu galería o en "Archivos" antes de continuar. <strong>No lo abras directo desde la app</strong> — descárgalo primero.</div>
-        <div class="pill-row">
-          <span class="pill">Galería / Fotos</span>
-          <span class="pill">Archivos / Descargas</span>
-          <span class="pill green">✓ Video guardado</span>
-        </div>
-      </div>
-    </div>
+<!-- Floating WhatsApp button -->
+<a class="wa-fab"
+   href="https://wa.me/56982591098?text=Hola%2C%20estaba%20revisando%20la%20guía%20de%20subida%20de%20contenido%20y%20tengo%20una%20consulta"
+   target="_blank" rel="noopener">
+  <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+    <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/>
+    <path d="M12 0C5.373 0 0 5.373 0 12c0 2.123.554 4.116 1.523 5.843L.057 23.486a.5.5 0 0 0 .613.633l5.798-1.521A11.95 11.95 0 0 0 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22a9.95 9.95 0 0 1-5.073-1.384l-.36-.214-3.742.982.999-3.648-.235-.374A9.96 9.96 0 0 1 2 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/>
+  </svg>
+  Consultar por WhatsApp
+</a>
 
-    <!-- Step 3 -->
-    <div class="step">
-      <div class="step-left">
-        <div class="step-num">03</div>
-        <div class="step-line"></div>
-      </div>
-      <div class="step-content">
-        <div class="step-tag">Aplicación</div>
-        <div class="step-title">Abre Meta Edits e importa el video</div>
-        <div class="step-desc">Descarga <strong>Meta Edits</strong> si aún no la tienes. Dentro de la app, toca el botón <strong>"+"</strong> o "Nuevo proyecto" y selecciona el video que descargaste.</div>
-        <div class="meta-card">
-          <div class="meta-logo">Ed</div>
-          <div class="meta-info">
-            <div class="meta-name">Meta Edits</div>
-            <div class="meta-sub">Disponible en App Store y Google Play · Gratis</div>
-          </div>
-        </div>
-      </div>
-    </div>
+<script>
+/* ── Galaxy particle canvas ── */
+(function() {
+  const canvas = document.getElementById('galaxy');
+  const ctx = canvas.getContext('2d');
+  let W, H, particles = [], animId;
 
-    <!-- Step 4 -->
-    <div class="step">
-      <div class="step-left">
-        <div class="step-num accent">04</div>
-        <div class="step-line"></div>
-      </div>
-      <div class="step-content">
-        <div class="step-tag">Exportar</div>
-        <div class="step-title">Exporta en 4K desde Edits</div>
-        <div class="step-desc">Este paso es <strong>fundamental</strong>. Exportar desde Edits preserva la calidad máxima y evita la compresión automática que aplica Instagram al subir directo.</div>
-        <div class="export-card">
-          <div class="export-row">
-            <span class="export-label">Resolución</span>
-            <span class="export-val">4K (2160p)</span>
-          </div>
-          <div class="export-row">
-            <span class="export-label">Formato</span>
-            <span class="export-val">MP4 / H.264</span>
-          </div>
-          <div class="export-row">
-            <span class="export-label">Dónde exportar</span>
-            <span class="export-val">Directo a Instagram</span>
-          </div>
-        </div>
-        <div class="tip-box">
-          <div class="tip-icon">★</div>
-          <div class="tip-text">Toca <strong>"Compartir" → "Instagram Reels"</strong> directamente desde Edits. Esto evita una recompresión adicional y tu Reel se ve exactamente como lo editamos.</div>
-        </div>
-      </div>
-    </div>
+  function resize() {
+    W = canvas.width  = window.innerWidth;
+    H = canvas.height = window.innerHeight;
+  }
 
-    <!-- Step 5 -->
-    <div class="step">
-      <div class="step-left">
-        <div class="step-num accent">05</div>
-        <div class="step-line last"></div>
-      </div>
-      <div class="step-content">
-        <div class="step-tag">Publicar</div>
-        <div class="step-title">Publica en Instagram como Reel</div>
-        <div class="step-desc">Instagram se abrirá automáticamente con el video listo. Agrega tu caption, hashtags, música si quieres, y pulsa <strong>Compartir</strong>. ¡Listo!</div>
-        <div class="pill-row">
-          <span class="pill">Caption + hashtags</span>
-          <span class="pill">Portada del Reel</span>
-          <span class="pill green">↑ Publicar</span>
-        </div>
-      </div>
-    </div>
+  function Particle() {
+    this.reset = function() {
+      this.x = Math.random() * W;
+      this.y = Math.random() * H;
+      this.r = Math.random() * 1.1 + .1;
+      this.alpha = Math.random() * .55 + .05;
+      this.speed = Math.random() * .12 + .02;
+      this.twinkle = Math.random() * Math.PI * 2;
+      this.twinkleSpeed = Math.random() * .008 + .002;
+      this.drift = (Math.random() - .5) * .06;
+    };
+    this.reset();
+  }
 
-  </div>
+  function init() {
+    resize();
+    particles = [];
+    const count = Math.min(Math.floor(W * H / 3500), 280);
+    for (let i = 0; i < count; i++) particles.push(new Particle());
+  }
 
-  <div class="footer">
-    <div class="footer-brand">Bolsillo Producciones</div>
-    <div class="footer-sub">¿Dudas? Escríbenos por WhatsApp antes de publicar.</div>
-  </div>
+  function draw() {
+    ctx.clearRect(0, 0, W, H);
 
-</div>
+    /* Nebula glows */
+    [{x: W*.18, y: H*.28, r: Math.min(W,H)*.38, a: .022},
+     {x: W*.82, y: H*.65, r: Math.min(W,H)*.32, a: .018}].forEach(b => {
+      const g = ctx.createRadialGradient(b.x, b.y, 0, b.x, b.y, b.r);
+      g.addColorStop(0, `rgba(255,255,255,${b.a})`);
+      g.addColorStop(1, 'rgba(255,255,255,0)');
+      ctx.fillStyle = g;
+      ctx.beginPath();
+      ctx.arc(b.x, b.y, b.r, 0, Math.PI * 2);
+      ctx.fill();
+    });
+
+    /* Stars */
+    particles.forEach(p => {
+      p.twinkle += p.twinkleSpeed;
+      p.y -= p.speed;
+      p.x += p.drift;
+      if (p.y < -2) { p.y = H + 2; p.x = Math.random() * W; }
+      if (p.x < -2 || p.x > W + 2) p.reset();
+      const a = p.alpha * (.5 + .5 * Math.sin(p.twinkle));
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+      ctx.fillStyle = `rgba(255,255,255,${a})`;
+      ctx.fill();
+    });
+
+    animId = requestAnimationFrame(draw);
+  }
+
+  window.addEventListener('resize', () => {
+    cancelAnimationFrame(animId);
+    init();
+    draw();
+  });
+
+  init();
+  draw();
+})();
+</script>
 </body>
 </html>
