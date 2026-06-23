@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@300;400;600&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:#050506;font-family:'DM Sans',sans-serif;color:#F8F8F8;min-height:100vh}
+.wrap{max-width:640px;margin:0 auto;padding:48px 28px 56px}
+.header{text-align:center;margin-bottom:44px}
+.logo-label{font-family:'Unbounded',sans-serif;font-size:10px;letter-spacing:.22em;color:rgba(255,255,255,.3);text-transform:uppercase;margin-bottom:14px}
+.title{font-family:'Unbounded',sans-serif;font-size:22px;font-weight:600;line-height:1.2;color:#F8F8F8;margin-bottom:8px}
+.subtitle{font-size:14px;font-weight:300;color:rgba(255,255,255,.5);line-height:1.6}
+.divider{width:32px;height:1px;background:rgba(255,255,255,.25);margin:18px auto 0}
+
+.steps{display:flex;flex-direction:column;gap:0}
+.step{display:flex;gap:0;position:relative}
+.step-left{display:flex;flex-direction:column;align-items:center;width:52px;flex-shrink:0}
+.step-num{width:36px;height:36px;border-radius:50%;border:1px solid rgba(255,255,255,.2);display:flex;align-items:center;justify-content:center;font-family:'Unbounded',sans-serif;font-size:10px;font-weight:400;letter-spacing:.1em;color:rgba(255,255,255,.5);flex-shrink:0;background:#050506;position:relative;z-index:1}
+.step-num.accent{border-color:rgba(74,222,128,.5);color:#4ade80;background:rgba(74,222,128,.06)}
+.step-line{width:1px;flex:1;background:rgba(255,255,255,.1);margin:4px 0}
+.step-line.last{display:none}
+.step-content{padding:0 0 32px 18px;flex:1}
+.step-tag{font-family:'Unbounded',sans-serif;font-size:8px;letter-spacing:.18em;text-transform:uppercase;color:rgba(255,255,255,.3);margin-bottom:6px}
+.step-title{font-family:'Unbounded',sans-serif;font-size:14px;font-weight:600;color:#F8F8F8;margin-bottom:8px;line-height:1.3}
+.step-desc{font-size:13px;font-weight:300;color:rgba(255,255,255,.6);line-height:1.75}
+.step-desc strong{color:rgba(255,255,255,.85);font-weight:500}
+
+.step-card{margin-top:12px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.09);border-radius:12px;padding:14px 16px}
+.card-row{display:flex;align-items:center;gap:10px;font-size:12px;color:rgba(255,255,255,.5);padding:5px 0;border-bottom:1px solid rgba(255,255,255,.06)}
+.card-row:last-child{border-bottom:none}
+.card-icon{width:28px;height:28px;border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0}
+.card-icon.wt{background:rgba(50,200,150,.12);color:#32c896}
+.card-icon.wa{background:rgba(37,211,102,.12);color:#25D366}
+.card-icon.gd{background:rgba(66,133,244,.12);color:#4285F4}
+.card-text{flex:1}
+.card-text span{display:block;font-size:11px;color:rgba(255,255,255,.3);margin-top:1px}
+
+.pill-row{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}
+.pill{font-family:'Unbounded',sans-serif;font-size:8px;letter-spacing:.1em;padding:5px 11px;border-radius:20px;border:1px solid rgba(255,255,255,.15);color:rgba(255,255,255,.5)}
+.pill.green{border-color:rgba(74,222,128,.35);color:#4ade80;background:rgba(74,222,128,.07)}
+
+.meta-card{margin-top:12px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.09);border-radius:12px;padding:14px 16px;display:flex;align-items:center;gap:12px}
+.meta-logo{width:38px;height:38px;border-radius:9px;background:linear-gradient(135deg,#833ab4,#fd1d1d,#fcb045);display:flex;align-items:center;justify-content:center;color:#fff;font-size:10px;font-family:'Unbounded',sans-serif;font-weight:600;letter-spacing:.05em;flex-shrink:0}
+.meta-info{flex:1}
+.meta-name{font-family:'Unbounded',sans-serif;font-size:12px;font-weight:600;color:#F8F8F8}
+.meta-sub{font-size:11px;color:rgba(255,255,255,.4);margin-top:2px}
+
+.export-card{margin-top:12px;background:rgba(74,222,128,.06);border:1px solid rgba(74,222,128,.2);border-radius:12px;padding:14px 16px}
+.export-row{display:flex;justify-content:space-between;align-items:center;padding:4px 0}
+.export-label{font-size:12px;color:rgba(255,255,255,.45)}
+.export-val{font-family:'Unbounded',sans-serif;font-size:11px;color:#4ade80;letter-spacing:.06em}
+
+.tip-box{margin-top:12px;background:rgba(255,200,50,.05);border:1px solid rgba(255,200,50,.2);border-radius:10px;padding:11px 14px;display:flex;gap:10px;align-items:flex-start}
+.tip-icon{font-size:14px;flex-shrink:0;margin-top:1px}
+.tip-text{font-size:12px;color:rgba(255,255,255,.5);line-height:1.65}
+.tip-text strong{color:rgba(255,210,50,.8);font-weight:500}
+
+.footer{margin-top:40px;padding-top:24px;border-top:1px solid rgba(255,255,255,.08);text-align:center}
+.footer-brand{font-family:'Unbounded',sans-serif;font-size:10px;letter-spacing:.2em;color:rgba(255,255,255,.2);text-transform:uppercase}
+.footer-sub{font-size:12px;color:rgba(255,255,255,.25);margin-top:6px}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="header">
+    <div class="logo-label">Bolsillo Producciones</div>
+    <h1 class="title">Cómo subir tu Reel<br>a Instagram</h1>
+    <p class="subtitle">Sigue estos pasos para publicar tu video<br>con la máxima calidad posible.</p>
+    <div class="divider"></div>
+  </div>
+
+  <div class="steps">
+
+    <!-- Step 1 -->
+    <div class="step">
+      <div class="step-left">
+        <div class="step-num">01</div>
+        <div class="step-line"></div>
+      </div>
+      <div class="step-content">
+        <div class="step-tag">Recepción</div>
+        <div class="step-title">Recibe el archivo editado</div>
+        <div class="step-desc">Te enviaremos el Reel terminado por uno de estos canales. El archivo estará listo para descargar directamente a tu teléfono.</div>
+        <div class="step-card">
+          <div class="card-row">
+            <div class="card-icon wt">⇩</div>
+            <div class="card-text">WeTransfer<span>Link de descarga por correo o WhatsApp</span></div>
+          </div>
+          <div class="card-row">
+            <div class="card-icon gd">▲</div>
+            <div class="card-text">Google Drive<span>Carpeta compartida — descarga directa</span></div>
+          </div>
+          <div class="card-row">
+            <div class="card-icon wa">✦</div>
+            <div class="card-text">WhatsApp<span>Archivo adjunto — guardar en galería</span></div>
+          </div>
+        </div>
+        <div class="tip-box">
+          <div class="tip-icon">⚠</div>
+          <div class="tip-text"><strong>Importante:</strong> si recibes el video por WhatsApp, descárgalo como <strong>documento</strong>, no como imagen o video comprimido. Esto preserva la calidad original.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Step 2 -->
+    <div class="step">
+      <div class="step-left">
+        <div class="step-num">02</div>
+        <div class="step-line"></div>
+      </div>
+      <div class="step-content">
+        <div class="step-tag">Descarga</div>
+        <div class="step-title">Descarga el video a tu teléfono</div>
+        <div class="step-desc">Asegúrate de que el archivo quede guardado en tu galería o en "Archivos" antes de continuar. <strong>No lo abras directo desde la app</strong> — descárgalo primero.</div>
+        <div class="pill-row">
+          <span class="pill">Galería / Fotos</span>
+          <span class="pill">Archivos / Descargas</span>
+          <span class="pill green">✓ Video guardado</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Step 3 -->
+    <div class="step">
+      <div class="step-left">
+        <div class="step-num">03</div>
+        <div class="step-line"></div>
+      </div>
+      <div class="step-content">
+        <div class="step-tag">Aplicación</div>
+        <div class="step-title">Abre Meta Edits e importa el video</div>
+        <div class="step-desc">Descarga <strong>Meta Edits</strong> si aún no la tienes. Dentro de la app, toca el botón <strong>"+"</strong> o "Nuevo proyecto" y selecciona el video que descargaste.</div>
+        <div class="meta-card">
+          <div class="meta-logo">Ed</div>
+          <div class="meta-info">
+            <div class="meta-name">Meta Edits</div>
+            <div class="meta-sub">Disponible en App Store y Google Play · Gratis</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Step 4 -->
+    <div class="step">
+      <div class="step-left">
+        <div class="step-num accent">04</div>
+        <div class="step-line"></div>
+      </div>
+      <div class="step-content">
+        <div class="step-tag">Exportar</div>
+        <div class="step-title">Exporta en 4K desde Edits</div>
+        <div class="step-desc">Este paso es <strong>fundamental</strong>. Exportar desde Edits preserva la calidad máxima y evita la compresión automática que aplica Instagram al subir directo.</div>
+        <div class="export-card">
+          <div class="export-row">
+            <span class="export-label">Resolución</span>
+            <span class="export-val">4K (2160p)</span>
+          </div>
+          <div class="export-row">
+            <span class="export-label">Formato</span>
+            <span class="export-val">MP4 / H.264</span>
+          </div>
+          <div class="export-row">
+            <span class="export-label">Dónde exportar</span>
+            <span class="export-val">Directo a Instagram</span>
+          </div>
+        </div>
+        <div class="tip-box">
+          <div class="tip-icon">★</div>
+          <div class="tip-text">Toca <strong>"Compartir" → "Instagram Reels"</strong> directamente desde Edits. Esto evita una recompresión adicional y tu Reel se ve exactamente como lo editamos.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Step 5 -->
+    <div class="step">
+      <div class="step-left">
+        <div class="step-num accent">05</div>
+        <div class="step-line last"></div>
+      </div>
+      <div class="step-content">
+        <div class="step-tag">Publicar</div>
+        <div class="step-title">Publica en Instagram como Reel</div>
+        <div class="step-desc">Instagram se abrirá automáticamente con el video listo. Agrega tu caption, hashtags, música si quieres, y pulsa <strong>Compartir</strong>. ¡Listo!</div>
+        <div class="pill-row">
+          <span class="pill">Caption + hashtags</span>
+          <span class="pill">Portada del Reel</span>
+          <span class="pill green">↑ Publicar</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="footer">
+    <div class="footer-brand">Bolsillo Producciones</div>
+    <div class="footer-sub">¿Dudas? Escríbenos por WhatsApp antes de publicar.</div>
+  </div>
+
+</div>
+</body>
+</html>
