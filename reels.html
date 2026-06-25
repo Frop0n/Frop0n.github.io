@@ -7,6 +7,8 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <title>Subir Reel — Bolsillo</title>
+<link rel="icon" type="image/png" href="https://i.imgur.com/EBkck9H.png">
+<link rel="apple-touch-icon" href="https://i.imgur.com/EBkck9H.png">
 <link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@300;400;600&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@ionic/core/css/ionic.bundle.css">
 <script type="module" src="https://cdn.jsdelivr.net/npm/@ionic/core/dist/ionic/ionic.esm.js"></script>
@@ -261,6 +263,30 @@
   .meta-name { font-family: var(--font-h); font-size: 12px; font-weight: 600; color: var(--white); }
   .meta-sub { font-family: var(--font-b); font-size: 11px; color: rgba(255,255,255,.38); margin-top: 2px; }
 
+  /* Download buttons */
+  .dl-btn-row {
+    display: flex; gap: 10px; margin-top: 12px;
+  }
+  .dl-btn {
+    flex: 1;
+    display: flex; align-items: center; justify-content: center; gap: 8px;
+    background: var(--glass);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 11px 14px;
+    text-decoration: none;
+    color: var(--white);
+    font-family: var(--font-h);
+    font-size: 10px; letter-spacing: .08em;
+    transition: background .2s, border-color .2s;
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+  }
+  .dl-btn:hover, .dl-btn:active {
+    background: rgba(255,255,255,.1);
+    border-color: rgba(255,255,255,.25);
+  }
+
   /* Export card */
   .export-card {
     margin-top: 12px;
@@ -409,12 +435,15 @@
             <div class="step-tag">Aplicación</div>
             <div class="step-title">Abre Meta Edits e importa el video</div>
             <div class="step-desc">Descarga <strong>Meta Edits</strong> si aún no la tienes. Toca <strong>"+"</strong> o "Nuevo proyecto" y selecciona el video descargado.</div>
-            <div class="meta-card">
-              <div class="meta-logo">Ed</div>
-              <div>
-                <div class="meta-name">Meta Edits</div>
-                <div class="meta-sub">App Store y Google Play · Gratis</div>
-              </div>
+            <div class="dl-btn-row">
+              <a class="dl-btn" href="https://play.google.com/store/apps/details?id=com.instagram.basel&hl=es" target="_blank" rel="noopener">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M3.18 23.76a2 2 0 0 0 2.04-.22l11.6-6.7-2.6-2.6-11.04 9.52zM.5 1.1A2 2 0 0 0 0 2.5v19a2 2 0 0 0 .5 1.4L.6 23l10.65-10.65v-.25L.6 1.1zM20.36 10.4l-2.73-1.58-2.93 2.93 2.93 2.93 2.75-1.59a2 2 0 0 0 0-3.69zM5.22.46L16.82 7.16l-2.6 2.6L3.18.24A2 2 0 0 1 5.22.46z"/></svg>
+                <span>Google Play</span>
+              </a>
+              <a class="dl-btn" href="https://apps.apple.com/us/app/edits-video-editor/id6738967378" target="_blank" rel="noopener">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98l-.09.06c-.22.14-2.15 1.26-2.13 3.76.03 2.99 2.62 3.99 2.65 4 0 .01-.02.06-.07.17zM13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>
+                <span>App Store</span>
+              </a>
             </div>
           </div>
         </div>
