@@ -1,8 +1,5 @@
 # Bolsillo Fotografía — Sitio Web
 
-> **Estado actual: página en cuarentena.** Mientras se rehace el sitio desde cero, `bolsilloprod.cl` muestra solo `index.html` (aviso "volvemos pronto" + botón a Instagram) y `404.html` redirige cualquier URL vieja a la portada.
-> El sitio completo anterior quedó guardado en la rama `archivo/sitio-original` y el tag `sitio-original-2026-10` (`git checkout archivo/sitio-original`).
-
 Sitio web estático para **Bolsillo Producciones SPA**, estudio de fotografía y video ubicado en Constitución 8, Bellavista, Providencia, Santiago de Chile.
 
 Hosteado en **GitHub Pages**. Sin frameworks, sin dependencias npm — HTML, CSS y JS vanilla puro.
